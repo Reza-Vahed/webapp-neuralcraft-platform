@@ -201,6 +201,69 @@
       "freelance": "همکاری آزاد"
     }
   },
+  "DevDashboard": {
+    "eyebrow": "داخلی",
+    "title": "داشبورد توسعه",
+    "lead": "نمای کلی داخلی توسعه‌دهندگان از وضعیت پروژه، معماری و شاخص‌های کیفیت.",
+    "statusCard": {
+      "title": "وضعیت پروژه",
+      "projectName": "پروژه",
+      "status": "وضعیت",
+      "statusValue": "در حال توسعه فعال",
+      "phase": "فاز فعلی",
+      "phaseValue": "فاز ۵ تکمیل شده · فاز ۶ در حال برنامه‌ریزی",
+      "lastCommit": "آخرین کامیت",
+      "noCommit": "تاریخچه گیت در دسترس نیست",
+      "nextStep": "قدم بعدی",
+      "nextStepValue": "تعیین محدوده و نیازمندی‌های فاز ۶"
+    },
+    "timeline": {
+      "title": "جدول زمانی فازها",
+      "statusCompleted": "تکمیل‌شده",
+      "statusActive": "فعال",
+      "statusPlanned": "برنامه‌ریزی‌شده",
+      "phase1": "فاز ۱ – پایه",
+      "phase2": "فاز ۲ – سیستم طراحی",
+      "phase3": "فاز ۳ – معماری اطلاعات + صفحه اصلی",
+      "phase4": "فاز ۴ – مدیریت محتوا",
+      "phase5": "فاز ۵ – خدمات",
+      "phase6": "فاز ۶ – مرحله بعد"
+    },
+    "routes": {
+      "title": "کاوشگر مسیرها"
+    },
+    "quality": {
+      "title": "وضعیت کیفیت",
+      "note": "بر اساس آخرین بررسی محلی (lint/typecheck/build) پیش از این کامیت — نظارت زنده نیست.",
+      "statusPass": "موفق",
+      "statusFail": "ناموفق",
+      "build": "بیلد",
+      "typescript": "TypeScript",
+      "eslint": "ESLint",
+      "i18n": "بین‌المللی‌سازی",
+      "rtl": "پشتیبانی راست‌به‌چپ",
+      "accessibility": "دسترس‌پذیری"
+    },
+    "architecture": {
+      "title": "نمای کلی معماری",
+      "frontend": {
+        "title": "فرانت‌اند",
+        "description": "Next.js 16 (App Router، Turbopack)، TypeScript، Tailwind CSS v4، shadcn/ui روی Base UI"
+      },
+      "contentLayer": {
+        "title": "لایه محتوا",
+        "description": "Velite — مجموعه‌های Markdown تایپ‌شده برای وبلاگ، نمونه‌کارها و آگهی‌های شغلی"
+      },
+      "i18n": {
+        "title": "بین‌المللی‌سازی",
+        "description": "next-intl با آلمانی، انگلیسی و فارسی (راست‌به‌چپ)، مسیرهای دارای پیشوند زبان"
+      },
+      "deployment": {
+        "title": "استقرار",
+        "description": "آماده برای Vercel، مسیرهای از پیش‌رندرشده به‌صورت ایستا از طریق generateStaticParams"
+      }
+    }
+  },
   "Footer": {
     "tagline": "شریک فناوری بلندمدت شما برای هوش مصنوعی عملی و قابل‌سنجش.",
     "navigation": "منو",

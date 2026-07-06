@@ -201,6 +201,69 @@
       "freelance": "Freiberuflich"
     }
   },
+  "DevDashboard": {
+    "eyebrow": "Intern",
+    "title": "Dev Dashboard",
+    "lead": "Interne Entwicklerübersicht über Projektstatus, Architektur und Qualitätskennzahlen.",
+    "statusCard": {
+      "title": "Projektstatus",
+      "projectName": "Projekt",
+      "status": "Status",
+      "statusValue": "Aktiv in Entwicklung",
+      "phase": "Aktuelle Phase",
+      "phaseValue": "Phase 5 abgeschlossen · Phase 6 in Planung",
+      "lastCommit": "Letzter Commit",
+      "noCommit": "Kein Git-Verlauf verfügbar",
+      "nextStep": "Nächster Schritt",
+      "nextStepValue": "Umfang und Anforderungen für Phase 6 festlegen"
+    },
+    "timeline": {
+      "title": "Phasen-Timeline",
+      "statusCompleted": "Abgeschlossen",
+      "statusActive": "Aktiv",
+      "statusPlanned": "Geplant",
+      "phase1": "Phase 1 – Foundation",
+      "phase2": "Phase 2 – Design System",
+      "phase3": "Phase 3 – IA + Homepage",
+      "phase4": "Phase 4 – CMS",
+      "phase5": "Phase 5 – Services",
+      "phase6": "Phase 6 – Next"
+    },
+    "routes": {
+      "title": "Route-Explorer"
+    },
+    "quality": {
+      "title": "Qualitätsstatus",
+      "note": "Stand der letzten lokalen Verifikation (lint/typecheck/build) vor diesem Commit — keine Live-Überwachung.",
+      "statusPass": "OK",
+      "statusFail": "Fehler",
+      "build": "Build",
+      "typescript": "TypeScript",
+      "eslint": "ESLint",
+      "i18n": "Internationalisierung",
+      "rtl": "RTL-Unterstützung",
+      "accessibility": "Barrierefreiheit"
+    },
+    "architecture": {
+      "title": "Architektur-Überblick",
+      "frontend": {
+        "title": "Frontend",
+        "description": "Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS v4, shadcn/ui auf Base UI"
+      },
+      "contentLayer": {
+        "title": "Content Layer",
+        "description": "Velite – typisierte Markdown-Collections für Blog, Case Studies und Stellenanzeigen"
+      },
+      "i18n": {
+        "title": "Internationalisierung",
+        "description": "next-intl mit Deutsch, Englisch und Farsi (RTL), locale-präfixierte Routen"
+      },
+      "deployment": {
+        "title": "Deployment",
+        "description": "Vercel-ready, statisch vorgerenderte Routen via generateStaticParams"
+      }
+    }
+  },
   "Footer": {
     "tagline": "Ihr langfristiger Technologiepartner für praktische, messbare KI.",
     "navigation": "Navigation",

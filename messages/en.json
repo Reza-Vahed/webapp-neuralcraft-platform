@@ -201,6 +201,69 @@
       "freelance": "Freelance"
     }
   },
+  "DevDashboard": {
+    "eyebrow": "Internal",
+    "title": "Dev Dashboard",
+    "lead": "Internal developer overview of project status, architecture, and quality metrics.",
+    "statusCard": {
+      "title": "Project Status",
+      "projectName": "Project",
+      "status": "Status",
+      "statusValue": "Actively in development",
+      "phase": "Current Phase",
+      "phaseValue": "Phase 5 completed · Phase 6 planned",
+      "lastCommit": "Last Commit",
+      "noCommit": "No git history available",
+      "nextStep": "Next Step",
+      "nextStepValue": "Define scope and requirements for Phase 6"
+    },
+    "timeline": {
+      "title": "Phase Timeline",
+      "statusCompleted": "Completed",
+      "statusActive": "Active",
+      "statusPlanned": "Planned",
+      "phase1": "Phase 1 – Foundation",
+      "phase2": "Phase 2 – Design System",
+      "phase3": "Phase 3 – IA + Homepage",
+      "phase4": "Phase 4 – CMS",
+      "phase5": "Phase 5 – Services",
+      "phase6": "Phase 6 – Next"
+    },
+    "routes": {
+      "title": "Route Explorer"
+    },
+    "quality": {
+      "title": "Quality Status",
+      "note": "Reflects the last local verification (lint/typecheck/build) before this commit — not live monitoring.",
+      "statusPass": "OK",
+      "statusFail": "Failing",
+      "build": "Build",
+      "typescript": "TypeScript",
+      "eslint": "ESLint",
+      "i18n": "Internationalization",
+      "rtl": "RTL Support",
+      "accessibility": "Accessibility"
+    },
+    "architecture": {
+      "title": "Architecture Overview",
+      "frontend": {
+        "title": "Frontend",
+        "description": "Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS v4, shadcn/ui on Base UI"
+      },
+      "contentLayer": {
+        "title": "Content Layer",
+        "description": "Velite – typed Markdown collections for blog posts, case studies, and job postings"
+      },
+      "i18n": {
+        "title": "Internationalization",
+        "description": "next-intl with German, English, and Farsi (RTL), locale-prefixed routes"
+      },
+      "deployment": {
+        "title": "Deployment",
+        "description": "Vercel-ready, statically pre-rendered routes via generateStaticParams"
+      }
+    }
+  },
   "Footer": {
     "tagline": "Your long-term technology partner for practical, measurable AI.",
     "navigation": "Navigation",
