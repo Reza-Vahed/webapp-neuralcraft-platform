@@ -77,28 +77,73 @@
   "Services": {
     "strategy": {
       "title": "KI-Strategie & Beratung",
-      "description": "Analyse bestehender Prozesse und eine priorisierte Roadmap für den KI-Einsatz."
+      "description": "Analyse bestehender Prozesse und eine priorisierte Roadmap für den KI-Einsatz.",
+      "lead": "Bevor wir eine Zeile Code schreiben, verstehen wir, wo KI in Ihrem Unternehmen wirklich einen Unterschied macht.",
+      "highlights": {
+        "point1": "Prozessanalyse & Identifikation der wirkungsvollsten Anwendungsfälle",
+        "point2": "Priorisierte Roadmap mit realistischen Aufwandsschätzungen",
+        "point3": "Klare Erfolgskennzahlen vor Projektstart"
+      }
     },
     "agenticAi": {
       "title": "Agentic AI Solutions",
-      "description": "Individuelle KI-Agenten für Kundenservice, Wissensmanagement und interne Prozesse."
+      "description": "Individuelle KI-Agenten für Kundenservice, Wissensmanagement und interne Prozesse.",
+      "lead": "Wir entwickeln KI-Agenten, die nicht nur antworten, sondern mit echtem Werkzeugzugriff eigenständig handeln – innerhalb klar definierter Grenzen.",
+      "highlights": {
+        "point1": "Integration in bestehende Systeme (CRM, Warenwirtschaft, interne Tools)",
+        "point2": "Klare Eskalationslogik – der Agent weiß, wann ein Mensch übernehmen muss",
+        "point3": "Laufende Überwachung und Weiterentwicklung nach Go-Live"
+      }
     },
     "automation": {
       "title": "Workflow-Automatisierung",
-      "description": "Wiederkehrende Geschäftsprozesse mit KI- und No-/Low-Code-Lösungen automatisieren."
+      "description": "Wiederkehrende Geschäftsprozesse mit KI- und No-/Low-Code-Lösungen automatisieren.",
+      "lead": "Wir automatisieren wiederkehrende Prozesse dort, wo es sich lohnt – mit dem richtigen Werkzeug statt Dogma.",
+      "highlights": {
+        "point1": "Analyse: No-Code/Low-Code oder individuelle Entwicklung?",
+        "point2": "Nahtlose Anbindung an bestehende Systeme und Datenquellen",
+        "point3": "Skalierbar von einzelnen Teilschritten bis zu komplexen Workflows"
+      }
     },
     "chatbots": {
       "title": "Chatbots & AI Assistants",
-      "description": "Intelligente Assistenten für Website, Kundenservice und interne Anwendungen."
+      "description": "Intelligente Assistenten für Website, Kundenservice und interne Anwendungen.",
+      "lead": "Assistenten, die echte Anliegen lösen, statt nur FAQ-Antworten zu wiederholen.",
+      "highlights": {
+        "point1": "Rund um die Uhr verfügbar, über Website, WhatsApp oder interne Tools",
+        "point2": "Nahtlose Übergabe an menschliche Mitarbeitende bei Bedarf",
+        "point3": "Kontinuierliches Lernen aus echten Kundengesprächen"
+      }
     },
     "aiCoding": {
       "title": "AI Coding & Softwareentwicklung",
-      "description": "KI-gestützte Webanwendungen, interne Tools und Plattformen für Ihr Unternehmen."
+      "description": "KI-gestützte Webanwendungen, interne Tools und Plattformen für Ihr Unternehmen.",
+      "lead": "Wir entwickeln die Softwaregrundlage, auf der Ihre KI-Lösungen produktiv laufen – sauber, wartbar, skalierbar.",
+      "highlights": {
+        "point1": "Moderne, wartbare Architektur statt technischer Altlasten",
+        "point2": "Von der internen Anwendung bis zur kundenseitigen Plattform",
+        "point3": "Enge Zusammenarbeit mit Ihrem bestehenden Team möglich"
+      }
     },
     "training": {
       "title": "KI-Schulungen & Workshops",
-      "description": "Praxisorientierte Workshops, die Ihr Team zu souveränen KI-Anwendern machen."
+      "description": "Praxisorientierte Workshops, die Ihr Team zu souveränen KI-Anwendern machen.",
+      "lead": "Technologie wirkt nur, wenn Ihr Team sie sicher einsetzt – deshalb ist Wissenstransfer Teil jedes Projekts.",
+      "highlights": {
+        "point1": "Praxisworkshops statt trockener Theorie",
+        "point2": "Zugeschnitten auf Ihre tatsächlichen Tools und Prozesse",
+        "point3": "Befähigung zur eigenständigen Weiterentwicklung nach Projektende"
+      }
     }
+  },
+  "ServicesPage": {
+    "eyebrow": "Leistungen",
+    "title": "Sechs Hebel für Ihren KI-Erfolg",
+    "lead": "Von der ersten Strategie bis zur produktiven KI-Anwendung – wir begleiten den gesamten Weg."
+  },
+  "ServiceDetailPage": {
+    "backToOverview": "Zurück zu den Leistungen",
+    "highlightsTitle": "Das gehört dazu"
   },
   "CaseStudyTeasers": {
     "items": {

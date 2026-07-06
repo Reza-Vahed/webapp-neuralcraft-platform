@@ -1,9 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { ServiceCard } from "@/components/content/service-card";
 import { Link } from "@/i18n/navigation";
 import { services } from "@/lib/services";
 
@@ -27,24 +27,14 @@ export async function ServicesOverview() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map(({ slug, messageKey, icon: Icon }) => (
-            <Link key={slug} href={`/services/${slug}`} className="group">
-              <Card className="ring-foreground/10 group-hover:ring-primary/50 h-full transition-colors">
-                <CardHeader>
-                  <div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-lg">
-                    <Icon className="size-5" aria-hidden />
-                  </div>
-                  <CardTitle className="mt-4 text-lg">
-                    {tServices(`${messageKey}.title`)}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground text-sm">
-                    {tServices(`${messageKey}.description`)}
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
+          {services.map(({ slug, messageKey, icon }) => (
+            <ServiceCard
+              key={slug}
+              slug={slug}
+              icon={icon}
+              title={tServices(`${messageKey}.title`)}
+              description={tServices(`${messageKey}.description`)}
+            />
           ))}
         </div>
 

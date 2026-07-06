@@ -7,8 +7,8 @@ Kurzreferenz für Sitemap, Seiten-Templates und Content-Modell. Alle Routen sind
 | Route                  | Seite                            | Template                          | Status                         |
 | ---------------------- | -------------------------------- | --------------------------------- | ------------------------------ |
 | `/`                    | Home                             | bespoke (Sektionen)               | ✅ Phase 3                     |
-| `/services`            | Leistungen – Übersicht           | `PageHeader` + Grid               | Phase 3-Fortsetzung            |
-| `/services/[slug]`     | Leistungsdetail (6× siehe unten) | `PageHeader`                      | offen                          |
+| `/services`            | Leistungen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 5                     |
+| `/services/[slug]`     | Leistungsdetail (6× siehe unten) | `PageHeader` + Highlights + CTA   | ✅ Phase 5                     |
 | `/case-studies`        | Referenzen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 4                     |
 | `/case-studies/[slug]` | Case-Study-Detail                | `ArticleLayout`                   | ✅ Phase 4                     |
 | `/about`               | Über uns                         | `PageHeader`                      | offen                          |
@@ -22,7 +22,9 @@ Kurzreferenz für Sitemap, Seiten-Templates und Content-Modell. Alle Routen sind
 | `/impressum`           | Impressum                        | `PageHeader` (schmale Textspalte) | offen (Phase 6)                |
 | `/datenschutz`         | Datenschutz                      | `PageHeader` (schmale Textspalte) | offen (Phase 6)                |
 
-Die 6 Leistungs-Slugs (`lib/services.ts`): `ki-strategie`, `agentic-ai`, `workflow-automatisierung`, `chatbots-ai-assistants`, `ai-coding`, `ki-schulungen`.
+Die 6 Leistungs-Slugs (`lib/services.ts`): `ai-consulting`, `agent-development`, `automation`, `chatbots`, `ai-coding`, `training`.
+
+> **Hinweis (Phase 5):** Die Slugs wurden gegenüber der ursprünglichen Phase-3-Fassung (`ki-strategie`, `agentic-ai`, `workflow-automatisierung`, `chatbots-ai-assistants`, `ai-coding`, `ki-schulungen`) auf sprechende englische Varianten umgestellt. Die 6 Leistungen selbst (inkl. „Chatbots & AI Assistants") sind unverändert geblieben — es wurden **keine** Leistungen entfernt oder durch „Cloud Solutions"/„Web Development" ersetzt (das war eine explizite Rückfrage/Entscheidung, da diese beiden Begriffe inhaltlich nicht durch bestehenden Content gedeckt waren).
 
 ## Seiten-Templates (reusable layouts)
 
@@ -47,7 +49,15 @@ JobPosting: slug, title, department, location, employmentType (full-time|part-ti
 
 ## Services-Datenmodell
 
-`lib/services.ts` exportiert die kanonische Liste der 6 Leistungen (Slug + Icon + i18n-Key). Übersetzte Inhalte liegen unter `Services.<key>` in `messages/*.json`. Sowohl der Home-Teaser als auch die künftige `/services`-Seite greifen auf dieselbe Quelle zu — keine Doppelpflege.
+`lib/services.ts` exportiert die kanonische Liste der 6 Leistungen (Slug + Icon + i18n-Key) — **einzige Datenquelle** für Home-Teaser, `/services`-Übersicht und `/services/[slug]`-Details. Übersetzte Inhalte liegen unter `Services.<key>` in `messages/*.json`:
+
+```
+title, description   — Kurzfassung (Card-Teaser auf Home/Übersicht)
+lead                  — Einleitungssatz für die Detailseite (PageHeader-Lead)
+highlights.point1-3   — Stichpunkte "Das gehört dazu" auf der Detailseite
+```
+
+`components/content/service-card.tsx` ist die gemeinsame Karten-Komponente für Home-Teaser und `/services`-Übersicht (nimmt bereits übersetzte Strings entgegen, keine eigene `useTranslations`-Logik — Konsistenz mit `BlogPostCard`/`CaseStudyCard`/`JobPostingCard`). Die Detailseite verwendet `PageHeader` (Titel/Lead) + eine Highlights-Liste + die bestehende `CtaSection` (Wiederverwendung, kein neues CTA-Pattern).
 
 ## Content-Zugriff & Pagination (`lib/content.ts`)
 

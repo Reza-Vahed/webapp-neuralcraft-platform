@@ -77,28 +77,73 @@
   "Services": {
     "strategy": {
       "title": "AI Strategy & Consulting",
-      "description": "Analysis of existing processes and a prioritized roadmap for AI adoption."
+      "description": "Analysis of existing processes and a prioritized roadmap for AI adoption.",
+      "lead": "Before we write a single line of code, we make sure we understand where AI actually moves the needle in your business.",
+      "highlights": {
+        "point1": "Process analysis and identification of the highest-impact use cases",
+        "point2": "Prioritized roadmap with realistic effort estimates",
+        "point3": "Clear success metrics defined before the project starts"
+      }
     },
     "agenticAi": {
       "title": "Agentic AI Solutions",
-      "description": "Custom AI agents for customer service, knowledge management, and internal processes."
+      "description": "Custom AI agents for customer service, knowledge management, and internal processes.",
+      "lead": "We build AI agents that don't just respond — with real tool access, they act on their own within clearly defined boundaries.",
+      "highlights": {
+        "point1": "Integration with existing systems (CRM, inventory, internal tools)",
+        "point2": "Clear escalation logic — the agent knows when to hand off to a human",
+        "point3": "Ongoing monitoring and iteration after go-live"
+      }
     },
     "automation": {
       "title": "Workflow Automation",
-      "description": "Automating recurring business processes with AI and no-/low-code tools."
+      "description": "Automating recurring business processes with AI and no-/low-code tools.",
+      "lead": "We automate recurring processes wherever it pays off — using the right tool for the job, not a fixed dogma.",
+      "highlights": {
+        "point1": "Assessment: no-code/low-code, or custom development?",
+        "point2": "Seamless integration with existing systems and data sources",
+        "point3": "Scales from individual sub-steps to complex, end-to-end workflows"
+      }
     },
     "chatbots": {
       "title": "Chatbots & AI Assistants",
-      "description": "Intelligent assistants for your website, customer service, and internal tools."
+      "description": "Intelligent assistants for your website, customer service, and internal tools.",
+      "lead": "Assistants that resolve real requests, instead of just repeating FAQ answers.",
+      "highlights": {
+        "point1": "Available around the clock, via website, WhatsApp, or internal tools",
+        "point2": "Seamless handoff to human staff whenever needed",
+        "point3": "Continuously improves from real customer conversations"
+      }
     },
     "aiCoding": {
       "title": "AI Coding & Software Development",
-      "description": "AI-powered web applications, internal tools, and platforms for your business."
+      "description": "AI-powered web applications, internal tools, and platforms for your business.",
+      "lead": "We build the software foundation your AI solutions run on in production — clean, maintainable, and built to scale.",
+      "highlights": {
+        "point1": "Modern, maintainable architecture instead of technical debt",
+        "point2": "From internal tools to customer-facing platforms",
+        "point3": "Works closely alongside your existing team where needed"
+      }
     },
     "training": {
       "title": "AI Training & Workshops",
-      "description": "Hands-on workshops that turn your team into confident AI users."
+      "description": "Hands-on workshops that turn your team into confident AI users.",
+      "lead": "Technology only pays off if your team can use it confidently — knowledge transfer is part of every project we run.",
+      "highlights": {
+        "point1": "Hands-on workshops instead of dry theory",
+        "point2": "Tailored to your actual tools and processes",
+        "point3": "Enables your team to keep improving after the project ends"
+      }
     }
+  },
+  "ServicesPage": {
+    "eyebrow": "Services",
+    "title": "Six levers for your AI success",
+    "lead": "From the first strategy session to a production AI system — we cover the full journey."
+  },
+  "ServiceDetailPage": {
+    "backToOverview": "Back to services",
+    "highlightsTitle": "What's included"
   },
   "CaseStudyTeasers": {
     "items": {

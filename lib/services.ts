@@ -24,18 +24,10 @@ export type Service = {
 };
 
 export const services: Service[] = [
-  { slug: "ki-strategie", messageKey: "strategy", icon: Compass },
-  { slug: "agentic-ai", messageKey: "agenticAi", icon: Bot },
-  {
-    slug: "workflow-automatisierung",
-    messageKey: "automation",
-    icon: Workflow,
-  },
-  {
-    slug: "chatbots-ai-assistants",
-    messageKey: "chatbots",
-    icon: MessageSquare,
-  },
+  { slug: "ai-consulting", messageKey: "strategy", icon: Compass },
+  { slug: "agent-development", messageKey: "agenticAi", icon: Bot },
+  { slug: "automation", messageKey: "automation", icon: Workflow },
+  { slug: "chatbots", messageKey: "chatbots", icon: MessageSquare },
   { slug: "ai-coding", messageKey: "aiCoding", icon: Code2 },
-  { slug: "ki-schulungen", messageKey: "training", icon: GraduationCap },
+  { slug: "training", messageKey: "training", icon: GraduationCap },
 ];
