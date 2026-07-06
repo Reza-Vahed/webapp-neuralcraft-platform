@@ -147,3 +147,51 @@
     @apply font-sans;
   }
 }
+
+/* Code blocks (rehype-pretty-code / Shiki, dual light+dark theme) */
+/* Code is always LTR, even on RTL (Farsi) pages — otherwise the Unicode
+   bidi algorithm reorders tokens on each line and the code reads backwards. */
+.prose pre,
+.prose code {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.prose pre {
+  overflow-x: auto;
+  text-align: left;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding-block: 1rem;
+  background-color: transparent;
+}
+.prose code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+.prose pre code {
+  display: grid;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
+}
+code[data-theme] span {
+  color: var(--shiki-light);
+}
+.dark code[data-theme] span {
+  color: var(--shiki-dark) !important;
+}
+[data-line] {
+  padding-inline: 1rem;
+  border-inline-start: 2px solid transparent;
+}
+[data-highlighted-line] {
+  background-color: var(--muted);
+  border-inline-start-color: var(--primary);
+}
+[data-highlighted-chars] {
+  background-color: var(--muted);
+  border-radius: 0.25rem;
+  padding-inline: 0.2rem;
+}

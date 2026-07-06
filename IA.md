@@ -9,13 +9,15 @@ Kurzreferenz für Sitemap, Seiten-Templates und Content-Modell. Alle Routen sind
 | `/`                    | Home                             | bespoke (Sektionen)               | ✅ Phase 3                     |
 | `/services`            | Leistungen – Übersicht           | `PageHeader` + Grid               | Phase 3-Fortsetzung            |
 | `/services/[slug]`     | Leistungsdetail (6× siehe unten) | `PageHeader`                      | offen                          |
-| `/case-studies`        | Referenzen – Übersicht           | `PageHeader` + Grid               | offen                          |
-| `/case-studies/[slug]` | Case-Study-Detail                | `ArticleLayout`                   | offen (Content: Phase 4)       |
+| `/case-studies`        | Referenzen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 4                     |
+| `/case-studies/[slug]` | Case-Study-Detail                | `ArticleLayout`                   | ✅ Phase 4                     |
 | `/about`               | Über uns                         | `PageHeader`                      | offen                          |
-| `/blog`                | Blog – Übersicht                 | `PageHeader` + Grid               | offen                          |
-| `/blog/[slug]`         | Blogartikel                      | `ArticleLayout`                   | offen (Content: Phase 4)       |
-| `/careers`             | Karriere – Übersicht             | `PageHeader` + Grid               | offen                          |
-| `/careers/[slug]`      | Stellendetail                    | `ArticleLayout`                   | offen (Content: Phase 4)       |
+| `/blog`                | Blog – Übersicht (paginiert)     | `PageHeader` + Grid               | ✅ Phase 4                     |
+| `/blog/page/[page]`    | Blog – weitere Seiten            | `PageHeader` + Grid               | ✅ Phase 4                     |
+| `/blog/[slug]`         | Blogartikel                      | `ArticleLayout`                   | ✅ Phase 4                     |
+| `/blog/feed.xml`       | RSS 2.0-Feed                     | –                                 | ✅ Phase 4                     |
+| `/careers`             | Karriere – Übersicht             | `PageHeader` + Grid               | ✅ Phase 4                     |
+| `/careers/[slug]`      | Stellendetail                    | `ArticleLayout`                   | ✅ Phase 4                     |
 | `/contact`             | Kontakt                          | `PageHeader` + Formular           | offen (Phase 5: Integrationen) |
 | `/impressum`           | Impressum                        | `PageHeader` (schmale Textspalte) | offen (Phase 6)                |
 | `/datenschutz`         | Datenschutz                      | `PageHeader` (schmale Textspalte) | offen (Phase 6)                |
@@ -29,22 +31,35 @@ Die 6 Leistungs-Slugs (`lib/services.ts`): `ki-strategie`, `agentic-ai`, `workfl
 - **`ArticleLayout`** (`components/layout/article-layout.tsx`): schmale Lesespalte (`max-w-3xl`), Metadaten-Zeile (Datum/Autor/Tags), optionales Titelbild, Prose-Content. Für Blogartikel, Case-Study- und Stellen-Details.
 - **Home**: einzige Seite mit freier, sektionsbasierter Komposition (Hero, Services-Teaser, Value-Props, Prozess, Case-Studies-Teaser, CTA) – kein gemeinsames Template, da strukturell einzigartig.
 
-## Content-Modell (Frontmatter, Anbindung an Velite folgt in Phase 4)
+## Content-Modell (Velite, `velite.config.ts`)
 
 ```
-BlogPost:   title, slug, description, publishedAt, author, tags[], coverImage
-CaseStudy:  title, slug, industry, summary, challenge, solution, results (metric[]), coverImage, tags[]
-JobPosting: title, slug, department, location, employmentType, description, requirements[]
+BlogPost:   slug, title, description, publishedAt, author, tags[], coverImage?, content (markdown), metadata (Lesezeit/Wortzahl)
+CaseStudy:  slug, title, industry, summary, challenge, solution, results ({label, value}[]), tags[], coverImage?, content (markdown)
+JobPosting: slug, title, department, location, employmentType (full-time|part-time|freelance), description, requirements[], content (markdown)
 ```
+
+- **Locale** wird bei allen drei Collections **nicht** im Frontmatter gepflegt, sondern aus dem Dateipfad abgeleitet (`content/<locale>/<collection>/*.md`) — kann so nicht aus Versehen falsch gepflegt werden.
+- **`content` ist bei allen drei Collections Pflicht** (kein `.optional()`): Velites `s.markdown()`/`s.mdx()`/`s.excerpt()`/`s.metadata()`-Feldtypen ignorieren den Frontmatter-Key und lesen immer den Datei-Body — in Kombination mit `.optional()` überspringt Zod diese Transformation aber bei fehlendem Frontmatter-Feld komplett, wodurch `content` immer `undefined` bliebe. Für optionalen Zusatztext künftig lieber ein eigenes Boolean-Flag im Frontmatter verwenden, nicht `.optional()` auf den Markdown-Feldtyp selbst.
+- **Übersetzungen teilen denselben `slug`** über alle drei Locales hinweg (z. B. `de/blog/ki-strategie-kmu.md` und `en/blog/ki-strategie-kmu.md`) — der `LocaleSwitcher` wechselt nur das Locale-Präfix im Pfad, nicht den Slug.
+- Kein CMS-UI: Inhalte werden als Markdown-Dateien im Repo gepflegt und von Velite beim `next dev`/`next build` automatisch (re-)kompiliert (`next.config.ts`).
+- Syntax-Highlighting für Codeblöcke: `rehype-pretty-code` + Shiki, Dual-Theme (`github-light`/`github-dark`), gesteuert über `[data-theme]`-Selektoren in `globals.css` (keine `.shiki`-Klasse in dieser Version). Codeblöcke erzwingen `direction: ltr`, damit sie auf Farsi-Seiten nicht vom Bidi-Algorithmus umsortiert werden.
 
 ## Services-Datenmodell
 
 `lib/services.ts` exportiert die kanonische Liste der 6 Leistungen (Slug + Icon + i18n-Key). Übersetzte Inhalte liegen unter `Services.<key>` in `messages/*.json`. Sowohl der Home-Teaser als auch die künftige `/services`-Seite greifen auf dieselbe Quelle zu — keine Doppelpflege.
 
+## Content-Zugriff & Pagination (`lib/content.ts`)
+
+- `getBlogPosts`/`getCaseStudies`/`getJobPostings(locale)` filtern die Velite-Collections nach Locale; `getBlogPost`/`getCaseStudy`/`getJobPosting(locale, slug)` liefern ein einzelnes Item.
+- `paginate(items, page, pageSize)` ist generisch und UI-unabhängig. Blog nutzt sie mit `BLOG_PAGE_SIZE = 6` über Pfad-basierte Seiten (`/blog`, `/blog/page/2`, …) statt Query-Parametern — jede Seite bekommt so eine eigene, indexierbare kanonische URL. `/blog/page/1` liefert bewusst 404 (kanonisch ist `/blog`).
+
 ## SEO-Konventionen
 
 - `generateMetadata` pro Locale via `getTranslations("Metadata")`, zentral im Root-Layout (`metadataBase`, `alternates.languages` inkl. `x-default`, OpenGraph, Twitter-Card).
-- Einzelne Seiten überschreiben nur die abweichenden Felder (Title/Description/OG-Image).
+- Einzelne Seiten überschreiben nur die abweichenden Felder (Title/Description/OG-Image); `lib/seo.ts#buildAlternates(locale, path)` erzeugt Canonical + hreflang für jede Route konsistent.
+- **Strukturierte Daten**: Blog- und Case-Study-Details erhalten `Article`-JSON-LD (`lib/structured-data.ts` + `components/content/json-ld.tsx`). Für Stellenanzeigen wurde bewusst **kein** `JobPosting`-Schema ergänzt — Googles Rich-Results verlangen dafür `datePosted`/`validThrough`/`hiringOrganization`, die unser Content-Modell (noch) nicht abbildet; unvollständiges Markup wäre schlechter als keines. Sollte Careers-SEO relevant werden, zuerst das Frontmatter-Schema entsprechend erweitern.
+- RSS 2.0 pro Locale unter `/[locale]/blog/feed.xml` (`lib/rss.ts`), verlinkt via `<atom:link rel="self">`.
 
 ## Accessibility-Konventionen
 

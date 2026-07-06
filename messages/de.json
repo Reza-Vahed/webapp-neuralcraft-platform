@@ -122,6 +122,40 @@
       }
     }
   },
+  "Pagination": {
+    "label": "Seitennavigation",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "pageOf": "Seite {current} von {total}"
+  },
+  "BlogPage": {
+    "eyebrow": "Blog",
+    "title": "Einblicke in KI-Strategie und Praxis",
+    "lead": "Praxisnahe Beiträge zu KI-Strategie, Automatisierung und Softwareentwicklung.",
+    "empty": "Aktuell sind keine Beiträge verfügbar.",
+    "backToOverview": "Zurück zum Blog"
+  },
+  "CaseStudiesPage": {
+    "eyebrow": "Referenzen",
+    "title": "Ausgewählte Projekte",
+    "lead": "Ein Einblick in konkrete Ergebnisse für Unternehmen unterschiedlicher Größe und Branche.",
+    "empty": "Aktuell sind keine Referenzen verfügbar.",
+    "backToOverview": "Zurück zu den Referenzen",
+    "resultsTitle": "Ergebnisse im Überblick"
+  },
+  "CareersPage": {
+    "eyebrow": "Karriere",
+    "title": "Werde Teil von NeuralCraft",
+    "lead": "Wir suchen Menschen, die praktische KI-Lösungen genauso wichtig nehmen wie wir.",
+    "empty": "Aktuell sind keine offenen Stellen verfügbar.",
+    "backToOverview": "Zurück zur Übersicht",
+    "requirementsTitle": "Anforderungen",
+    "employmentType": {
+      "full-time": "Vollzeit",
+      "part-time": "Teilzeit",
+      "freelance": "Freiberuflich"
+    }
+  },
   "Footer": {
     "tagline": "Ihr langfristiger Technologiepartner für praktische, messbare KI.",
     "navigation": "Navigation",

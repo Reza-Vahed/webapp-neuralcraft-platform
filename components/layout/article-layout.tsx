@@ -7,7 +7,9 @@ import { Container } from "@/components/layout/container";
 type ArticleLayoutProps = {
   title: string;
   description?: string;
-  formattedDate?: string;
+  /** Short meta line under the description — a formatted date, an industry
+   * label, or similar, depending on the content type. */
+  meta?: string;
   author?: string;
   tags?: string[];
   coverImage?: { src: string; alt: string };
@@ -19,7 +21,7 @@ type ArticleLayoutProps = {
 export function ArticleLayout({
   title,
   description,
-  formattedDate,
+  meta,
   author,
   tags,
   coverImage,
@@ -46,9 +48,9 @@ export function ArticleLayout({
           <p className="text-muted-foreground mt-4 text-lg">{description}</p>
         )}
 
-        {(formattedDate ?? author) && (
+        {(meta ?? author) && (
           <p className="text-muted-foreground mt-6 text-sm">
-            {[formattedDate, author].filter(Boolean).join(" · ")}
+            {[meta, author].filter(Boolean).join(" · ")}
           </p>
         )}
       </Container>

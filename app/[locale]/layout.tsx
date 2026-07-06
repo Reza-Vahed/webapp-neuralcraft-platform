@@ -8,9 +8,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
+import { siteUrl } from "@/lib/site";
+import { buildAlternates } from "@/lib/seo";
 import "../globals.css";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,13 +49,7 @@ export async function generateMetadata({
       template: `%s · NeuralCraft`,
     },
     description: t("description"),
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        ...Object.fromEntries(routing.locales.map((l) => [l, `/${l}`])),
-        "x-default": `/${routing.defaultLocale}`,
-      },
-    },
+    alternates: buildAlternates(locale, ""),
     openGraph: {
       type: "website",
       locale,
