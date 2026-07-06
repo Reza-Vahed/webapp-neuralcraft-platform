@@ -26,9 +26,11 @@ Kurzreferenz der Architektur- und Gestaltungsentscheidungen. Details/Werte stehe
 
 ## Komponenten-Inventar
 
-- **shadcn/ui-Primitives** (`components/ui/`): Button, Card, Badge, Input — Basis für alle künftigen Seiten, nicht weiter anpassen ohne Grund.
+- **shadcn/ui-Primitives** (`components/ui/`): Button, Card, Badge, Input, Textarea, Checkbox, Label (Textarea/Checkbox/Label seit Phase 6, für das Kontaktformular) — Basis für alle künftigen Seiten, nicht weiter anpassen ohne Grund.
 - **Layout-Bausteine** (`components/layout/`): `Container` (max-width Wrapper), `Section` (vertikaler Rhythmus, `spacing="default"|"compact"`), `Navbar` (sticky, responsive, RTL-fest), `Footer`, `LocaleSwitcher`, `PageHeader`, `ArticleLayout`, `SkipLink`.
 - **Content-Bausteine** (`components/content/`, seit Phase 4): `BlogPostCard`, `CaseStudyCard`, `JobPostingCard` (Grid-Karten für die Übersichtsseiten), `BlogList` (Grid + Pagination zusammen, von `/blog` und `/blog/page/[page]` geteilt), `Pagination` (generisch, `buildHref`-Callback statt fest verdrahteter Routen), `Markdown` (rendert Velites Markdown-HTML via `dangerouslySetInnerHTML` — sicher, da ausschließlich repo-eigener Content, nie Nutzereingabe), `JsonLd`.
+- **About-Bausteine** (`components/about/`, seit Phase 6): `MissionVision`, `CompanyValues`, `TechnologyStack`, `WhyNeuralCraft` — reine Marketing-Content-Sektionen nach demselben `dl`/`dt`/`dd`- bzw. Card-Grid-Muster wie `ValueProps`/`ArchitectureOverview`.
+- **Contact-Bausteine** (`components/contact/`, seit Phase 6): `ContactInfo` (Server-Komponente), `ContactForm` (Client-Komponente, `react-hook-form` + `zodResolver`) — erste Formular-Implementierung im Projekt, siehe IA.md für die Validierungs-/Server-Action-Architektur.
 - **Theming**: `ThemeProvider` (next-themes, class-basiert), `ThemeToggle`.
 
 Base UI (`@base-ui/react`, nicht Radix) ist die zugrunde liegende Primitive-Bibliothek von shadcn in dieser Version. Buttons, die einen Link rendern, benötigen `nativeButton={false}` zusammen mit `render={<Link .../>}` — sonst wirft Base UI eine Accessibility-Warnung (kein natives `<button>`-Element mehr).
@@ -39,5 +41,6 @@ Codeblöcke müssen unabhängig von der Seitenrichtung immer `direction: ltr` er
 
 ## Offene Punkte für spätere Phasen
 
-- Seiten unter `/services`, `/about`, `/contact`, `/impressum`, `/datenschutz` existieren als Navigationsziele, aber noch nicht als Routen (Blog/Case-Studies/Careers sind seit Phase 4 vollständig).
+- `/impressum` und `/datenschutz` existieren als Navigationsziele (Footer, Datenschutz-Checkbox im Kontaktformular), aber noch nicht als Routen — alle anderen Nav-Ziele sind seit Phase 6 vollständig.
+- Kontaktformular versendet noch keine E-Mail (siehe IA.md, Abschnitt „Kontaktformular") — bewusst zurückgestellt, bis ein Provider (z. B. Resend) konfiguriert ist.
 - Kein Dialog/Sheet-Primitive bisher — mobiles Navbar-Menü ist eine einfache, selbstgebaute Disclosure (kein Fokus-Trap). Bei Bedarf (z. B. für Modals) `npx shadcn add dialog` ergänzen.

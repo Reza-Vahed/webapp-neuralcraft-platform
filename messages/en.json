@@ -264,6 +264,117 @@
       }
     }
   },
+  "AboutPage": {
+    "eyebrow": "About us",
+    "title": "People who make AI understandable and usable",
+    "lead": "NeuralCraft is a small, specialized team helping businesses of every size put artificial intelligence to practical, responsible use.",
+    "mission": {
+      "title": "Mission",
+      "body": "Our mission is to make artificial intelligence useful for businesses of every size — not as a buzzword, but as a practical tool that demonstrably saves time, cuts costs, and opens up new possibilities."
+    },
+    "vision": {
+      "title": "Vision",
+      "body": "We envision a future where small and mid-sized businesses can access the same AI-driven advantages as large corporations — supported by a partner who understands both the technology and the realities of running a business."
+    },
+    "valuesEyebrow": "Values",
+    "valuesTitle": "What we hold ourselves to",
+    "values": {
+      "transparency": {
+        "title": "Transparency",
+        "description": "We communicate openly about what's possible — and what isn't (yet). No black-box promises."
+      },
+      "responsibility": {
+        "title": "Responsibility",
+        "description": "We take responsibility for the outcomes of our work, not just for shipping code."
+      },
+      "curiosity": {
+        "title": "Curiosity",
+        "description": "We stay close to how the technology evolves — and pass that knowledge on to our clients."
+      },
+      "pragmatism": {
+        "title": "Pragmatism",
+        "description": "The best solution is the one that actually runs in production — not the most technically elegant one."
+      }
+    },
+    "technologyEyebrow": "Technology",
+    "technologyTitle": "The tools behind our solutions",
+    "technologyLead": "We're deliberately technology-agnostic and pick the right approach for each task instead of a single favorite vendor.",
+    "technologies": {
+      "llmAgentic": {
+        "title": "LLM & Agentic AI",
+        "description": "Language models and agent frameworks for intelligent automation."
+      },
+      "automation": {
+        "title": "Automation",
+        "description": "Workflow engines spanning no-code to fully custom process automation."
+      },
+      "development": {
+        "title": "Development",
+        "description": "Modern, maintainable foundations for web applications and internal tools."
+      },
+      "cloud": {
+        "title": "Cloud & Infrastructure",
+        "description": "Scalable, production-ready operations — independent of any single vendor."
+      }
+    },
+    "whyEyebrow": "Why NeuralCraft",
+    "whyTitle": "What sets us apart from a typical agency",
+    "why": {
+      "oneTeam": {
+        "title": "One team, not a subcontractor chain",
+        "description": "Senior experts stay with your project from the first analysis to production operation."
+      },
+      "techAgnostic": {
+        "title": "Technology-agnostic",
+        "description": "No lock-in to a single AI vendor — we choose what genuinely fits your use case."
+      },
+      "strategyToCode": {
+        "title": "From strategy to code",
+        "description": "Consulting and implementation sit under one roof — no gap between concept and execution."
+      },
+      "resultsOverBuzzwords": {
+        "title": "Results over buzzwords",
+        "description": "Clear success metrics instead of marketing speak, from day one."
+      }
+    }
+  },
+  "ContactPage": {
+    "eyebrow": "Contact",
+    "title": "Let's talk",
+    "lead": "Tell us about your project — we'll get back to you within 1–2 business days.",
+    "info": {
+      "title": "Contact information",
+      "emailLabel": "Email",
+      "emailValue": "hello@neuralcraft.ai",
+      "responseTimeLabel": "Response time",
+      "responseTimeValue": "Within 1–2 business days",
+      "locationLabel": "Location",
+      "locationValue": "Remote-first, DACH region"
+    },
+    "form": {
+      "title": "Send a message",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "companyLabel": "Company (optional)",
+      "messageLabel": "Message",
+      "privacyLabel": "I have read the <link>privacy policy</link> and agree to the processing of my data.",
+      "submit": "Send message",
+      "submitting": "Sending …",
+      "sendAnother": "Send another message",
+      "successTitle": "Thanks for your message!",
+      "successBody": "We've received your inquiry and will get back to you shortly.",
+      "genericError": "Something went wrong. Please try again later or email us directly.",
+      "errors": {
+        "nameRequired": "Please enter your name.",
+        "nameTooLong": "The name is too long.",
+        "emailInvalid": "Please enter a valid email address.",
+        "companyTooLong": "The company name is too long.",
+        "messageRequired": "Your message should be at least 10 characters long.",
+        "messageTooLong": "The message is too long (max. 4000 characters).",
+        "privacyRequired": "Please agree to the privacy policy."
+      }
+    }
+  },
   "Footer": {
     "tagline": "Your long-term technology partner for practical, measurable AI.",
     "navigation": "Navigation",

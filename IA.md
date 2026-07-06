@@ -4,23 +4,24 @@ Kurzreferenz für Sitemap, Seiten-Templates und Content-Modell. Alle Routen sind
 
 ## Sitemap
 
-| Route                  | Seite                            | Template                          | Status                         |
-| ---------------------- | -------------------------------- | --------------------------------- | ------------------------------ |
-| `/`                    | Home                             | bespoke (Sektionen)               | ✅ Phase 3                     |
-| `/services`            | Leistungen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 5                     |
-| `/services/[slug]`     | Leistungsdetail (6× siehe unten) | `PageHeader` + Highlights + CTA   | ✅ Phase 5                     |
-| `/case-studies`        | Referenzen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 4                     |
-| `/case-studies/[slug]` | Case-Study-Detail                | `ArticleLayout`                   | ✅ Phase 4                     |
-| `/about`               | Über uns                         | `PageHeader`                      | offen                          |
-| `/blog`                | Blog – Übersicht (paginiert)     | `PageHeader` + Grid               | ✅ Phase 4                     |
-| `/blog/page/[page]`    | Blog – weitere Seiten            | `PageHeader` + Grid               | ✅ Phase 4                     |
-| `/blog/[slug]`         | Blogartikel                      | `ArticleLayout`                   | ✅ Phase 4                     |
-| `/blog/feed.xml`       | RSS 2.0-Feed                     | –                                 | ✅ Phase 4                     |
-| `/careers`             | Karriere – Übersicht             | `PageHeader` + Grid               | ✅ Phase 4                     |
-| `/careers/[slug]`      | Stellendetail                    | `ArticleLayout`                   | ✅ Phase 4                     |
-| `/contact`             | Kontakt                          | `PageHeader` + Formular           | offen (Phase 5: Integrationen) |
-| `/impressum`           | Impressum                        | `PageHeader` (schmale Textspalte) | offen (Phase 6)                |
-| `/datenschutz`         | Datenschutz                      | `PageHeader` (schmale Textspalte) | offen (Phase 6)                |
+| Route                  | Seite                            | Template                          | Status                 |
+| ---------------------- | -------------------------------- | --------------------------------- | ---------------------- |
+| `/`                    | Home                             | bespoke (Sektionen)               | ✅ Phase 3             |
+| `/services`            | Leistungen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 5             |
+| `/services/[slug]`     | Leistungsdetail (6× siehe unten) | `PageHeader` + Highlights + CTA   | ✅ Phase 5             |
+| `/case-studies`        | Referenzen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 4             |
+| `/case-studies/[slug]` | Case-Study-Detail                | `ArticleLayout`                   | ✅ Phase 4             |
+| `/about`               | Über uns                         | bespoke (Sektionen)               | ✅ Phase 6             |
+| `/blog`                | Blog – Übersicht (paginiert)     | `PageHeader` + Grid               | ✅ Phase 4             |
+| `/blog/page/[page]`    | Blog – weitere Seiten            | `PageHeader` + Grid               | ✅ Phase 4             |
+| `/blog/[slug]`         | Blogartikel                      | `ArticleLayout`                   | ✅ Phase 4             |
+| `/blog/feed.xml`       | RSS 2.0-Feed                     | –                                 | ✅ Phase 4             |
+| `/careers`             | Karriere – Übersicht             | `PageHeader` + Grid               | ✅ Phase 4             |
+| `/careers/[slug]`      | Stellendetail                    | `ArticleLayout`                   | ✅ Phase 4             |
+| `/contact`             | Kontakt                          | `PageHeader` + Info + Formular    | ✅ Phase 6             |
+| `/dev`                 | Internes Dev-Dashboard           | `PageHeader` + Sektionen          | ✅ (intern, `noindex`) |
+| `/impressum`           | Impressum                        | `PageHeader` (schmale Textspalte) | offen                  |
+| `/datenschutz`         | Datenschutz                      | `PageHeader` (schmale Textspalte) | offen                  |
 
 Die 6 Leistungs-Slugs (`lib/services.ts`): `ai-consulting`, `agent-development`, `automation`, `chatbots`, `ai-coding`, `training`.
 
@@ -58,6 +59,23 @@ highlights.point1-3   — Stichpunkte "Das gehört dazu" auf der Detailseite
 ```
 
 `components/content/service-card.tsx` ist die gemeinsame Karten-Komponente für Home-Teaser und `/services`-Übersicht (nimmt bereits übersetzte Strings entgegen, keine eigene `useTranslations`-Logik — Konsistenz mit `BlogPostCard`/`CaseStudyCard`/`JobPostingCard`). Die Detailseite verwendet `PageHeader` (Titel/Lead) + eine Highlights-Liste + die bestehende `CtaSection` (Wiederverwendung, kein neues CTA-Pattern).
+
+## About-Seite (`/about`, seit Phase 6)
+
+Sektionsbasiert wie Home, aber mit maximaler Wiederverwendung bestehender Bausteine statt neuer Komponenten:
+
+- `MissionVision`, `CompanyValues`, `TechnologyStack`, `WhyNeuralCraft` (`components/about/`) — neue, aber musterkonforme Sektionen (gleiche `dl`/`dt`/`dd`-Grid-Konvention wie `ValueProps`/`ArchitectureOverview`; `TechnologyStack` kombiniert `Card` + `Badge`, ebenfalls bereits etablierte Primitives).
+- **„Unsere Arbeitsweise" ist keine neue Sektion**, sondern die bestehende `<Process />`-Komponente (Home-Teaser) 1:1 wiederverwendet — dieselbe Arbeitsweise gilt schließlich unabhängig von der Seite.
+- CTA: die bestehende `<CtaSection />`.
+- Content-Daten (Werte-/Technologie-/Warum-IDs) liegen in `lib/about-content.ts`, Übersetzungen unter `AboutPage.*`.
+
+## Kontaktformular (`/contact`, seit Phase 6)
+
+- **Validierung**: `lib/validations/contact-form.ts` exportiert `createContactFormSchema(messages)` — eine Zod-Schema-Fabrik, die lokalisierte Fehlermeldungen als Parameter entgegennimmt. So nutzen Client (React Hook Form, `useTranslations`) und Server Action (`getTranslations`) exakt dieselbe Validierungslogik ohne Duplikation.
+- **Formular**: `components/contact/contact-form.tsx` (Client-Komponente) via `react-hook-form` + `@hookform/resolvers/zod`. Die Checkbox von Base UI ist nicht nativ (`checked`/`onCheckedChange` statt `onChange`) und wird daher über `Controller` statt `register()` angebunden.
+- **Server Action**: `lib/actions/contact-form.ts` (`"use server"`) validiert serverseitig erneut (Defense-in-Depth) und protokolliert die Anfrage vorerst nur serverseitig (`console.info`) — **keine E-Mail-Zustellung**. Klar als `TODO` markiert für eine künftige Provider-Anbindung (z. B. Resend), sobald ein Account existiert.
+- **Datenschutz-Checkbox**: verlinkt auf `/datenschutz` (per `t.rich` mit eingebettetem Link) — diese Route existiert noch nicht (siehe Sitemap) und liefert bis zur Umsetzung der Legal-Seiten bewusst 404.
+- **E-Mail-Adresse** (`hello@neuralcraft.ai`) und weitere technische Werte sind mit `dir="ltr"` fixiert, damit sie auf der Farsi-Seite nicht vom Bidi-Algorithmus umsortiert werden (siehe DESIGN.md).
 
 ## Content-Zugriff & Pagination (`lib/content.ts`)
 

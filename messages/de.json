@@ -264,6 +264,117 @@
       }
     }
   },
+  "AboutPage": {
+    "eyebrow": "Über uns",
+    "title": "Menschen, die KI verständlich und nutzbar machen",
+    "lead": "NeuralCraft ist ein kleines, spezialisiertes Team, das Unternehmen jeder Größe dabei hilft, Künstliche Intelligenz praktisch und verantwortungsvoll einzusetzen.",
+    "mission": {
+      "title": "Mission",
+      "body": "Unsere Mission ist es, Künstliche Intelligenz für Unternehmen jeder Größe nutzbar zu machen – nicht als Buzzword, sondern als praktisches Werkzeug, das nachweisbar Zeit spart, Kosten senkt und neue Möglichkeiten schafft."
+    },
+    "vision": {
+      "title": "Vision",
+      "body": "Wir stellen uns eine Zukunft vor, in der kleine und mittlere Unternehmen dieselben KI-gestützten Vorteile nutzen können wie Konzerne – begleitet von einem Partner, der Technologie versteht und unternehmerische Realität ernst nimmt."
+    },
+    "valuesEyebrow": "Werte",
+    "valuesTitle": "Woran wir uns messen lassen",
+    "values": {
+      "transparency": {
+        "title": "Transparenz",
+        "description": "Wir kommunizieren offen darüber, was möglich ist – und was (noch) nicht. Keine Blackbox-Versprechen."
+      },
+      "responsibility": {
+        "title": "Verantwortung",
+        "description": "Wir übernehmen Verantwortung für die Ergebnisse unserer Arbeit, nicht nur für die Lieferung von Code."
+      },
+      "curiosity": {
+        "title": "Neugier",
+        "description": "Wir bleiben nah an der Entwicklung der Technologie – und geben dieses Wissen an unsere Kunden weiter."
+      },
+      "pragmatism": {
+        "title": "Pragmatismus",
+        "description": "Die beste Lösung ist die, die tatsächlich produktiv läuft – nicht die technisch eleganteste."
+      }
+    },
+    "technologyEyebrow": "Technologien",
+    "technologyTitle": "Die Werkzeuge hinter unseren Lösungen",
+    "technologyLead": "Wir sind bewusst technologieoffen und wählen für jede Aufgabe den passenden Ansatz statt eines einzigen bevorzugten Anbieters.",
+    "technologies": {
+      "llmAgentic": {
+        "title": "LLM & Agentic AI",
+        "description": "Sprachmodelle und Agenten-Frameworks für intelligente Automatisierung."
+      },
+      "automation": {
+        "title": "Automatisierung",
+        "description": "Workflow-Engines für No-Code- bis individuelle Prozessautomatisierung."
+      },
+      "development": {
+        "title": "Entwicklung",
+        "description": "Moderne, wartbare Grundlagen für Web-Anwendungen und interne Tools."
+      },
+      "cloud": {
+        "title": "Cloud & Infrastruktur",
+        "description": "Skalierbarer, produktiver Betrieb – unabhängig vom Anbieter."
+      }
+    },
+    "whyEyebrow": "Warum NeuralCraft",
+    "whyTitle": "Was uns von klassischen Agenturen unterscheidet",
+    "why": {
+      "oneTeam": {
+        "title": "Ein Team statt Subunternehmer-Kette",
+        "description": "Senior-Expertinnen und -Experten begleiten Ihr Projekt von der ersten Analyse bis zum produktiven Betrieb."
+      },
+      "techAgnostic": {
+        "title": "Technologieoffen",
+        "description": "Kein Lock-in zu einem einzigen KI-Anbieter – wir wählen, was für Ihren Anwendungsfall wirklich passt."
+      },
+      "strategyToCode": {
+        "title": "Von der Strategie bis zum Code",
+        "description": "Beratung und Umsetzung liegen in einer Hand – kein Bruch zwischen Konzept und Implementierung."
+      },
+      "resultsOverBuzzwords": {
+        "title": "Ergebnisse vor Buzzwords",
+        "description": "Klare Erfolgskennzahlen statt Marketing-Sprech – von Anfang an."
+      }
+    }
+  },
+  "ContactPage": {
+    "eyebrow": "Kontakt",
+    "title": "Lassen Sie uns sprechen",
+    "lead": "Erzählen Sie uns von Ihrem Vorhaben – wir melden uns innerhalb von 1–2 Werktagen zurück.",
+    "info": {
+      "title": "Kontaktinformationen",
+      "emailLabel": "E-Mail",
+      "emailValue": "hello@neuralcraft.ai",
+      "responseTimeLabel": "Antwortzeit",
+      "responseTimeValue": "Innerhalb von 1–2 Werktagen",
+      "locationLabel": "Standort",
+      "locationValue": "Remote-first, DACH-Region"
+    },
+    "form": {
+      "title": "Nachricht senden",
+      "nameLabel": "Name",
+      "emailLabel": "E-Mail",
+      "companyLabel": "Unternehmen (optional)",
+      "messageLabel": "Nachricht",
+      "privacyLabel": "Ich habe die <link>Datenschutzerklärung</link> gelesen und stimme der Verarbeitung meiner Daten zu.",
+      "submit": "Nachricht senden",
+      "submitting": "Wird gesendet …",
+      "sendAnother": "Weitere Nachricht senden",
+      "successTitle": "Danke für Ihre Nachricht!",
+      "successBody": "Wir haben Ihre Anfrage erhalten und melden uns in Kürze.",
+      "genericError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut oder schreiben Sie uns direkt eine E-Mail.",
+      "errors": {
+        "nameRequired": "Bitte geben Sie Ihren Namen an.",
+        "nameTooLong": "Der Name ist zu lang.",
+        "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse an.",
+        "companyTooLong": "Der Firmenname ist zu lang.",
+        "messageRequired": "Ihre Nachricht sollte mindestens 10 Zeichen lang sein.",
+        "messageTooLong": "Die Nachricht ist zu lang (max. 4000 Zeichen).",
+        "privacyRequired": "Bitte stimmen Sie der Datenschutzerklärung zu."
+      }
+    }
+  },
   "Footer": {
     "tagline": "Ihr langfristiger Technologiepartner für praktische, messbare KI.",
     "navigation": "Navigation",
