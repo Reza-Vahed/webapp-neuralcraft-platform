@@ -3,6 +3,9 @@
     "title": "NeuralCraft – KI-Beratung für Unternehmen",
     "description": "NeuralCraft begleitet Unternehmen jeder Größe als langfristiger Technologiepartner beim praktischen und messbaren Einsatz von Künstlicher Intelligenz."
   },
+  "Common": {
+    "skipToContent": "Zum Inhalt springen"
+  },
   "Nav": {
     "home": "Start",
     "services": "Leistungen",
@@ -13,10 +16,111 @@
     "contact": "Kontakt"
   },
   "HomePage": {
+    "eyebrow": "KI-Beratung für KMU & Handwerk",
     "heroTitle": "Künstliche Intelligenz, die messbar wirkt",
     "heroSubtitle": "NeuralCraft entwickelt KI-Strategien, Agenten und Automatisierungen, die aus Unternehmen jeder Größe echten Mehrwert schaffen.",
     "ctaPrimary": "Erstgespräch vereinbaren",
-    "ctaSecondary": "Leistungen entdecken"
+    "ctaSecondary": "Leistungen entdecken",
+    "servicesEyebrow": "Leistungen",
+    "servicesTitle": "Ein Partner, sechs Hebel für Ihren KI-Erfolg",
+    "servicesSubtitle": "Von der ersten Strategie bis zur produktiven KI-Anwendung – wir begleiten den gesamten Weg.",
+    "servicesCta": "Alle Leistungen im Überblick",
+    "valuePropsEyebrow": "Warum NeuralCraft",
+    "valuePropsTitle": "Praktisch statt theoretisch",
+    "processEyebrow": "Vorgehen",
+    "processTitle": "So arbeiten wir mit Ihnen",
+    "processSubtitle": "Ein klarer, iterativer Prozess statt monatelanger Konzeptpapiere.",
+    "caseStudiesEyebrow": "Referenzen",
+    "caseStudiesTitle": "Ergebnisse, die zählen",
+    "caseStudiesSubtitle": "Eine Auswahl exemplarischer Projekte – reale Kundenprojekte folgen laufend.",
+    "caseStudiesCta": "Alle Referenzen ansehen",
+    "ctaTitle": "Bereit für den nächsten Schritt?",
+    "ctaSubtitle": "Lassen Sie uns in einem unverbindlichen Erstgespräch klären, wo KI in Ihrem Unternehmen den größten Hebel hat.",
+    "ctaButton": "Kostenloses Erstgespräch buchen"
+  },
+  "ValueProps": {
+    "measurable": {
+      "title": "Messbarer Mehrwert",
+      "description": "Jedes Projekt startet mit einer klaren Erfolgskennzahl – kein Experimentieren auf Kundenkosten."
+    },
+    "partnership": {
+      "title": "Langfristige Partnerschaft",
+      "description": "Wir liefern nicht nur ein Projekt ab, sondern begleiten Betrieb, Weiterentwicklung und Skalierung."
+    },
+    "practical": {
+      "title": "Praxis statt Theorie",
+      "description": "Funktionierende Lösungen in Wochen – statt Jahresstrategien ohne Umsetzung."
+    },
+    "accessible": {
+      "title": "Für jede Unternehmensgröße",
+      "description": "Vom Handwerksbetrieb bis zum Mittelstand – passend zu Ihrem Budget und Ihrer Größe."
+    }
+  },
+  "ProcessSteps": {
+    "discover": {
+      "title": "Analyse",
+      "description": "Wir verstehen Ihre Prozesse, Daten und Ziele – vor Ort oder remote."
+    },
+    "strategize": {
+      "title": "Strategie",
+      "description": "Gemeinsam entwickeln wir eine priorisierte KI-Roadmap mit klaren Meilensteinen."
+    },
+    "build": {
+      "title": "Umsetzung",
+      "description": "Unser Team entwickelt und integriert die Lösung – von Agenten bis Automatisierung."
+    },
+    "scale": {
+      "title": "Skalierung",
+      "description": "Wir optimieren, schulen Ihr Team und bauen die Lösung gezielt weiter aus."
+    }
+  },
+  "Services": {
+    "strategy": {
+      "title": "KI-Strategie & Beratung",
+      "description": "Analyse bestehender Prozesse und eine priorisierte Roadmap für den KI-Einsatz."
+    },
+    "agenticAi": {
+      "title": "Agentic AI Solutions",
+      "description": "Individuelle KI-Agenten für Kundenservice, Wissensmanagement und interne Prozesse."
+    },
+    "automation": {
+      "title": "Workflow-Automatisierung",
+      "description": "Wiederkehrende Geschäftsprozesse mit KI- und No-/Low-Code-Lösungen automatisieren."
+    },
+    "chatbots": {
+      "title": "Chatbots & AI Assistants",
+      "description": "Intelligente Assistenten für Website, Kundenservice und interne Anwendungen."
+    },
+    "aiCoding": {
+      "title": "AI Coding & Softwareentwicklung",
+      "description": "KI-gestützte Webanwendungen, interne Tools und Plattformen für Ihr Unternehmen."
+    },
+    "training": {
+      "title": "KI-Schulungen & Workshops",
+      "description": "Praxisorientierte Workshops, die Ihr Team zu souveränen KI-Anwendern machen."
+    }
+  },
+  "CaseStudyTeasers": {
+    "items": {
+      "manufacturing": {
+        "industry": "Maschinenbau, 120 Mitarbeitende",
+        "title": "KI-gestützte Angebotserstellung",
+        "result": "−65 % Bearbeitungszeit pro Angebot",
+        "description": "Ein KI-Agent liest technische Anfragen aus, gleicht sie mit dem Produktkatalog ab und erstellt einen versandfertigen Angebotsentwurf."
+      },
+      "craft": {
+        "industry": "Elektrohandwerk, 18 Mitarbeitende",
+        "title": "Automatisierte Terminkoordination",
+        "result": "3 Std. weniger Telefonzeit pro Woche und Mitarbeiter",
+        "description": "Ein Chat-Assistent nimmt Kundenanfragen entgegen, gleicht Kapazitäten ab und schlägt passende Termine vor – rund um die Uhr."
+      },
+      "consulting": {
+        "industry": "Steuerkanzlei, 40 Mitarbeitende",
+        "title": "Automatisierte Dokumentenprüfung",
+        "result": "+40 % schnellere Erstprüfung eingereichter Unterlagen",
+        "description": "Ein Workflow extrahiert relevante Kennzahlen aus eingereichten Dokumenten und markiert Auffälligkeiten für die manuelle Prüfung."
+      }
+    }
   },
   "Footer": {
     "tagline": "Ihr langfristiger Technologiepartner für praktische, messbare KI.",

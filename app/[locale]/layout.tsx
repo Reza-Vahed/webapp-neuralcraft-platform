@@ -7,7 +7,10 @@ import { getDirection, routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { SkipLink } from "@/components/layout/skip-link";
 import "../globals.css";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,8 +43,32 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
-    title: t("title"),
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: t("title"),
+      template: `%s · NeuralCraft`,
+    },
     description: t("description"),
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        ...Object.fromEntries(routing.locales.map((l) => [l, `/${l}`])),
+        "x-default": `/${routing.defaultLocale}`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale,
+      url: `/${locale}`,
+      siteName: "NeuralCraft",
+      title: t("title"),
+      description: t("description"),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+    },
   };
 }
 
@@ -70,6 +97,7 @@ export default async function LocaleLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <SkipLink />
             <Navbar />
             {children}
             <Footer />

@@ -3,6 +3,9 @@
     "title": "NeuralCraft – AI Consulting for Businesses",
     "description": "NeuralCraft partners with businesses of every size as a long-term technology partner, turning artificial intelligence into practical, measurable value."
   },
+  "Common": {
+    "skipToContent": "Skip to content"
+  },
   "Nav": {
     "home": "Home",
     "services": "Services",
@@ -13,10 +16,111 @@
     "contact": "Contact"
   },
   "HomePage": {
+    "eyebrow": "AI consulting for SMEs & trades",
     "heroTitle": "Artificial intelligence that moves the needle",
     "heroSubtitle": "NeuralCraft builds AI strategies, agents, and automations that create real value for businesses of every size.",
     "ctaPrimary": "Book a consultation",
-    "ctaSecondary": "Explore our services"
+    "ctaSecondary": "Explore our services",
+    "servicesEyebrow": "Services",
+    "servicesTitle": "One partner, six levers for your AI success",
+    "servicesSubtitle": "From the first strategy session to a production AI system — we cover the full journey.",
+    "servicesCta": "See all services",
+    "valuePropsEyebrow": "Why NeuralCraft",
+    "valuePropsTitle": "Practical, not theoretical",
+    "processEyebrow": "Approach",
+    "processTitle": "How we work with you",
+    "processSubtitle": "A clear, iterative process — not months of concept papers.",
+    "caseStudiesEyebrow": "Case studies",
+    "caseStudiesTitle": "Results that matter",
+    "caseStudiesSubtitle": "A selection of representative projects — real client work is added continuously.",
+    "caseStudiesCta": "View all case studies",
+    "ctaTitle": "Ready for the next step?",
+    "ctaSubtitle": "Let's talk through a free, no-obligation consultation to find where AI has the biggest leverage in your business.",
+    "ctaButton": "Book your free consultation"
+  },
+  "ValueProps": {
+    "measurable": {
+      "title": "Measurable value",
+      "description": "Every project starts with a clear success metric — no experimenting on your budget."
+    },
+    "partnership": {
+      "title": "Long-term partnership",
+      "description": "We don't just ship a project — we stay for operations, iteration, and scaling."
+    },
+    "practical": {
+      "title": "Practice over theory",
+      "description": "Working solutions in weeks, not year-long strategy decks that never ship."
+    },
+    "accessible": {
+      "title": "Built for any company size",
+      "description": "From trade businesses to mid-market — solutions that fit your budget and scale."
+    }
+  },
+  "ProcessSteps": {
+    "discover": {
+      "title": "Discover",
+      "description": "We understand your processes, data, and goals — on-site or remote."
+    },
+    "strategize": {
+      "title": "Strategize",
+      "description": "Together we build a prioritized AI roadmap with clear milestones."
+    },
+    "build": {
+      "title": "Build",
+      "description": "Our team develops and integrates the solution — from agents to automation."
+    },
+    "scale": {
+      "title": "Scale",
+      "description": "We optimize, train your team, and expand the solution with intent."
+    }
+  },
+  "Services": {
+    "strategy": {
+      "title": "AI Strategy & Consulting",
+      "description": "Analysis of existing processes and a prioritized roadmap for AI adoption."
+    },
+    "agenticAi": {
+      "title": "Agentic AI Solutions",
+      "description": "Custom AI agents for customer service, knowledge management, and internal processes."
+    },
+    "automation": {
+      "title": "Workflow Automation",
+      "description": "Automating recurring business processes with AI and no-/low-code tools."
+    },
+    "chatbots": {
+      "title": "Chatbots & AI Assistants",
+      "description": "Intelligent assistants for your website, customer service, and internal tools."
+    },
+    "aiCoding": {
+      "title": "AI Coding & Software Development",
+      "description": "AI-powered web applications, internal tools, and platforms for your business."
+    },
+    "training": {
+      "title": "AI Training & Workshops",
+      "description": "Hands-on workshops that turn your team into confident AI users."
+    }
+  },
+  "CaseStudyTeasers": {
+    "items": {
+      "manufacturing": {
+        "industry": "Machinery manufacturer, 120 employees",
+        "title": "AI-assisted quote generation",
+        "result": "−65% quote turnaround time",
+        "description": "An AI agent reads technical inquiries, matches them against the product catalog, and drafts a ready-to-send quote."
+      },
+      "craft": {
+        "industry": "Electrical trade business, 18 employees",
+        "title": "Automated appointment coordination",
+        "result": "3 fewer hours on the phone per employee, per week",
+        "description": "A chat assistant handles customer inquiries, checks capacity, and suggests matching appointment slots around the clock."
+      },
+      "consulting": {
+        "industry": "Tax advisory firm, 40 employees",
+        "title": "Automated document review",
+        "result": "+40% faster first-pass review of submitted documents",
+        "description": "A workflow extracts relevant figures from submitted documents and flags anomalies for manual review."
+      }
+    }
   },
   "Footer": {
     "tagline": "Your long-term technology partner for practical, measurable AI.",
