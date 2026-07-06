@@ -17,5 +17,13 @@
     "heroSubtitle": "NeuralCraft entwickelt KI-Strategien, Agenten und Automatisierungen, die aus Unternehmen jeder Größe echten Mehrwert schaffen.",
     "ctaPrimary": "Erstgespräch vereinbaren",
     "ctaSecondary": "Leistungen entdecken"
+  },
+  "Footer": {
+    "tagline": "Ihr langfristiger Technologiepartner für praktische, messbare KI.",
+    "navigation": "Navigation",
+    "legal": "Rechtliches",
+    "impressum": "Impressum",
+    "privacy": "Datenschutz",
+    "rights": "© {year} NeuralCraft. Alle Rechte vorbehalten."
   }
 }

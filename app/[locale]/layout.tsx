@@ -5,6 +5,8 @@ import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getDirection, routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -64,11 +66,13 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
+            <Navbar />
             {children}
+            <Footer />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
