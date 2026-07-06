@@ -1,0 +1,21 @@
+{
+  "Metadata": {
+    "title": "NeuralCraft – AI Consulting for Businesses",
+    "description": "NeuralCraft partners with businesses of every size as a long-term technology partner, turning artificial intelligence into practical, measurable value."
+  },
+  "Nav": {
+    "home": "Home",
+    "services": "Services",
+    "caseStudies": "Case Studies",
+    "about": "About",
+    "blog": "Blog",
+    "careers": "Careers",
+    "contact": "Contact"
+  },
+  "HomePage": {
+    "heroTitle": "Artificial intelligence that moves the needle",
+    "heroSubtitle": "NeuralCraft builds AI strategies, agents, and automations that create real value for businesses of every size.",
+    "ctaPrimary": "Book a consultation",
+    "ctaSecondary": "Explore our services"
+  }
+}

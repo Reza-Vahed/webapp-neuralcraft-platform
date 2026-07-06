@@ -1,0 +1,21 @@
+{
+  "Metadata": {
+    "title": "NeuralCraft – KI-Beratung für Unternehmen",
+    "description": "NeuralCraft begleitet Unternehmen jeder Größe als langfristiger Technologiepartner beim praktischen und messbaren Einsatz von Künstlicher Intelligenz."
+  },
+  "Nav": {
+    "home": "Start",
+    "services": "Leistungen",
+    "caseStudies": "Referenzen",
+    "about": "Über uns",
+    "blog": "Blog",
+    "careers": "Karriere",
+    "contact": "Kontakt"
+  },
+  "HomePage": {
+    "heroTitle": "Künstliche Intelligenz, die messbar wirkt",
+    "heroSubtitle": "NeuralCraft entwickelt KI-Strategien, Agenten und Automatisierungen, die aus Unternehmen jeder Größe echten Mehrwert schaffen.",
+    "ctaPrimary": "Erstgespräch vereinbaren",
+    "ctaSecondary": "Leistungen entdecken"
+  }
+}
