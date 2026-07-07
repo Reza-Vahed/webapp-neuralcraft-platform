@@ -69,3 +69,5 @@ Kein `loading.tsx`: Die Seite ist inzwischen (Phase 8, siehe IA.md „Rendering-
 - Cloudflare Turnstile ist vorbereitet, aber nicht aktiviert (kein Secret hinterlegt, kein Widget im Formular) — siehe IA.md „Spam-Schutz & Rate Limiting".
 - Kein Analytics-Anbieter aktiv (siehe IA.md „Analytics-Vorbereitung") — Architektur für Plausible/Google Analytics/Umami steht, aber `NEXT_PUBLIC_ANALYTICS_PROVIDER` ist nicht gesetzt.
 - Rate Limiting ist In-Memory und pro Prozess (siehe DEPLOYMENT.md) — für eine einzelne Hetzner-Instanz korrekt, bei horizontaler Skalierung wäre ein gemeinsamer Store (Redis) nötig.
+- Noch kein echter Hetzner-Server eingerichtet (wie beauftragt) — Docker/CI/CD sind vollständig vorbereitet, siehe DEPLOYMENT.md.
+- `deploy.yml` baut das Docker-Image nur zur Validierung, pusht aber noch nirgendwohin — Registry-Push + SSH-Deployment sind auskommentiert vorbereitet (siehe DEPLOYMENT.md „CI/CD").

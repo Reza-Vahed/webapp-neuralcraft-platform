@@ -4,7 +4,7 @@ Premium-Website einer KI-Beratung. Next.js 16 (App Router, Turbopack), TypeScrip
 
 Architektur- und Design-Entscheidungen sind fortlaufend dokumentiert in **[IA.md](IA.md)** (Informationsarchitektur, Routen, Content-Modell), **[DESIGN.md](DESIGN.md)** (Design-System, Tokens, Komponenten-Inventar) und **[DEPLOYMENT.md](DEPLOYMENT.md)** (Environment-Variablen, Build/Start, Hetzner-Vorbereitung) — bei größeren Änderungen bitte dort mitpflegen statt Wissen nur im Code zu verteilen.
 
-## Erste Schritte
+## Quick Start
 
 ```bash
 npm install
@@ -14,18 +14,7 @@ npm run dev
 
 Öffne [http://localhost:3000](http://localhost:3000) — die Startseite leitet automatisch auf die Standardsprache (`/de`) weiter. Ohne `.env.local` läuft die Seite trotzdem vollständig (das Kontaktformular funktioniert, versendet aber keine E-Mail — siehe DEPLOYMENT.md).
 
-## Scripts
-
-| Befehl              | Zweck                                                                                  |
-| ------------------- | -------------------------------------------------------------------------------------- |
-| `npm run dev`       | Entwicklungsserver (Turbopack)                                                         |
-| `npm run build`     | Produktions-Build (führt vorab automatisch `velite build` aus, siehe `next.config.ts`) |
-| `npm run start`     | Produktions-Server (nach `build`)                                                      |
-| `npm run lint`      | ESLint                                                                                 |
-| `npm run typecheck` | `tsc --noEmit`                                                                         |
-| `npm run format`    | Prettier auf das gesamte Projekt anwenden                                              |
-
-Vor jedem Commit prüft ein Husky-Pre-Commit-Hook (`lint-staged`) automatisch die gestagten Dateien (ESLint + Prettier).
+Alternative ohne lokale Node-Installation: [Docker](#docker) weiter unten.
 
 ## Projektstruktur
 
@@ -55,7 +44,12 @@ app/robots.ts, app/sitemap.ts, app/manifest.ts   Next.js Metadata-API-Routen (ro
 app/icon.tsx, app/apple-icon.tsx                 Generierte Favicon-/PWA-/Apple-Touch-Icons (Platzhalter-Monogramm, siehe DESIGN.md)
 app/[locale]/error.tsx, app/global-error.tsx     Fehlerbehandlung (Route-Segment- bzw. globale Error Boundary, siehe IA.md)
 instrumentation.ts, components/web-vitals.tsx    Monitoring-Vorbereitung (noch ohne externen Dienst, siehe IA.md)
-.env.example                                     Dokumentation aller Environment-Variablen (siehe DEPLOYMENT.md)
+app/api/health/route.ts                          Health-Check-Endpunkt (status/version/buildTime/uptime), siehe DEPLOYMENT.md
+.env.example, .env.production.example            Dokumentation aller Environment-Variablen (siehe DEPLOYMENT.md)
+Dockerfile, Dockerfile.dev, docker-compose.yml    Multi-Stage-Produktions-Build + Dev-Container, siehe DEPLOYMENT.md
+.dockerignore                                     Schließt node_modules/.git/.env* etc. vom Docker-Build-Context aus
+.github/workflows/ci.yml                          CI: lint, typecheck, build bei jedem Push/jeder PR
+.github/workflows/deploy.yml                      Vorbereiteter (inaktiver) Deployment-Workflow, siehe DEPLOYMENT.md
 ```
 
 ## Internationalisierung
@@ -68,20 +62,49 @@ instrumentation.ts, components/web-vitals.tsx    Monitoring-Vorbereitung (noch o
 
 Blog, Case Studies und Stellenanzeigen liegen als Markdown-Dateien unter `content/<locale>/<collection>/*.md` und werden von [Velite](https://velite.js.org) typisiert kompiliert (Schema in `velite.config.ts`). Kein CMS-UI — neue Inhalte werden direkt im Repo als Markdown-Datei angelegt.
 
-## Performance
+## Development
 
-Alle Routen (bis auf den `[...rest]`-Catch-all für unbekannte Pfade) werden zur Build-Zeit statisch vorgerendert (`generateStaticParams` + next-intls `setRequestLocale`, siehe IA.md „Rendering-Strategie"). `npm run build` zeigt das im Routen-Overview als `●` (SSG) statt `ƒ` (dynamisch).
+| Befehl              | Zweck                                                                                  |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `npm run dev`       | Entwicklungsserver (Turbopack, Hot-Reload)                                             |
+| `npm run build`     | Produktions-Build (führt vorab automatisch `velite build` aus, siehe `next.config.ts`) |
+| `npm run start`     | Produktions-Server (nach `build`)                                                      |
+| `npm run lint`      | ESLint (`no-console` projektweit erzwungen, Ausnahme: `lib/logger.ts`)                 |
+| `npm run typecheck` | `tsc --noEmit`                                                                         |
+| `npm run format`    | Prettier auf das gesamte Projekt anwenden                                              |
 
-## Qualitätssicherung
+Vor jedem Commit prüft ein Husky-Pre-Commit-Hook (`lint-staged`) automatisch die gestagten Dateien (ESLint + Prettier). Node-Version siehe `package.json#engines` (`>=22`) — dieselbe Version wie im `Dockerfile`.
 
-Vor jedem Abschluss einer Phase: `npm run lint`, `npm run typecheck`, `npm run build` müssen fehlerfrei sein. UI-Änderungen werden zusätzlich mit Playwright (Desktop/Mobile, Light/Dark, alle drei Sprachen) visuell verifiziert. ESLint erzwingt `no-console` projektweit (Ausnahme: `lib/logger.ts` selbst) — alles Logging läuft über `lib/logger.ts`.
+## Docker
 
-## Sicherheit
+Produktionsreifer Multi-Stage-Build (siehe `Dockerfile`, Details in [DEPLOYMENT.md](DEPLOYMENT.md)):
 
-Server Actions validieren serverseitig erneut (Zod), das Kontaktformular hat Rate Limiting, Honeypot-Spam-Schutz und eine für Cloudflare Turnstile vorbereitete (aber inaktive) Prüfung. Security-Header inkl. Content-Security-Policy werden zentral über `next.config.ts` gesetzt. Details: [IA.md](IA.md), Abschnitte „Sicherheit" und „Spam-Schutz & Rate Limiting".
+```bash
+docker compose up -d --build      # Produktion (nach .env aus .env.example erstellen)
+docker compose --profile dev up dev  # Dev-Container mit Hot-Reload (Dockerfile.dev)
+```
 
-## Deployment
+Kein lokales Node/npm nötig, um die App containerisiert zu bauen oder zu entwickeln. Healthcheck ist im Image integriert (`/api/health`, siehe unten).
 
-Läuft als gewöhnlicher Node.js-Prozess (kein Vercel-spezifisches API genutzt) — vorbereitet für einen Hetzner-VPS mit nginx davor, siehe **[DEPLOYMENT.md](DEPLOYMENT.md)** für Environment-Variablen, Resend-Einrichtung, Build/Start und die nginx-/Prozessmanagement-Hinweise.
+## Production
 
-Vor dem produktiven Go-Live: Platzhalter-Inhalte ersetzen — Firmendaten auf `/imprint`/`/privacy` (siehe DESIGN.md, „Offene Punkte"), die generierten Platzhalter-App-Icons (`app/icon.tsx`, `app/apple-icon.tsx`) durch echte Markenassets sowie einen echten `RESEND_API_KEY` hinterlegen.
+```bash
+npm run build   # Velite-Build + Next.js Production-Build (Standalone-Output)
+npm run start   # Produktionsserver, Port 3000 (PORT-Env-Variable änderbar)
+```
+
+Praktisch alle Routen werden zur Build-Zeit statisch vorgerendert (`generateStaticParams` + next-intls `setRequestLocale`, siehe IA.md „Rendering-Strategie") — `npm run build` zeigt das im Routen-Overview als `●` (SSG) statt `ƒ` (dynamisch). `output: "standalone"` (siehe `next.config.ts`) reduziert den Produktions-Deployment-Fußabdruck auf die tatsächlich benötigten Dateien, ganz ohne `node_modules` — Grundlage für das ~340 MB kleine Docker-Image.
+
+**Health Check:** `GET /api/health` liefert `status`/`version`/`buildTime`/`uptime` als JSON — nie gecacht, Grundlage für Docker-Healthchecks und externes Uptime-Monitoring (siehe DEPLOYMENT.md).
+
+**Sicherheit:** Server Actions validieren serverseitig erneut (Zod), das Kontaktformular hat Rate Limiting, Honeypot-Spam-Schutz und eine für Cloudflare Turnstile vorbereitete (aber inaktive) Prüfung. Security-Header inkl. Content-Security-Policy werden zentral über `next.config.ts` gesetzt, unabhängig davon ob per Docker oder klassisch betrieben. Details: [IA.md](IA.md) „Sicherheit"/„Spam-Schutz & Rate Limiting", [DEPLOYMENT.md](DEPLOYMENT.md) „Sicherheit (Docker & Produktion)".
+
+## CI
+
+GitHub Actions (`.github/workflows/ci.yml`) läuft bei jedem Push/jeder PR: `npm ci` → `npm run lint` → `npm run typecheck` → `npm run build`. Jeder fehlschlagende Schritt lässt den gesamten Workflow fehlschlagen. Ein vorbereiteter (aber inaktiver) Deployment-Workflow (`.github/workflows/deploy.yml`) validiert zusätzlich den Docker-Build — Details in [DEPLOYMENT.md](DEPLOYMENT.md) „CI/CD".
+
+## Deployment Übersicht
+
+Läuft als Docker-Container (bevorzugt) oder gewöhnlicher Node.js-Prozess (kein Vercel-spezifisches API genutzt) — vorbereitet für eine Hetzner-Cloud-VM mit nginx als Reverse Proxy davor. **[DEPLOYMENT.md](DEPLOYMENT.md)** ist die vollständige Referenz: Environment-Variablen, Docker Build/Start/Compose, Resend-Einrichtung, CI/CD, Backup/Restore, Update-Prozess, Rollback und die Hetzner-Vorbereitung im Detail. Es ist noch kein echter Server eingerichtet — die Infrastruktur ist vollständig vorbereitet, sodass später nur noch die VM selbst aufgesetzt werden muss.
+
+Vor dem produktiven Go-Live zusätzlich: Platzhalter-Inhalte ersetzen — Firmendaten auf `/imprint`/`/privacy` (siehe DESIGN.md, „Offene Punkte"), die generierten Platzhalter-App-Icons (`app/icon.tsx`, `app/apple-icon.tsx`) durch echte Markenassets sowie einen echten `RESEND_API_KEY` hinterlegen.

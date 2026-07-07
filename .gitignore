@@ -34,8 +34,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — but not the secret-free .example templates, which document
+# every variable and must be committed (see DEPLOYMENT.md). Found via a
+# `git status` check in Phase 10: this broad pattern had silently excluded
+# .env.example from every commit since it was introduced in Phase 9.
 .env*
+!.env*.example
 
 # vercel
 .vercel

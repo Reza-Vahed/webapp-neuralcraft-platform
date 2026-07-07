@@ -89,6 +89,10 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Traces the minimal file set per page into .next/standalone (incl. a
+  // small server.js), so the production Docker image doesn't need
+  // node_modules at all — see Dockerfile.
+  output: "standalone",
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
