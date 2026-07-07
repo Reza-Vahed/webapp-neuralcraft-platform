@@ -10,6 +10,7 @@ import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
 import { CookieNotice } from "@/components/legal/cookie-notice";
 import { WebVitals } from "@/components/web-vitals";
+import { AnalyticsScripts } from "@/components/analytics/analytics-scripts";
 import { siteUrl } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
 import "../globals.css";
@@ -102,6 +103,7 @@ export default async function LocaleLayout({
             <Footer />
             <CookieNotice />
             <WebVitals />
+            <AnalyticsScripts />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

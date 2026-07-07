@@ -30,10 +30,12 @@ Kurzreferenz der Architektur- und Gestaltungsentscheidungen. Details/Werte stehe
 - **Layout-Bausteine** (`components/layout/`): `Container` (max-width Wrapper), `Section` (vertikaler Rhythmus, `spacing="default"|"compact"`), `Navbar` (sticky, responsive, RTL-fest), `Footer`, `LocaleSwitcher`, `PageHeader`, `ArticleLayout`, `SkipLink`.
 - **Content-Bausteine** (`components/content/`, seit Phase 4): `BlogPostCard`, `CaseStudyCard`, `JobPostingCard` (Grid-Karten für die Übersichtsseiten), `ContentCardLink` (seit Phase 8: gemeinsame `Link`+`Card`-Hülle, die zuvor viermal dupliziert war — siehe IA.md), `BlogList` (Grid + Pagination zusammen, von `/blog` und `/blog/page/[page]` geteilt), `Pagination` (generisch, `buildHref`-Callback statt fest verdrahteter Routen), `Markdown` (rendert Velites Markdown-HTML via `dangerouslySetInnerHTML` — sicher, da ausschließlich repo-eigener Content, nie Nutzereingabe), `JsonLd`.
 - **About-Bausteine** (`components/about/`, seit Phase 6): `MissionVision`, `CompanyValues`, `TechnologyStack`, `WhyNeuralCraft` — reine Marketing-Content-Sektionen nach demselben `dl`/`dt`/`dd`- bzw. Card-Grid-Muster wie `ValueProps`/`ArchitectureOverview`.
-- **Contact-Bausteine** (`components/contact/`, seit Phase 6): `ContactInfo` (Server-Komponente), `ContactForm` (Client-Komponente, `react-hook-form` + `zodResolver`) — erste Formular-Implementierung im Projekt, siehe IA.md für die Validierungs-/Server-Action-Architektur.
+- **Contact-Bausteine** (`components/contact/`, seit Phase 6, produktionsreif seit Phase 9): `ContactInfo` (Server-Komponente), `ContactForm` (Client-Komponente, `react-hook-form` + `zodResolver`) — erste Formular-Implementierung im Projekt, siehe IA.md für die Validierungs-/Server-Action-/Sicherheits-Architektur.
+- **E-Mail-Templates** (`lib/email/templates/`, seit Phase 9): `ContactConfirmationEmail`, `ContactNotificationEmail` — reines JSX + Inline-Styles statt einer Komponentenbibliothek (siehe IA.md, warum `@react-email/components` bewusst nicht genutzt wird), gleicher Indigo-Akzent wie der Rest der Seite (Header-Balken in `--primary`-Hex).
 - **Legal-Bausteine** (`components/legal/`, seit Phase 7): `LegalDisclaimer` (Card-basierte Hinweisbox, kein neuer Farb-Token — `text-muted-foreground` + `Info`-Icon), `CookieNotice` (Client-Komponente, `useSyncExternalStore` gegen `localStorage`, kein Consent-Management).
 - **Theming**: `ThemeProvider` (next-themes, class-basiert), `ThemeToggle`.
 - **Monitoring** (`components/web-vitals.tsx`, seit Phase 8): reine `useReportWebVitals`-Bridge, siehe IA.md „Monitoring".
+- **Analytics** (`components/analytics/analytics-scripts.tsx`, seit Phase 9): rendert je nach `NEXT_PUBLIC_ANALYTICS_PROVIDER` das passende `next/script`-Tag, ohne Konfiguration nichts — siehe IA.md „Analytics-Vorbereitung".
 
 Base UI (`@base-ui/react`, nicht Radix) ist die zugrunde liegende Primitive-Bibliothek von shadcn in dieser Version. Buttons, die einen Link rendern, benötigen `nativeButton={false}` zusammen mit `render={<Link .../>}` — sonst wirft Base UI eine Accessibility-Warnung (kein natives `<button>`-Element mehr).
 
@@ -59,8 +61,11 @@ Kein `loading.tsx`: Die Seite ist inzwischen (Phase 8, siehe IA.md „Rendering-
 
 ## Offene Punkte für spätere Phasen
 
-- Kontaktformular versendet noch keine E-Mail (siehe IA.md, Abschnitt „Kontaktformular") — bewusst zurückgestellt, bis ein Provider (z. B. Resend) konfiguriert ist.
 - Kein Dialog/Sheet-Primitive bisher — mobiles Navbar-Menü ist eine einfache, selbstgebaute Disclosure (kein Fokus-Trap). Bei Bedarf (z. B. für Modals) `npx shadcn add dialog` ergänzen.
 - App-Icons sind Platzhalter (siehe „Icons & App-Manifest" oben) — echte Markenassets stehen noch aus.
 - Legal-Seiten (`/imprint`, `/privacy`) enthalten `[Platzhalter: ...]`-markierte Firmendaten (Anschrift, Handelsregister, Hosting-Anbieter, Datenschutzbeauftragter) und müssen vor Go-Live juristisch geprüft und vervollständigt werden (siehe IA.md, Abschnitt „Legal-Seiten").
-- Kein externer Monitoring-/Observability-Anbieter (siehe IA.md, Abschnitt „Monitoring") — `instrumentation.ts` und `components/web-vitals.tsx` loggen aktuell nur in die Konsole.
+- Kein externer Monitoring-/Observability-Anbieter (siehe IA.md, Abschnitt „Monitoring") — `instrumentation.ts` und `components/web-vitals.tsx` loggen aktuell nur strukturiert in die Konsole (`lib/logger.ts`).
+- Kein echter `RESEND_API_KEY` hinterlegt (wie beauftragt) — Kontaktformular funktioniert vollständig, versendet aber erst nach Konfiguration echte E-Mails (siehe DEPLOYMENT.md).
+- Cloudflare Turnstile ist vorbereitet, aber nicht aktiviert (kein Secret hinterlegt, kein Widget im Formular) — siehe IA.md „Spam-Schutz & Rate Limiting".
+- Kein Analytics-Anbieter aktiv (siehe IA.md „Analytics-Vorbereitung") — Architektur für Plausible/Google Analytics/Umami steht, aber `NEXT_PUBLIC_ANALYTICS_PROVIDER` ist nicht gesetzt.
+- Rate Limiting ist In-Memory und pro Prozess (siehe DEPLOYMENT.md) — für eine einzelne Hetzner-Instanz korrekt, bei horizontaler Skalierung wäre ein gemeinsamer Store (Redis) nötig.

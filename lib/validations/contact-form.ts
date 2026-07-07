@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+// Shared (not server-only) because the honeypot input needs to render on
+// the client with this exact name, while lib/spam-protection.ts checks it
+// server-side — this file is already imported by both sides.
+export const HONEYPOT_FIELD_NAME = "website";
+
 // Localized error messages are supplied by the caller (client component via
 // useTranslations, Server Action via getTranslations) so this schema stays
 // framework-agnostic and works identically on both sides of the request.

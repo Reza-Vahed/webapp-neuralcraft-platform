@@ -14,7 +14,8 @@ export type Phase = {
     | "phase5"
     | "phase6"
     | "phase7"
-    | "phase8";
+    | "phase8"
+    | "phase9";
   status: PhaseStatus;
 };
 
@@ -26,7 +27,8 @@ export const phases: Phase[] = [
   { id: "phase5", status: "completed" },
   { id: "phase6", status: "completed" },
   { id: "phase7", status: "completed" },
-  { id: "phase8", status: "active" },
+  { id: "phase8", status: "completed" },
+  { id: "phase9", status: "active" },
 ];
 
 export type QualityCheckStatus = "pass" | "fail";

@@ -216,11 +216,11 @@
       "status": "Status",
       "statusValue": "Actively in development",
       "phase": "Current Phase",
-      "phaseValue": "Phase 7 completed · Phase 8 in progress",
+      "phaseValue": "Phase 8 completed · Phase 9 in progress",
       "lastCommit": "Last Commit",
       "noCommit": "No git history available",
       "nextStep": "Next Step",
-      "nextStepValue": "Quality assurance and closing report for Phase 8"
+      "nextStepValue": "Quality assurance and closing report for Phase 9"
     },
     "timeline": {
       "title": "Phase Timeline",
@@ -234,7 +234,8 @@
       "phase5": "Phase 5 – Services",
       "phase6": "Phase 6 – About & Contact",
       "phase7": "Phase 7 – Legal & Production Readiness",
-      "phase8": "Phase 8 – Performance & DX"
+      "phase8": "Phase 8 – Performance & DX",
+      "phase9": "Phase 9 – Backend & Security"
     },
     "routes": {
       "title": "Route Explorer"
@@ -378,7 +379,28 @@
         "companyTooLong": "The company name is too long.",
         "messageRequired": "Your message should be at least 10 characters long.",
         "messageTooLong": "The message is too long (max. 4000 characters).",
-        "privacyRequired": "Please agree to the privacy policy."
+        "privacyRequired": "Please agree to the privacy policy.",
+        "rateLimited": "You've sent too many requests recently. Please try again in a few minutes.",
+        "timeout": "The request took too long. Please try again."
+      }
+    },
+    "emails": {
+      "confirmation": {
+        "subject": "Your inquiry to NeuralCraft",
+        "heading": "Thanks for your message, {name}!",
+        "body": "We've received your inquiry and will typically get back to you within 1–2 business days.",
+        "messageRecapLabel": "Your message",
+        "signature": "The NeuralCraft team",
+        "footerNote": "This email was sent automatically because you used the contact form at neuralcraft.ai."
+      },
+      "notification": {
+        "subject": "New contact inquiry from {name}",
+        "heading": "New contact inquiry",
+        "nameLabel": "Name",
+        "emailLabel": "Email",
+        "companyLabel": "Company",
+        "messageLabel": "Message",
+        "footerNote": "Reply directly to this email to reach {name}."
       }
     }
   },

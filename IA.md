@@ -92,13 +92,41 @@ Sektionsbasiert wie Home, aber mit maximaler Wiederverwendung bestehender Bauste
 - CTA: die bestehende `<CtaSection />`.
 - Content-Daten (Werte-/Technologie-/Warum-IDs) liegen in `lib/about-content.ts`, Übersetzungen unter `AboutPage.*`.
 
-## Kontaktformular (`/contact`, seit Phase 6)
+## Kontaktformular (`/contact`, seit Phase 6, produktionsreif seit Phase 9)
 
-- **Validierung**: `lib/validations/contact-form.ts` exportiert `createContactFormSchema(messages)` — eine Zod-Schema-Fabrik, die lokalisierte Fehlermeldungen als Parameter entgegennimmt. So nutzen Client (React Hook Form, `useTranslations`) und Server Action (`getTranslations`) exakt dieselbe Validierungslogik ohne Duplikation.
-- **Formular**: `components/contact/contact-form.tsx` (Client-Komponente) via `react-hook-form` + `@hookform/resolvers/zod`. Die Checkbox von Base UI ist nicht nativ (`checked`/`onCheckedChange` statt `onChange`) und wird daher über `Controller` statt `register()` angebunden.
-- **Server Action**: `lib/actions/contact-form.ts` (`"use server"`) validiert serverseitig erneut (Defense-in-Depth) und protokolliert die Anfrage vorerst nur serverseitig (`console.info`) — **keine E-Mail-Zustellung**. Klar als `TODO` markiert für eine künftige Provider-Anbindung (z. B. Resend), sobald ein Account existiert.
+- **Validierung**: `lib/validations/contact-form.ts` exportiert `createContactFormSchema(messages)` — eine Zod-Schema-Fabrik, die lokalisierte Fehlermeldungen als Parameter entgegennimmt. So nutzen Client (React Hook Form, `useTranslations`) und Server Action (`getTranslations`) exakt dieselbe Validierungslogik ohne Duplikation. Dieselbe Datei exportiert auch `HONEYPOT_FIELD_NAME` (siehe „Spam-Schutz" unten) — bewusst hier und nicht in `lib/spam-protection.ts`, da Letzteres `server-only` ist und der Client-Komponente den Feldnamen kennen muss.
+- **Formular**: `components/contact/contact-form.tsx` (Client-Komponente) via `react-hook-form` + `@hookform/resolvers/zod`. Die Checkbox von Base UI ist nicht nativ (`checked`/`onCheckedChange` statt `onChange`) und wird daher über `Controller` statt `register()` angebunden. Zustände: `idle` (Formular) → `success`/`error` nach Absenden; Pending-State kommt direkt aus React Hook Forms `isSubmitting` (kein zusätzlicher State nötig). Der Honeypot-Wert wird aus dem nativen Submit-Event via `FormData` gelesen, nicht per Ref — vermeidet einen `react-hooks/refs`-Lint-Fehler und hält das Feld bewusst außerhalb des typisierten RHF-Zustands.
+- **Server Action**: `lib/actions/contact-form.ts` (`"use server"`) — Prüfreihenfolge bewusst: (1) Rate-Limit, (2) Honeypot, (3) Turnstile (No-op ohne Key), (4) Zod-Validierung, (5) E-Mail-Versand mit Timeout. Rate-Limit steht **vor** dem Honeypot, damit auch Bots, die den Honeypot triggern, nicht unbegrenzt Anfragen senden können. Fehler werden nie roh an den Client durchgereicht — immer eine übersetzte, generische Nachricht (siehe „Sicherheit" unten).
+- **Timeout-Handling**: der E-Mail-Versand wird serverseitig mit `Promise.race` auf 8 Sekunden begrenzt (`withTimeout` in `lib/actions/contact-form.ts`) — bewusst serverseitig statt einem zusätzlichen Client-Timeout, da der Server so oder so eine gebundene Obergrenze für seine Antwortzeit braucht; der Client wartet einfach auf die (garantiert zeitnahe) Antwort der Server Action.
 - **Datenschutz-Checkbox**: verlinkt auf `/privacy` (per `t.rich` mit eingebettetem Link).
 - **E-Mail-Adresse** (`hello@neuralcraft.ai`) und weitere technische Werte sind mit `dir="ltr"` fixiert, damit sie auf der Farsi-Seite nicht vom Bidi-Algorithmus umsortiert werden (siehe DESIGN.md).
+
+### E-Mail-Versand (`lib/email/`, seit Phase 9)
+
+- **Resend** (`lib/email/resend-client.ts`) — lazy erzeugter Client, `null` ohne `RESEND_API_KEY` (siehe `.env.example`/DEPLOYMENT.md). Ohne Key funktioniert das Formular weiter (Einsendung wird geloggt), es wird nur keine E-Mail verschickt — kein Absturz, kein Fehlerzustand für den Nutzer.
+- **Templates** (`lib/email/templates/`): zwei React-Komponenten (`ContactConfirmationEmail`, `ContactNotificationEmail`), reines JSX + Inline-Styles (`styles.ts`), **kein** `@react-email/components` — dieses Paket sowie jede einzelne seiner Primitiven (Text, Heading, Container, …) sind upstream als "no longer supported" deprecated. Nur `@react-email/render` (aktiv gepflegt) wird genutzt, um dieselbe Komponente einmal zu HTML und einmal (via `{ plainText: true }`) zu Plain-Text zu rendern — eine Quelle für beide Formate, keine separat gepflegte Text-Kopie.
+- **Inhalte vollständig mehrsprachig**: `lib/email/send-contact-emails.tsx` löst alle Strings über `getTranslations({ locale, namespace: "ContactPage.emails" })` auf, bevor die Templates gerendert werden — dieselbe Locale, mit der das Formular abgeschickt wurde (auch für die interne Benachrichtigung; bewusste Entscheidung für ein einheitliches Verfahren statt eines Sonderfalls nur für die interne Mail).
+- **Bestätigungs- vs. Benachrichtigungs-Mail**: Nur ein Fehlschlag der **internen** Benachrichtigung lässt die Server Action fehlschlagen (es gibt keine Datenbank — diese E-Mail ist der einzige Nachweis der Anfrage). Ein Fehlschlag der Kundenbestätigung wird nur geloggt, blockiert aber nicht den Erfolg, da die Anfrage selbst bereits beim Team angekommen ist.
+
+## Spam-Schutz & Rate Limiting (seit Phase 9)
+
+- **Honeypot** (`lib/spam-protection.ts` + `lib/validations/contact-form.ts#HONEYPOT_FIELD_NAME`): ein unsichtbares Feld (`sr-only`, `aria-hidden`, `tabIndex={-1}`, `autoComplete="off"`), das echte Nutzer:innen nie sehen oder per Tab erreichen. Bots, die jedes Feld einer Seite ausfüllen, tragen dort etwas ein — die Server Action antwortet dann mit einem **vorgetäuschten Erfolg**, damit das Bot-Skript nie lernt, dass die Einsendung verworfen wurde.
+- **Cloudflare Turnstile vorbereitet, aber inaktiv**: `verifyTurnstileToken()` ist ein No-op, solange `TURNSTILE_SECRET_KEY` nicht gesetzt ist (siehe `.env.example`). Aktivierung: Secret + `NEXT_PUBLIC_TURNSTILE_SITE_KEY` setzen und das Widget in `ContactForm` einbinden, das seinen Token dann als `turnstileToken` mitschickt — die Server-Action-Seite ist bereits fertig verdrahtet.
+- **Rate Limiting** (`lib/rate-limit.ts`): In-Memory, Fixed-Window, 5 Anfragen / 10 Minuten pro IP, keyed über `x-forwarded-for`/`x-real-ip` (siehe DEPLOYMENT.md für die nötige nginx-Konfiguration). Bewusst ohne externen Dienst (Redis o. Ä.), wie beauftragt — mit dokumentierter Grenze: pro Prozess, nicht geteilt zwischen mehreren Instanzen (siehe DEPLOYMENT.md „Hetzner-Vorbereitung").
+
+## Sicherheit (seit Phase 9)
+
+- **Logging** (`lib/logger.ts`): einzige Stelle im Projekt, die `console.*` aufrufen darf — per ESLint-Regel (`no-console`, siehe `eslint.config.mjs`) erzwungen, mit gezielter Ausnahme für genau diese Datei. Strukturiertes JSON in Produktion (leicht mit journald/Docker-Logs auszuwerten), lesbares Format in der Entwicklung.
+- **Server Actions**: Next.js prüft `Origin` gegen `Host` automatisch (eingebauter CSRF-Schutz) — keine eigene Konfiguration nötig, solange die Domain 1:1 durch einen Reverse Proxy durchgereicht wird (siehe DEPLOYMENT.md). Jede Server Action validiert ihre Eingaben serverseitig erneut (Zod), unabhängig von der Client-Validierung — Client-Validierung ist UX, keine Sicherheitsgrenze.
+- **Fehlerbehandlung**: Server Actions geben nie rohe Fehler-/Provider-Details an den Client zurück — immer eine übersetzte, generische Nachricht; das eigentliche Detail landet nur im Server-Log (`lib/logger.ts`).
+- **Security-Header + CSP** (`next.config.ts#headers()`): `Content-Security-Policy`, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security` für alle Routen. Die CSP erlaubt bewusst `'unsafe-inline'` für Scripts/Styles (next-themes' Inline-Skript zur Flash-Vermeidung braucht das) und zusätzlich `'unsafe-eval'` **nur** in der Entwicklung (React braucht `eval()` fürs Debugging, nie in Produktion). Nonce-basierte CSP wurde bewusst **nicht** gewählt, da sie jede Seite in dynamisches Rendering zwingen würde — ein direkter Rückschritt zum Static-Rendering-Ergebnis aus Phase 8. Die CSP erweitert sich automatisch um die Domain des aktiven Analytics-Anbieters (siehe unten).
+- **Environment-Variablen**: alle Secrets (`RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, …) werden ausschließlich in Dateien mit `import "server-only"` oder `"use server"` gelesen — nie in einer Client-Komponente, nie mit `NEXT_PUBLIC_`-Präfix. `.env.example` dokumentiert alle Variablen ohne echte Werte; `.env*` ist in `.gitignore`.
+
+## Analytics-Vorbereitung (`lib/analytics.ts`, seit Phase 9 — noch kein Dienst aktiv)
+
+- `getAnalyticsConfig()` liest `NEXT_PUBLIC_ANALYTICS_PROVIDER` (`plausible` | `google-analytics` | `umami`) plus die providerspezifische(n) Variable(n); ohne gültige Konfiguration liefert sie `{ provider: null }`.
+- `components/analytics/analytics-scripts.tsx` (Server Component, kein `"use client"` nötig) rendert je nach Konfiguration das passende `next/script`-Tag — ohne Konfiguration nichts. Eingebunden im Root-Layout neben `WebVitals`.
+- `next.config.ts` liest dieselben Env-Variablen und erweitert die CSP automatisch um die Domain des gewählten Anbieters (selbst gehostetes Plausible braucht eine manuelle CSP-Ergänzung, da die Domain nicht im Voraus bekannt ist).
 
 ## Legal-Seiten (`/imprint`, `/privacy`, seit Phase 7)
 
@@ -144,8 +172,8 @@ Sektionsbasiert wie Home, aber mit maximaler Wiederverwendung bestehender Bauste
 
 ## Monitoring (seit Phase 8, Vorbereitung ohne externen Dienst)
 
-- **`instrumentation.ts`** (Repo-Root): `register()` ist aktuell ein No-op (Einstiegspunkt für einen künftigen APM-/OTel-Provider); `onRequestError` protokolliert Server-Fehler (Server Components, Route Handlers, Server Actions) über `console.error`, inkl. Pfad/Methode/Route-Typ.
-- **`components/web-vitals.tsx`**: Client-Komponente, die `useReportWebVitals` (aus `next/web-vitals`) nutzt und alle Core-Web-Vitals-Metriken (TTFB, FCP, LCP, CLS, INP) über `console.info` protokolliert. Eingebunden im Root-Layout, damit der `"use client"`-Boundary auf diese eine Komponente beschränkt bleibt (next-intl/Next.js-Konvention).
+- **`instrumentation.ts`** (Repo-Root): `register()` ist aktuell ein No-op (Einstiegspunkt für einen künftigen APM-/OTel-Provider); `onRequestError` protokolliert Server-Fehler (Server Components, Route Handlers, Server Actions) über `lib/logger.ts`, inkl. Pfad/Methode/Route-Typ.
+- **`components/web-vitals.tsx`**: Client-Komponente, die `useReportWebVitals` (aus `next/web-vitals`) nutzt und alle Core-Web-Vitals-Metriken (TTFB, FCP, LCP, CLS, INP) über `lib/logger.ts` protokolliert. Eingebunden im Root-Layout, damit der `"use client"`-Boundary auf diese eine Komponente beschränkt bleibt (next-intl/Next.js-Konvention).
 - **Kein externer Dienst integriert** (Sentry, Datadog, o. Ä.) — beide Stellen sind bewusst so geschnitten, dass ein späterer Anbieter nur den Funktionskörper ersetzen muss, nicht die Aufrufstellen.
 
 ## Accessibility-Konventionen

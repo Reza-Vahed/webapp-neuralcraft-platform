@@ -1,5 +1,7 @@
 import type { Instrumentation } from "next";
 
+import { logger } from "@/lib/logger";
+
 // Integration point for a real observability provider (e.g. Sentry,
 // Datadog, OpenTelemetry) once one is selected. Intentionally a no-op for
 // now — see DESIGN.md's monitoring section.
@@ -13,8 +15,15 @@ export const onRequestError: Instrumentation.onRequestError = async (
   request,
   context
 ) => {
-  console.error("[onRequestError]", {
-    error,
+  const message = error instanceof Error ? error.message : String(error);
+  const digest =
+    typeof error === "object" && error !== null && "digest" in error
+      ? String(error.digest)
+      : undefined;
+
+  logger.error("Unhandled request error", {
+    message,
+    digest,
     path: request.path,
     method: request.method,
     routeType: context.routeType,

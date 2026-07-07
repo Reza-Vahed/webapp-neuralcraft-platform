@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,14 +17,14 @@ import type { Locale } from "@/i18n/routing";
 import { submitContactForm } from "@/lib/actions/contact-form";
 import {
   createContactFormSchema,
+  HONEYPOT_FIELD_NAME,
   type ContactFormValues,
 } from "@/lib/validations/contact-form";
 
 export function ContactForm() {
   const locale = useLocale() as Locale;
   const t = useTranslations("ContactPage.form");
-  const [status, setStatus] = useState<"idle" | "error">("idle");
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [serverError, setServerError] = useState<string | null>(null);
 
   const schema = createContactFormSchema({
@@ -54,35 +54,46 @@ export function ContactForm() {
     },
   });
 
-  async function onSubmit(values: ContactFormValues) {
+  // Reads the honeypot from the native submit event's FormData rather than
+  // a ref — the field isn't part of react-hook-form's typed values (see
+  // ContactFormSecurity in lib/actions/contact-form.ts), and this avoids
+  // holding a ref just to read it once at submit time.
+  const onSubmit: SubmitHandler<ContactFormValues> = async (values, event) => {
+    setStatus("idle");
     setServerError(null);
-    const result = await submitContactForm(locale, values);
+
+    const formElement = event?.target as HTMLFormElement | undefined;
+    const honeypotValue = formElement
+      ? String(new FormData(formElement).get(HONEYPOT_FIELD_NAME) ?? "")
+      : "";
+
+    const result = await submitContactForm(locale, values, {
+      [HONEYPOT_FIELD_NAME]: honeypotValue,
+    });
 
     if (result.status === "success") {
-      setSubmitted(true);
+      setStatus("success");
       reset();
     } else {
       setStatus("error");
       setServerError(result.message);
     }
-  }
+  };
 
-  if (submitted) {
+  if (status === "success") {
     return (
       <Card>
         <CardContent className="flex flex-col items-center gap-3 py-10 text-center">
           <div className="bg-primary/10 text-primary flex size-12 items-center justify-center rounded-full">
             <CheckCircle2 className="size-6" aria-hidden />
           </div>
-          <p className="text-lg font-semibold">{t("successTitle")}</p>
+          <p className="text-lg font-semibold" role="status">
+            {t("successTitle")}
+          </p>
           <p className="text-muted-foreground max-w-sm text-sm">
             {t("successBody")}
           </p>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setSubmitted(false)}
-          >
+          <Button variant="outline" size="sm" onClick={() => setStatus("idle")}>
             {t("sendAnother")}
           </Button>
         </CardContent>
@@ -106,6 +117,22 @@ export function ContactForm() {
               {serverError}
             </p>
           )}
+
+          {/* Honeypot: invisible to sighted users and hidden from assistive
+              tech (aria-hidden + tabIndex=-1); bots that fill every field
+              trip it. Never rendered as a real form control for real users,
+              so the label is intentionally not localized — no person ever
+              sees or hears it. */}
+          <div aria-hidden="true" className="sr-only">
+            <label htmlFor="contact-website">Website</label>
+            <input
+              id="contact-website"
+              name={HONEYPOT_FIELD_NAME}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
 
           <div className="space-y-1.5">
             <Label htmlFor="contact-name">{t("nameLabel")}</Label>

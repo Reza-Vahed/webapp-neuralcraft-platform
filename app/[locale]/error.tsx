@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { Link } from "@/i18n/navigation";
+import { logger } from "@/lib/logger";
 
 // Error boundaries must be Client Components (see Next.js docs). This file
 // sits inside app/[locale]/, so it does NOT replace app/[locale]/layout.tsx —
@@ -23,7 +24,7 @@ export default function ErrorBoundary({
 
   useEffect(() => {
     // TODO: forward to a real error-monitoring service once one is wired up.
-    console.error(error);
+    logger.error("Route error boundary triggered", error);
   }, [error]);
 
   return (
