@@ -34,3 +34,26 @@ export function buildArticleJsonLd({
     },
   };
 }
+
+export function buildServiceJsonLd({
+  name,
+  description,
+  url,
+}: {
+  name: string;
+  description: string;
+  url: string;
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name,
+    description,
+    url: `${siteUrl}${url}`,
+    provider: {
+      "@type": "Organization",
+      name: "NeuralCraft",
+      url: siteUrl,
+    },
+  };
+}

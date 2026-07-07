@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
+import { CookieNotice } from "@/components/legal/cookie-notice";
 import { siteUrl } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
 import "../globals.css";
@@ -95,6 +96,7 @@ export default async function LocaleLayout({
             <Navbar />
             {children}
             <Footer />
+            <CookieNotice />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -50,7 +50,7 @@ export function Footer() {
           <ul className="mt-4 space-y-3">
             <li>
               <Link
-                href="/impressum"
+                href="/imprint"
                 className="text-muted-foreground hover:text-foreground text-sm transition-colors"
               >
                 {t("impressum")}
@@ -58,7 +58,7 @@ export function Footer() {
             </li>
             <li>
               <Link
-                href="/datenschutz"
+                href="/privacy"
                 className="text-muted-foreground hover:text-foreground text-sm transition-colors"
               >
                 {t("privacy")}

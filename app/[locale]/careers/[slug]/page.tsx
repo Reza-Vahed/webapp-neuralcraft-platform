@@ -8,7 +8,7 @@ import { Container } from "@/components/layout/container";
 import { Markdown } from "@/components/content/markdown";
 import { jobPostings } from "@/.velite";
 import { getJobPosting } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildBasicMetadata } from "@/lib/seo";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 
@@ -27,12 +27,12 @@ export async function generateMetadata({
   const job = getJobPosting(locale, slug);
   if (!job) return {};
 
-  return {
+  return buildBasicMetadata({
     title: job.title,
     description: job.description,
-    alternates: buildAlternates(locale, `/careers/${slug}`),
-    openGraph: { title: job.title, description: job.description },
-  };
+    locale,
+    path: `/careers/${slug}`,
+  });
 }
 
 export default async function JobPostingPage({ params }: PageProps) {

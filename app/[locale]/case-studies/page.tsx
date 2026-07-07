@@ -5,7 +5,7 @@ import { CaseStudyCard } from "@/components/content/case-study-card";
 import { Container } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { getCaseStudies } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildBasicMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
 
 type PageProps = {
@@ -18,12 +18,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "CaseStudiesPage" });
 
-  return {
+  return buildBasicMetadata({
     title: t("title"),
     description: t("lead"),
-    alternates: buildAlternates(locale, "/case-studies"),
-    openGraph: { title: t("title"), description: t("lead") },
-  };
+    locale,
+    path: "/case-studies",
+  });
 }
 
 export default async function CaseStudiesPage({ params }: PageProps) {

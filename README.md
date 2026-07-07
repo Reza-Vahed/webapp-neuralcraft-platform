@@ -37,12 +37,15 @@ components/
   content/            Content-Listing-Bausteine (Blog/Case-Study/Job-Cards, Pagination, …)
   about/              /about-spezifische Sektionen
   contact/            /contact-spezifische Komponenten (Formular, Kontaktinfo)
+  legal/              Legal-Bausteine (LegalDisclaimer, CookieNotice)
   dev/                Bausteine des internen /dev-Dashboards
 content/<locale>/     Markdown-Inhalte (Blog, Case Studies, Stellenanzeigen) — von Velite kompiliert
 lib/                  Datenzugriff, Validierung, Server Actions, SEO-Helper (eine Datei je Zuständigkeit)
 messages/<locale>.json  Alle UI-Texte — keine hartcodierten Strings in Komponenten
 i18n/                 next-intl-Konfiguration (Routing, Navigation, Request-Config)
 velite.config.ts      Content-Collections (BlogPost, CaseStudy, JobPosting)
+app/robots.ts, app/sitemap.ts, app/manifest.ts   Next.js Metadata-API-Routen (robots.txt, sitemap.xml, Web-Manifest)
+app/icon.tsx, app/apple-icon.tsx                 Generierte Favicon-/PWA-/Apple-Touch-Icons (Platzhalter-Monogramm, siehe DESIGN.md)
 ```
 
 ## Internationalisierung
@@ -61,4 +64,6 @@ Vor jedem Abschluss einer Phase: `npm run lint`, `npm run typecheck`, `npm run b
 
 ## Deployment
 
-Vercel-ready. `NEXT_PUBLIC_SITE_URL` sollte in Produktion auf die tatsächliche Domain gesetzt werden (Fallback: `http://localhost:3000`, siehe `lib/site.ts`) — wird für `metadataBase`, hreflang-Alternates und den RSS-Feed verwendet.
+Vercel-ready. `NEXT_PUBLIC_SITE_URL` sollte in Produktion auf die tatsächliche Domain gesetzt werden (Fallback: `http://localhost:3000`, siehe `lib/site.ts`) — wird für `metadataBase`, hreflang-Alternates, den RSS-Feed sowie `sitemap.xml`/`robots.txt` verwendet.
+
+Vor dem produktiven Go-Live: Platzhalter-Inhalte ersetzen — Firmendaten auf `/imprint`/`/privacy` (siehe DESIGN.md, „Offene Punkte") und die generierten Platzhalter-App-Icons (`app/icon.tsx`, `app/apple-icon.tsx`) durch echte Markenassets.

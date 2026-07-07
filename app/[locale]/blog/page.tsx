@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { BlogList } from "@/components/content/blog-list";
 import { PageHeader } from "@/components/layout/page-header";
-import { buildAlternates } from "@/lib/seo";
+import { buildBasicMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
 
 type PageProps = {
@@ -16,12 +16,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "BlogPage" });
 
-  return {
+  return buildBasicMetadata({
     title: t("title"),
     description: t("lead"),
-    alternates: buildAlternates(locale, "/blog"),
-    openGraph: { title: t("title"), description: t("lead") },
-  };
+    locale,
+    path: "/blog",
+  });
 }
 
 export default async function BlogPage({ params }: PageProps) {

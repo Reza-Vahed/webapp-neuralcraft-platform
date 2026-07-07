@@ -221,7 +221,7 @@ export function ContactForm() {
                 {t.rich("privacyLabel", {
                   link: (chunks) => (
                     <Link
-                      href="/datenschutz"
+                      href="/privacy"
                       className="text-foreground underline underline-offset-4"
                     >
                       {chunks}

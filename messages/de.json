@@ -375,6 +375,109 @@
       }
     }
   },
+  "ImprintPage": {
+    "eyebrow": "Impressum",
+    "title": "Impressum",
+    "lead": "Angaben gemäß § 5 TMG.",
+    "disclaimer": "Rechtlicher Hinweis: Diese Seite enthält Platzhalter-Angaben und ersetzt keine individuelle Rechtsberatung. Vor dem Livegang müssen alle Angaben durch die tatsächlichen Unternehmensdaten ersetzt und von einer Rechtsanwältin bzw. einem Rechtsanwalt geprüft werden.",
+    "sections": {
+      "provider": {
+        "title": "Anbieter",
+        "body": "NeuralCraft, [Platzhalter: vollständige Firmierung und Rechtsform], [Platzhalter: Straße, Hausnummer, PLZ, Ort, Land]."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "body": "E-Mail: hello@neuralcraft.ai · [Platzhalter: Telefonnummer]."
+      },
+      "responsible": {
+        "title": "Verantwortlich für den Inhalt",
+        "body": "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: [Platzhalter: Name der verantwortlichen Person]."
+      },
+      "disputeResolution": {
+        "title": "EU-Streitschlichtung",
+        "body": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: ec.europa.eu/consumers/odr/. Wir sind nicht verpflichtet und nicht bereit, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+      },
+      "liability": {
+        "title": "Haftung für Inhalte und Links",
+        "body": "Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Für die Inhalte externer, verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich; eine permanente inhaltliche Kontrolle ohne konkrete Anhaltspunkte einer Rechtsverletzung ist nicht zumutbar."
+      },
+      "copyright": {
+        "title": "Urheberrecht",
+        "body": "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet."
+      }
+    }
+  },
+  "PrivacyPage": {
+    "eyebrow": "Datenschutz",
+    "title": "Datenschutzerklärung",
+    "lead": "Informationen zur Verarbeitung personenbezogener Daten gemäß Art. 13 DSGVO.",
+    "disclaimer": "Rechtlicher Hinweis: Diese Datenschutzerklärung ist eine strukturierte Vorlage und ersetzt keine individuelle Rechtsberatung. Vor dem Livegang müssen alle Angaben (insbesondere zu Hosting und Verantwortlichem) vervollständigt und von einer Rechtsanwältin bzw. einem Rechtsanwalt geprüft werden.",
+    "sections": {
+      "overview": {
+        "title": "Überblick",
+        "body": "Diese Datenschutzerklärung informiert Sie darüber, welche personenbezogenen Daten wir beim Besuch dieser Website verarbeiten und welche Rechte Ihnen dabei zustehen."
+      },
+      "controller": {
+        "title": "Verantwortlicher",
+        "body": "Verantwortlich für die Datenverarbeitung auf dieser Website ist NeuralCraft, [Platzhalter: Anschrift], E-Mail: hello@neuralcraft.ai."
+      },
+      "dataCollected": {
+        "title": "Welche Daten wir erheben",
+        "body": "Beim Besuch dieser Website erheben wir automatisch technische Zugriffsdaten (Server-Logs) sowie freiwillig übermittelte Daten, wenn Sie das Kontaktformular nutzen: Name, E-Mail-Adresse, optional Unternehmen, sowie Ihre Nachricht."
+      },
+      "purpose": {
+        "title": "Zweck der Verarbeitung",
+        "body": "Wir verarbeiten diese Daten, um Ihre Anfragen zu beantworten sowie die Website technisch bereitzustellen und abzusichern."
+      },
+      "legalBasis": {
+        "title": "Rechtsgrundlage",
+        "body": "Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags) sowie Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am sicheren und zuverlässigen Betrieb der Website)."
+      },
+      "retention": {
+        "title": "Speicherdauer",
+        "body": "Wir speichern personenbezogene Daten nur so lange, wie es für die genannten Zwecke erforderlich ist, oder wie es gesetzliche Aufbewahrungspflichten vorsehen."
+      },
+      "rights": {
+        "title": "Ihre Rechte",
+        "items": {
+          "access": "Auskunft über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO)",
+          "rectification": "Berichtigung unrichtiger Daten (Art. 16 DSGVO)",
+          "erasure": "Löschung Ihrer Daten (Art. 17 DSGVO)",
+          "restriction": "Einschränkung der Verarbeitung (Art. 18 DSGVO)",
+          "portability": "Datenübertragbarkeit (Art. 20 DSGVO)",
+          "objection": "Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)",
+          "complaint": "Beschwerde bei einer Datenschutz-Aufsichtsbehörde (Art. 77 DSGVO)"
+        }
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "Diese Website verwendet ausschließlich technisch notwendige Cookies, zum Beispiel zur Speicherung Ihrer Spracheinstellung. Es werden keine Tracking- oder Marketing-Cookies gesetzt. Ein Hinweis dazu wird beim ersten Besuch eingeblendet."
+      },
+      "contactForm": {
+        "title": "Kontaktformular",
+        "body": "Wenn Sie das Kontaktformular nutzen, verarbeiten wir die von Ihnen angegebenen Daten ausschließlich zur Bearbeitung Ihrer Anfrage. Eine Weitergabe an Dritte erfolgt nicht."
+      },
+      "hosting": {
+        "title": "Hosting",
+        "body": "[Platzhalter: Angaben zum Hosting-Anbieter und Serverstandort]."
+      },
+      "contact": {
+        "title": "Ansprechpartner für Datenschutz",
+        "body": "Bei Fragen zum Datenschutz wenden Sie sich bitte an: hello@neuralcraft.ai · [Platzhalter: Name des Datenschutzbeauftragten, falls bestellt]."
+      }
+    }
+  },
+  "CookieNotice": {
+    "label": "Cookie-Hinweis",
+    "message": "Diese Website verwendet ausschließlich technisch notwendige Cookies (z. B. zur Speicherung Ihrer Spracheinstellung). Weitere Informationen finden Sie in unserer <link>Datenschutzerklärung</link>.",
+    "dismiss": "Verstanden"
+  },
+  "NotFound": {
+    "eyebrow": "404",
+    "title": "Diese Seite wurde nicht gefunden",
+    "lead": "Der Link ist möglicherweise veraltet, oder die Seite wurde verschoben.",
+    "cta": "Zurück zur Startseite"
+  },
   "Footer": {
     "tagline": "Ihr langfristiger Technologiepartner für praktische, messbare KI.",
     "navigation": "Navigation",

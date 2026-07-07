@@ -4,24 +4,37 @@ Kurzreferenz für Sitemap, Seiten-Templates und Content-Modell. Alle Routen sind
 
 ## Sitemap
 
-| Route                  | Seite                            | Template                          | Status                 |
-| ---------------------- | -------------------------------- | --------------------------------- | ---------------------- |
-| `/`                    | Home                             | bespoke (Sektionen)               | ✅ Phase 3             |
-| `/services`            | Leistungen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 5             |
-| `/services/[slug]`     | Leistungsdetail (6× siehe unten) | `PageHeader` + Highlights + CTA   | ✅ Phase 5             |
-| `/case-studies`        | Referenzen – Übersicht           | `PageHeader` + Grid               | ✅ Phase 4             |
-| `/case-studies/[slug]` | Case-Study-Detail                | `ArticleLayout`                   | ✅ Phase 4             |
-| `/about`               | Über uns                         | bespoke (Sektionen)               | ✅ Phase 6             |
-| `/blog`                | Blog – Übersicht (paginiert)     | `PageHeader` + Grid               | ✅ Phase 4             |
-| `/blog/page/[page]`    | Blog – weitere Seiten            | `PageHeader` + Grid               | ✅ Phase 4             |
-| `/blog/[slug]`         | Blogartikel                      | `ArticleLayout`                   | ✅ Phase 4             |
-| `/blog/feed.xml`       | RSS 2.0-Feed                     | –                                 | ✅ Phase 4             |
-| `/careers`             | Karriere – Übersicht             | `PageHeader` + Grid               | ✅ Phase 4             |
-| `/careers/[slug]`      | Stellendetail                    | `ArticleLayout`                   | ✅ Phase 4             |
-| `/contact`             | Kontakt                          | `PageHeader` + Info + Formular    | ✅ Phase 6             |
-| `/dev`                 | Internes Dev-Dashboard           | `PageHeader` + Sektionen          | ✅ (intern, `noindex`) |
-| `/impressum`           | Impressum                        | `PageHeader` (schmale Textspalte) | offen                  |
-| `/datenschutz`         | Datenschutz                      | `PageHeader` (schmale Textspalte) | offen                  |
+| Route                  | Seite                            | Template                                  | Status                 |
+| ---------------------- | -------------------------------- | ----------------------------------------- | ---------------------- |
+| `/`                    | Home                             | bespoke (Sektionen)                       | ✅ Phase 3             |
+| `/services`            | Leistungen – Übersicht           | `PageHeader` + Grid                       | ✅ Phase 5             |
+| `/services/[slug]`     | Leistungsdetail (6× siehe unten) | `PageHeader` + Highlights + CTA           | ✅ Phase 5             |
+| `/case-studies`        | Referenzen – Übersicht           | `PageHeader` + Grid                       | ✅ Phase 4             |
+| `/case-studies/[slug]` | Case-Study-Detail                | `ArticleLayout`                           | ✅ Phase 4             |
+| `/about`               | Über uns                         | bespoke (Sektionen)                       | ✅ Phase 6             |
+| `/blog`                | Blog – Übersicht (paginiert)     | `PageHeader` + Grid                       | ✅ Phase 4             |
+| `/blog/page/[page]`    | Blog – weitere Seiten            | `PageHeader` + Grid                       | ✅ Phase 4             |
+| `/blog/[slug]`         | Blogartikel                      | `ArticleLayout`                           | ✅ Phase 4             |
+| `/blog/feed.xml`       | RSS 2.0-Feed                     | –                                         | ✅ Phase 4             |
+| `/careers`             | Karriere – Übersicht             | `PageHeader` + Grid                       | ✅ Phase 4             |
+| `/careers/[slug]`      | Stellendetail                    | `ArticleLayout`                           | ✅ Phase 4             |
+| `/contact`             | Kontakt                          | `PageHeader` + Info + Formular            | ✅ Phase 6             |
+| `/dev`                 | Internes Dev-Dashboard           | `PageHeader` + Sektionen                  | ✅ (intern, `noindex`) |
+| `/imprint`             | Impressum                        | `PageHeader` + Prose (schmale Textspalte) | ✅ Phase 7             |
+| `/privacy`             | Datenschutzerklärung             | `PageHeader` + Prose (schmale Textspalte) | ✅ Phase 7             |
+| `/not-found` (404)     | Fehlerseite                      | bespoke (Icon + CTA)                      | ✅ Phase 7             |
+
+> **Hinweis (Phase 7):** Die Legal-Routen wurden von den ursprünglich für Phase 8 vorgesehenen deutschen Slugs `/impressum`/`/datenschutz` auf die finalen englischen Slugs `/imprint`/`/privacy` umbenannt (Konsistenz mit allen anderen Routen, die durchgängig englische Slugs verwenden, z. B. `/case-studies`, `/careers`). `Footer` und das Kontaktformular verlinken jetzt auf die echten Seiten statt auf Platzhalter.
+
+Nicht-Seiten-Routen (Next.js Metadata-API-Konventionen, kein eigener Sitemap-Eintrag):
+
+| Datei                | Zweck                                                                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `app/robots.ts`      | `robots.txt`, erlaubt alles außer `/*/dev`, verweist auf Sitemap                                                                     |
+| `app/sitemap.ts`     | `sitemap.xml`, alle statischen Routen + Content-Detailseiten × alle Locales, inkl. `hreflang`-Alternates                             |
+| `app/manifest.ts`    | `manifest.webmanifest` (Name, Short Name, Theme Color, Icons)                                                                        |
+| `app/icon.tsx`       | Favicon + PWA-Icons (192/512), generiert via `next/og` `ImageResponse` — **Platzhalter-Monogramm** ("N" auf Indigo), siehe DESIGN.md |
+| `app/apple-icon.tsx` | Apple-Touch-Icon (180×180), gleiches Platzhalter-Monogramm                                                                           |
 
 Die 6 Leistungs-Slugs (`lib/services.ts`): `ai-consulting`, `agent-development`, `automation`, `chatbots`, `ai-coding`, `training`.
 
@@ -74,8 +87,28 @@ Sektionsbasiert wie Home, aber mit maximaler Wiederverwendung bestehender Bauste
 - **Validierung**: `lib/validations/contact-form.ts` exportiert `createContactFormSchema(messages)` — eine Zod-Schema-Fabrik, die lokalisierte Fehlermeldungen als Parameter entgegennimmt. So nutzen Client (React Hook Form, `useTranslations`) und Server Action (`getTranslations`) exakt dieselbe Validierungslogik ohne Duplikation.
 - **Formular**: `components/contact/contact-form.tsx` (Client-Komponente) via `react-hook-form` + `@hookform/resolvers/zod`. Die Checkbox von Base UI ist nicht nativ (`checked`/`onCheckedChange` statt `onChange`) und wird daher über `Controller` statt `register()` angebunden.
 - **Server Action**: `lib/actions/contact-form.ts` (`"use server"`) validiert serverseitig erneut (Defense-in-Depth) und protokolliert die Anfrage vorerst nur serverseitig (`console.info`) — **keine E-Mail-Zustellung**. Klar als `TODO` markiert für eine künftige Provider-Anbindung (z. B. Resend), sobald ein Account existiert.
-- **Datenschutz-Checkbox**: verlinkt auf `/datenschutz` (per `t.rich` mit eingebettetem Link) — diese Route existiert noch nicht (siehe Sitemap) und liefert bis zur Umsetzung der Legal-Seiten bewusst 404.
+- **Datenschutz-Checkbox**: verlinkt auf `/privacy` (per `t.rich` mit eingebettetem Link).
 - **E-Mail-Adresse** (`hello@neuralcraft.ai`) und weitere technische Werte sind mit `dir="ltr"` fixiert, damit sie auf der Farsi-Seite nicht vom Bidi-Algorithmus umsortiert werden (siehe DESIGN.md).
+
+## Legal-Seiten (`/imprint`, `/privacy`, seit Phase 7)
+
+- **Content-Modell**: `lib/legal-content.ts` exportiert reine ID-Arrays (`imprintSectionIds`, `privacySectionIds`, `privacyRightsItemIds`) nach dem etablierten „IDs + Messages"-Muster (wie `lib/services.ts`/`lib/about-content.ts`) — beide Seiten iterieren über die IDs und lesen Titel/Text aus `messages/*.json` (`ImprintPage.sections.*`, `PrivacyPage.sections.*`). Kein Freitext im Code.
+- Die Privacy-Seite hat eine Sonderbehandlung für die Section-ID `"rights"`: statt eines Absatzes wird eine `<ul>` aus `privacyRightsItemIds` gerendert (DSGVO-Rechtekatalog, Art. 15–21 + 77). Bewusst als Einzelfall im Rendering gelöst statt eines generischeren Content-Schemas, da es die einzige Liste unter den insgesamt 17 Sections ist.
+- Beide Seiten nutzen `PageHeader` + `LegalDisclaimer` (`components/legal/legal-disclaimer.tsx`, neue Card-basierte Hinweisbox) + eine Prose-Sektion in `Container className="max-w-3xl"` (gleiche schmale Textspalte wie `ArticleLayout`).
+- **Platzhalter-Daten**: Firmenanschrift, Handelsregister, Hosting-Anbieter, Datenschutzbeauftragter sind als `[Platzhalter: ...]`/`[جایگزین: ...]` markiert und müssen vor Go-Live durch echte Daten ersetzt und juristisch geprüft werden (expliziter Disclaimer-Text auf beiden Seiten in allen 3 Sprachen).
+- Das Kontaktformular verlinkt auf `/privacy`, der Footer auf beide Seiten.
+
+## Cookie-Hinweis (seit Phase 7)
+
+- **Kein Consent-Management** — rein informativer, abweisbarer Banner (`components/legal/cookie-notice.tsx`), da die Seite ausschließlich technisch notwendige Cookies setzt (Locale-Präferenz), keine Tracking-/Marketing-Cookies.
+- Persistenz über `localStorage` (`neuralcraft-cookie-notice-dismissed`), gelesen via `useSyncExternalStore` (kein `useEffect`+`setState`, um React-Server/Client-Hydration sauber zu synchronisieren und einen Cascading-Render-Lint-Fehler zu vermeiden).
+- Eingebunden im Root-Layout (`app/[locale]/layout.tsx`), unterhalb des Footers.
+
+## 404-Seite (`app/[locale]/not-found.tsx`, seit Phase 7)
+
+- Next.js' `not-found.js`-Convention erhält **keine Props** (kein `params`); die Locale wird trotzdem korrekt aufgelöst, da next-intl den Request-Locale-Context automatisch bereitstellt (dieselbe Mechanik wie beim `NextIntlClientProvider`).
+- Next.js injiziert für jede 404-Response automatisch `noindex`-Meta — kein manuelles `robots`-Metadata-Feld nötig.
+- Icon (`Compass`, Lucide) in einem `bg-primary/10`-Kreis + CTA-Button (`render`-Prop auf `<Link href="/">`) zurück zur Startseite, komplett mehrsprachig über `NotFound.*`.
 
 ## Content-Zugriff & Pagination (`lib/content.ts`)
 
@@ -86,8 +119,11 @@ Sektionsbasiert wie Home, aber mit maximaler Wiederverwendung bestehender Bauste
 
 - `generateMetadata` pro Locale via `getTranslations("Metadata")`, zentral im Root-Layout (`metadataBase`, `alternates.languages` inkl. `x-default`, OpenGraph, Twitter-Card).
 - Einzelne Seiten überschreiben nur die abweichenden Felder (Title/Description/OG-Image); `lib/seo.ts#buildAlternates(locale, path)` erzeugt Canonical + hreflang für jede Route konsistent.
-- **Strukturierte Daten**: Blog- und Case-Study-Details erhalten `Article`-JSON-LD (`lib/structured-data.ts` + `components/content/json-ld.tsx`). Für Stellenanzeigen wurde bewusst **kein** `JobPosting`-Schema ergänzt — Googles Rich-Results verlangen dafür `datePosted`/`validThrough`/`hiringOrganization`, die unser Content-Modell (noch) nicht abbildet; unvollständiges Markup wäre schlechter als keines. Sollte Careers-SEO relevant werden, zuerst das Frontmatter-Schema entsprechend erweitern.
+- **`lib/seo.ts#buildBasicMetadata()`** (seit Phase 7) bündelt das wiederkehrende Muster `title` + `description` + `alternates` + `openGraph` + `twitter` in einem Helper. Eingeführt, nachdem ein Audit fehlende Twitter-Card-Metadaten auf 5 Seiten (Careers Liste/Detail, Case-Studies-Liste, Blog Liste/paginiert) aufdeckte — alle 5 nutzen jetzt den Helper statt manueller, kopierter Metadata-Objekte, damit der Fehler bei neuen Seiten nicht wieder auftritt.
+- **Strukturierte Daten**: Blog- und Case-Study-Details erhalten `Article`-JSON-LD, Service-Details (`/services/[slug]`) seit Phase 7 `Service`-JSON-LD (`lib/structured-data.ts#buildServiceJsonLd` + `components/content/json-ld.tsx`). Für Stellenanzeigen wurde bewusst **kein** `JobPosting`-Schema ergänzt — Googles Rich-Results verlangen dafür `datePosted`/`validThrough`/`hiringOrganization`, die unser Content-Modell (noch) nicht abbildet; unvollständiges Markup wäre schlechter als keines. Sollte Careers-SEO relevant werden, zuerst das Frontmatter-Schema entsprechend erweitern.
 - RSS 2.0 pro Locale unter `/[locale]/blog/feed.xml` (`lib/rss.ts`), verlinkt via `<atom:link rel="self">`.
+- **`sitemap.xml`** (`app/sitemap.ts`, seit Phase 7): alle statischen Routen (Home, Services, Case-Studies, About, Blog, Careers, Contact, Privacy, Imprint) × alle Locales, plus die 6 Service-Detailseiten sowie sämtliche Blog-/Case-Study-/Stellendetailseiten aus `lib/content.ts`. Jeder Eintrag trägt `alternates.languages` (`lib/seo.ts#buildSitemapLanguageAlternates`) für konsistente hreflang-Angaben, analog zu `buildAlternates` für einzelne Seiten. Blogartikel liefern ein echtes `lastModified` (`publishedAt`); Case-Studies/Stellenanzeigen haben kein Datumsfeld im Content-Modell und lassen `lastModified` daher weg.
+- **`robots.txt`** (`app/robots.ts`, seit Phase 7): erlaubt alles außer `/*/dev` (internes Dashboard), verweist auf die Sitemap.
 
 ## Accessibility-Konventionen
 

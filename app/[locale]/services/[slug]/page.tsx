@@ -7,8 +7,10 @@ import { Container } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { Section } from "@/components/layout/section";
 import { CtaSection } from "@/components/sections/cta-section";
+import { JsonLd } from "@/components/content/json-ld";
 import { buildAlternates } from "@/lib/seo";
 import { services } from "@/lib/services";
+import { buildServiceJsonLd } from "@/lib/structured-data";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 
@@ -60,6 +62,14 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
   return (
     <main id="main-content" className="flex-1">
+      <JsonLd
+        data={buildServiceJsonLd({
+          name: tServices(`${service.messageKey}.title`),
+          description: tServices(`${service.messageKey}.description`),
+          url: `/${locale}/services/${slug}`,
+        })}
+      />
+
       <Container className="max-w-3xl pt-8">
         <Link
           href="/services"

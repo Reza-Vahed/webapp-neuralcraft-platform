@@ -5,7 +5,7 @@ import { JobPostingCard } from "@/components/content/job-posting-card";
 import { Container } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { getJobPostings } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildBasicMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
 
 type PageProps = {
@@ -18,12 +18,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "CareersPage" });
 
-  return {
+  return buildBasicMetadata({
     title: t("title"),
     description: t("lead"),
-    alternates: buildAlternates(locale, "/careers"),
-    openGraph: { title: t("title"), description: t("lead") },
-  };
+    locale,
+    path: "/careers",
+  });
 }
 
 export default async function CareersPage({ params }: PageProps) {

@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { BlogList } from "@/components/content/blog-list";
 import { PageHeader } from "@/components/layout/page-header";
 import { BLOG_PAGE_SIZE, getBlogPosts } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildBasicMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
 
 type PageProps = {
@@ -23,11 +23,12 @@ export async function generateMetadata({
   const { locale, page } = await params;
   const t = await getTranslations({ locale, namespace: "BlogPage" });
 
-  return {
+  return buildBasicMetadata({
     title: `${t("title")} (${page})`,
     description: t("lead"),
-    alternates: buildAlternates(locale, `/blog/page/${page}`),
-  };
+    locale,
+    path: `/blog/page/${page}`,
+  });
 }
 
 export default async function BlogPagePaginated({ params }: PageProps) {

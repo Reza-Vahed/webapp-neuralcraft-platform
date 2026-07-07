@@ -375,6 +375,109 @@
       }
     }
   },
+  "ImprintPage": {
+    "eyebrow": "Imprint",
+    "title": "Imprint",
+    "lead": "Legal disclosure pursuant to Section 5 of the German Telemedia Act (TMG).",
+    "disclaimer": "Legal notice: this page contains placeholder information and does not constitute individual legal advice. Before going live, all details must be replaced with the actual company data and reviewed by a qualified lawyer.",
+    "sections": {
+      "provider": {
+        "title": "Provider",
+        "body": "NeuralCraft, [Placeholder: full legal company name and entity type], [Placeholder: street, number, postal code, city, country]."
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "Email: hello@neuralcraft.ai · [Placeholder: phone number]."
+      },
+      "responsible": {
+        "title": "Responsible for content",
+        "body": "Responsible for content per Section 55(2) of the German Interstate Broadcasting Treaty (RStV): [Placeholder: name of the responsible person]."
+      },
+      "disputeResolution": {
+        "title": "EU dispute resolution",
+        "body": "The European Commission provides a platform for online dispute resolution (ODR): ec.europa.eu/consumers/odr/. We are neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration board."
+      },
+      "liability": {
+        "title": "Liability for content and links",
+        "body": "As a service provider, we are responsible for our own content on these pages under general law, per Section 7(1) TMG. We are not obliged to permanently monitor external linked content without concrete evidence of a legal violation; the operators of linked external sites are solely responsible for their own content."
+      },
+      "copyright": {
+        "title": "Copyright",
+        "body": "Content and works created by the site operators on these pages are subject to German copyright law. Third-party contributions are marked as such."
+      }
+    }
+  },
+  "PrivacyPage": {
+    "eyebrow": "Privacy",
+    "title": "Privacy Policy",
+    "lead": "Information on the processing of personal data pursuant to Article 13 GDPR.",
+    "disclaimer": "Legal notice: this privacy policy is a structured template and does not constitute individual legal advice. Before going live, all details (especially hosting and the data controller) must be completed and reviewed by a qualified lawyer.",
+    "sections": {
+      "overview": {
+        "title": "Overview",
+        "body": "This privacy policy explains which personal data we process when you visit this website, and what rights you have in relation to that processing."
+      },
+      "controller": {
+        "title": "Data controller",
+        "body": "The data controller for this website is NeuralCraft, [Placeholder: address], email: hello@neuralcraft.ai."
+      },
+      "dataCollected": {
+        "title": "What data we collect",
+        "body": "When you visit this website, we automatically collect technical access data (server logs), as well as data you voluntarily submit through the contact form: name, email address, optionally your company, and your message."
+      },
+      "purpose": {
+        "title": "Purpose of processing",
+        "body": "We process this data to respond to your inquiries and to operate and secure the website reliably."
+      },
+      "legalBasis": {
+        "title": "Legal basis",
+        "body": "Processing is based on Article 6(1)(b) GDPR (steps prior to entering into a contract) and Article 6(1)(f) GDPR (legitimate interest in the secure and reliable operation of the website)."
+      },
+      "retention": {
+        "title": "Retention period",
+        "body": "We retain personal data only for as long as necessary for the purposes described above, or as required by statutory retention obligations."
+      },
+      "rights": {
+        "title": "Your rights",
+        "items": {
+          "access": "Access to the data we hold about you (Art. 15 GDPR)",
+          "rectification": "Rectification of inaccurate data (Art. 16 GDPR)",
+          "erasure": "Erasure of your data (Art. 17 GDPR)",
+          "restriction": "Restriction of processing (Art. 18 GDPR)",
+          "portability": "Data portability (Art. 20 GDPR)",
+          "objection": "Objection to processing (Art. 21 GDPR)",
+          "complaint": "Lodging a complaint with a data protection supervisory authority (Art. 77 GDPR)"
+        }
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "This website uses only strictly necessary cookies, for example to store your language preference. We do not set any tracking or marketing cookies. A notice about this is shown on your first visit."
+      },
+      "contactForm": {
+        "title": "Contact form",
+        "body": "When you use the contact form, we process the data you provide solely to handle your inquiry. We do not share it with third parties."
+      },
+      "hosting": {
+        "title": "Hosting",
+        "body": "[Placeholder: details of the hosting provider and server location]."
+      },
+      "contact": {
+        "title": "Privacy contact",
+        "body": "For privacy-related questions, please contact: hello@neuralcraft.ai · [Placeholder: name of the data protection officer, if appointed]."
+      }
+    }
+  },
+  "CookieNotice": {
+    "label": "Cookie notice",
+    "message": "This website uses only strictly necessary cookies (e.g. to store your language preference). See our <link>privacy policy</link> for details.",
+    "dismiss": "Got it"
+  },
+  "NotFound": {
+    "eyebrow": "404",
+    "title": "This page couldn't be found",
+    "lead": "The link may be outdated, or the page may have moved.",
+    "cta": "Back to homepage"
+  },
   "Footer": {
     "tagline": "Your long-term technology partner for practical, measurable AI.",
     "navigation": "Navigation",
