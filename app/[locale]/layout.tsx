@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Vazirmatn } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getDirection, routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -9,6 +9,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
 import { CookieNotice } from "@/components/legal/cookie-notice";
+import { WebVitals } from "@/components/web-vitals";
 import { siteUrl } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
 import "../globals.css";
@@ -41,6 +42,7 @@ export async function generateMetadata({
   params,
 }: Pick<LocaleLayoutProps, "params">): Promise<Metadata> {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
@@ -77,6 +79,8 @@ export default async function LocaleLayout({
     notFound();
   }
 
+  setRequestLocale(locale);
+
   return (
     <html
       lang={locale}
@@ -97,6 +101,7 @@ export default async function LocaleLayout({
             {children}
             <Footer />
             <CookieNotice />
+            <WebVitals />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

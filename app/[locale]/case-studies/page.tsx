@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { CaseStudyCard } from "@/components/content/case-study-card";
 import { Container } from "@/components/layout/container";
@@ -16,6 +16,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "CaseStudiesPage" });
 
   return buildBasicMetadata({
@@ -28,6 +29,7 @@ export async function generateMetadata({
 
 export default async function CaseStudiesPage({ params }: PageProps) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "CaseStudiesPage" });
   const caseStudies = getCaseStudies(locale);
 

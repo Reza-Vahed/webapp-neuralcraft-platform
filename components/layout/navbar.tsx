@@ -22,6 +22,7 @@ const navItems = [
 
 export function Navbar() {
   const t = useTranslations("Nav");
+  const tCommon = useTranslations("Common");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -90,7 +91,7 @@ export function Navbar() {
           className="text-foreground -me-2 inline-flex items-center justify-center rounded-md p-2 md:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={open ? tCommon("closeMenu") : tCommon("openMenu")}
           onClick={() => setOpen((value) => !value)}
         >
           {open ? (

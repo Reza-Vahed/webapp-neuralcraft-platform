@@ -4,7 +4,12 @@
     "description": "NeuralCraft begleitet Unternehmen jeder Größe als langfristiger Technologiepartner beim praktischen und messbaren Einsatz von Künstlicher Intelligenz."
   },
   "Common": {
-    "skipToContent": "Zum Inhalt springen"
+    "skipToContent": "Zum Inhalt springen",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "languageSwitcherLabel": "Sprache",
+    "switchToLightTheme": "Zum hellen Design wechseln",
+    "switchToDarkTheme": "Zum dunklen Design wechseln"
   },
   "Nav": {
     "home": "Start",
@@ -211,11 +216,11 @@
       "status": "Status",
       "statusValue": "Aktiv in Entwicklung",
       "phase": "Aktuelle Phase",
-      "phaseValue": "Phase 5 abgeschlossen · Phase 6 in Planung",
+      "phaseValue": "Phase 7 abgeschlossen · Phase 8 in Arbeit",
       "lastCommit": "Letzter Commit",
       "noCommit": "Kein Git-Verlauf verfügbar",
       "nextStep": "Nächster Schritt",
-      "nextStepValue": "Umfang und Anforderungen für Phase 6 festlegen"
+      "nextStepValue": "Qualitätssicherung und Abschlussbericht für Phase 8"
     },
     "timeline": {
       "title": "Phasen-Timeline",
@@ -227,7 +232,9 @@
       "phase3": "Phase 3 – IA + Homepage",
       "phase4": "Phase 4 – CMS",
       "phase5": "Phase 5 – Services",
-      "phase6": "Phase 6 – Next"
+      "phase6": "Phase 6 – About & Contact",
+      "phase7": "Phase 7 – Legal & Production Readiness",
+      "phase8": "Phase 8 – Performance & DX"
     },
     "routes": {
       "title": "Route-Explorer"
@@ -476,6 +483,13 @@
     "eyebrow": "404",
     "title": "Diese Seite wurde nicht gefunden",
     "lead": "Der Link ist möglicherweise veraltet, oder die Seite wurde verschoben.",
+    "cta": "Zurück zur Startseite"
+  },
+  "ErrorPage": {
+    "eyebrow": "Fehler",
+    "title": "Etwas ist schiefgelaufen",
+    "lead": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut oder kehre zur Startseite zurück.",
+    "retry": "Erneut versuchen",
     "cta": "Zurück zur Startseite"
   },
   "Footer": {

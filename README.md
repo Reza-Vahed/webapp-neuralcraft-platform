@@ -46,6 +46,8 @@ i18n/                 next-intl-Konfiguration (Routing, Navigation, Request-Conf
 velite.config.ts      Content-Collections (BlogPost, CaseStudy, JobPosting)
 app/robots.ts, app/sitemap.ts, app/manifest.ts   Next.js Metadata-API-Routen (robots.txt, sitemap.xml, Web-Manifest)
 app/icon.tsx, app/apple-icon.tsx                 Generierte Favicon-/PWA-/Apple-Touch-Icons (Platzhalter-Monogramm, siehe DESIGN.md)
+app/[locale]/error.tsx, app/global-error.tsx     Fehlerbehandlung (Route-Segment- bzw. globale Error Boundary, siehe IA.md)
+instrumentation.ts, components/web-vitals.tsx    Monitoring-Vorbereitung (noch ohne externen Dienst, siehe IA.md)
 ```
 
 ## Internationalisierung
@@ -57,6 +59,10 @@ app/icon.tsx, app/apple-icon.tsx                 Generierte Favicon-/PWA-/Apple-
 ## Content
 
 Blog, Case Studies und Stellenanzeigen liegen als Markdown-Dateien unter `content/<locale>/<collection>/*.md` und werden von [Velite](https://velite.js.org) typisiert kompiliert (Schema in `velite.config.ts`). Kein CMS-UI — neue Inhalte werden direkt im Repo als Markdown-Datei angelegt.
+
+## Performance
+
+Alle Routen (bis auf den `[...rest]`-Catch-all für unbekannte Pfade) werden zur Build-Zeit statisch vorgerendert (`generateStaticParams` + next-intls `setRequestLocale`, siehe IA.md „Rendering-Strategie"). `npm run build` zeigt das im Routen-Overview als `●` (SSG) statt `ƒ` (dynamisch).
 
 ## Qualitätssicherung
 

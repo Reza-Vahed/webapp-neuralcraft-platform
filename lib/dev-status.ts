@@ -6,7 +6,15 @@ export const projectName = "NeuralCraft Platform";
 export type PhaseStatus = "completed" | "active" | "planned";
 
 export type Phase = {
-  id: "phase1" | "phase2" | "phase3" | "phase4" | "phase5" | "phase6";
+  id:
+    | "phase1"
+    | "phase2"
+    | "phase3"
+    | "phase4"
+    | "phase5"
+    | "phase6"
+    | "phase7"
+    | "phase8";
   status: PhaseStatus;
 };
 
@@ -16,7 +24,9 @@ export const phases: Phase[] = [
   { id: "phase3", status: "completed" },
   { id: "phase4", status: "completed" },
   { id: "phase5", status: "completed" },
-  { id: "phase6", status: "planned" },
+  { id: "phase6", status: "completed" },
+  { id: "phase7", status: "completed" },
+  { id: "phase8", status: "active" },
 ];
 
 export type QualityCheckStatus = "pass" | "fail";

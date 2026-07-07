@@ -23,6 +23,7 @@ Kurzreferenz für Sitemap, Seiten-Templates und Content-Modell. Alle Routen sind
 | `/imprint`             | Impressum                        | `PageHeader` + Prose (schmale Textspalte) | ✅ Phase 7             |
 | `/privacy`             | Datenschutzerklärung             | `PageHeader` + Prose (schmale Textspalte) | ✅ Phase 7             |
 | `/not-found` (404)     | Fehlerseite                      | bespoke (Icon + CTA)                      | ✅ Phase 7             |
+| _(Runtime-Fehler)_     | Fehlerseite                      | bespoke (Icon + CTA + Retry)              | ✅ Phase 8             |
 
 > **Hinweis (Phase 7):** Die Legal-Routen wurden von den ursprünglich für Phase 8 vorgesehenen deutschen Slugs `/impressum`/`/datenschutz` auf die finalen englischen Slugs `/imprint`/`/privacy` umbenannt (Konsistenz mit allen anderen Routen, die durchgängig englische Slugs verwenden, z. B. `/case-studies`, `/careers`). `Footer` und das Kontaktformular verlinken jetzt auf die echten Seiten statt auf Platzhalter.
 
@@ -39,6 +40,13 @@ Nicht-Seiten-Routen (Next.js Metadata-API-Konventionen, kein eigener Sitemap-Ein
 Die 6 Leistungs-Slugs (`lib/services.ts`): `ai-consulting`, `agent-development`, `automation`, `chatbots`, `ai-coding`, `training`.
 
 > **Hinweis (Phase 5):** Die Slugs wurden gegenüber der ursprünglichen Phase-3-Fassung (`ki-strategie`, `agentic-ai`, `workflow-automatisierung`, `chatbots-ai-assistants`, `ai-coding`, `ki-schulungen`) auf sprechende englische Varianten umgestellt. Die 6 Leistungen selbst (inkl. „Chatbots & AI Assistants") sind unverändert geblieben — es wurden **keine** Leistungen entfernt oder durch „Cloud Solutions"/„Web Development" ersetzt (das war eine explizite Rückfrage/Entscheidung, da diese beiden Begriffe inhaltlich nicht durch bestehenden Content gedeckt waren).
+
+## Rendering-Strategie (seit Phase 8)
+
+- **Alle Routen sind jetzt statisch vorgerendert** (`●` SSG im Build-Output), bis auf den `[...rest]`-Catch-all (bleibt zwangsläufig dynamisch, siehe unten). Bis Phase 8 waren trotz vorhandener `generateStaticParams` **alle** Seiten dynamisch (`ƒ`) — next-intl's `getTranslations`/`useTranslations` lesen den Locale-Kontext aus einem Request-scoped Cache, der ohne einen expliziten `setRequestLocale(locale)`-Aufruf pro Layout/Page **jede** Seite zwangsläufig als dynamisch markiert, unabhängig von `generateStaticParams`. Der Fix: `setRequestLocale(locale)` wird jetzt in **jedem** `layout.tsx`/`page.tsx` unter `app/[locale]/` aufgerufen (sowohl in `generateMetadata` als auch in der Seiten-Komponente selbst — next-intl verlangt beides, da Next.js Segmente unabhängig rendern kann).
+- **`dynamicParams = false`** auf allen Slug-/Seiten-Detail-Routen (`blog/[slug]`, `case-studies/[slug]`, `careers/[slug]`, `services/[slug]`, `blog/page/[page]`): Da der Content vollständig build-time bekannt ist (Velite / `lib/services.ts`), ist jeder nicht in `generateStaticParams` enthaltene Slug/Seitenindex definitiv ungültig — Next liefert dafür sofort 404, ohne die Seiten-Funktion überhaupt auszuführen.
+- **`app/[locale]/[...rest]/page.tsx`**: Catch-all, der für jeden sonst nicht gematchten Pfad unter einem gültigen Locale `notFound()` aufruft und so `app/[locale]/not-found.tsx` erreichbar macht (ohne diese Route würden echte Tippfehler-URLs auf Next.js' generische Standard-404 statt der eigenen 404-Seite fallen — beim Playwright-Test in Phase 7 unentdeckt geblieben, da nur explizite `notFound()`-Aufrufe in bestehenden Routen getestet wurden, nicht ein komplett unbekannter Pfad).
+- Kein `loading.tsx`: Da praktisch die gesamte Seite statisch vorgerendert ist (kein Server-seitiges Warten auf Daten zur Request-Zeit), würde ein globales `loading.tsx` bei den meisten Navigationen nur unnötig aufblitzen, ohne echten Nutzen — bewusst ausgelassen.
 
 ## Seiten-Templates (reusable layouts)
 
@@ -72,6 +80,8 @@ highlights.point1-3   — Stichpunkte "Das gehört dazu" auf der Detailseite
 ```
 
 `components/content/service-card.tsx` ist die gemeinsame Karten-Komponente für Home-Teaser und `/services`-Übersicht (nimmt bereits übersetzte Strings entgegen, keine eigene `useTranslations`-Logik — Konsistenz mit `BlogPostCard`/`CaseStudyCard`/`JobPostingCard`). Die Detailseite verwendet `PageHeader` (Titel/Lead) + eine Highlights-Liste + die bestehende `CtaSection` (Wiederverwendung, kein neues CTA-Pattern).
+
+**`components/content/content-card-link.tsx`** (seit Phase 8): gemeinsame `Link` + `Card`-Hülle (Hover-Ring, `h-full`), die zuvor identisch in `ServiceCard`, `BlogPostCard`, `CaseStudyCard` und `JobPostingCard` dupliziert war. Alle vier nutzen jetzt `<ContentCardLink href={...}>{...}</ContentCardLink>` statt der eigenen `Link`/`Card`-Verdrahtung — reine DRY-Extraktion, kein Verhaltensunterschied.
 
 ## About-Seite (`/about`, seit Phase 6)
 
@@ -109,6 +119,13 @@ Sektionsbasiert wie Home, aber mit maximaler Wiederverwendung bestehender Bauste
 - Next.js' `not-found.js`-Convention erhält **keine Props** (kein `params`); die Locale wird trotzdem korrekt aufgelöst, da next-intl den Request-Locale-Context automatisch bereitstellt (dieselbe Mechanik wie beim `NextIntlClientProvider`).
 - Next.js injiziert für jede 404-Response automatisch `noindex`-Meta — kein manuelles `robots`-Metadata-Feld nötig.
 - Icon (`Compass`, Lucide) in einem `bg-primary/10`-Kreis + CTA-Button (`render`-Prop auf `<Link href="/">`) zurück zur Startseite, komplett mehrsprachig über `NotFound.*`.
+- Erreicht wird diese Seite für **echte** Tippfehler-URLs über den `[...rest]`-Catch-all (siehe „Rendering-Strategie"), seit Phase 8.
+
+## Fehlerbehandlung (seit Phase 8)
+
+- **`app/[locale]/error.tsx`**: Route-Segment-Error-Boundary (muss laut Next.js Client Component sein). Liegt auf derselben Ebene wie `app/[locale]/layout.tsx` und wird daher **von diesem Layout umschlossen, nicht ersetzt** — Navbar/Footer/ThemeProvider/`NextIntlClientProvider` bleiben aktiv, weshalb die Seite ganz normal `useTranslations` nutzen und optisch wie die 404-Seite aussehen kann (Icon-Kreis, Titel, Lead, CTA). Zusätzlich ein „Erneut versuchen"-Button über die neue `unstable_retry()`-Prop (Next.js 16.2+). Übersetzungen unter `ErrorPage.*`.
+- **`app/global-error.tsx`**: Letzte Instanz, falls sogar `app/[locale]/layout.tsx` crasht — ersetzt daher die **gesamte** App inkl. `<html>`/`<body>`, hat keinen Zugriff auf next-intl (kein Provider mehr vorhanden) und ist bewusst dependency-frei (keine eigenen Komponenten, keine `next/font`-Variablen) mit hartcodiertem, minimalem Markup und fest verdrahteten Dark-Farben (kein `.dark`-Klassenzugriff möglich, da next-themes ebenfalls nicht mehr gemounted ist). Einzige bewusste Ausnahme von der „keine hardcoded UI-Texte"-Regel, da hier keinerlei i18n-Kontext existiert.
+- Beide Boundaries protokollieren den Fehler über `console.error`/das neue `instrumentation.ts` (siehe „Monitoring").
 
 ## Content-Zugriff & Pagination (`lib/content.ts`)
 
@@ -120,10 +137,16 @@ Sektionsbasiert wie Home, aber mit maximaler Wiederverwendung bestehender Bauste
 - `generateMetadata` pro Locale via `getTranslations("Metadata")`, zentral im Root-Layout (`metadataBase`, `alternates.languages` inkl. `x-default`, OpenGraph, Twitter-Card).
 - Einzelne Seiten überschreiben nur die abweichenden Felder (Title/Description/OG-Image); `lib/seo.ts#buildAlternates(locale, path)` erzeugt Canonical + hreflang für jede Route konsistent.
 - **`lib/seo.ts#buildBasicMetadata()`** (seit Phase 7) bündelt das wiederkehrende Muster `title` + `description` + `alternates` + `openGraph` + `twitter` in einem Helper. Eingeführt, nachdem ein Audit fehlende Twitter-Card-Metadaten auf 5 Seiten (Careers Liste/Detail, Case-Studies-Liste, Blog Liste/paginiert) aufdeckte — alle 5 nutzen jetzt den Helper statt manueller, kopierter Metadata-Objekte, damit der Fehler bei neuen Seiten nicht wieder auftritt.
-- **Strukturierte Daten**: Blog- und Case-Study-Details erhalten `Article`-JSON-LD, Service-Details (`/services/[slug]`) seit Phase 7 `Service`-JSON-LD (`lib/structured-data.ts#buildServiceJsonLd` + `components/content/json-ld.tsx`). Für Stellenanzeigen wurde bewusst **kein** `JobPosting`-Schema ergänzt — Googles Rich-Results verlangen dafür `datePosted`/`validThrough`/`hiringOrganization`, die unser Content-Modell (noch) nicht abbildet; unvollständiges Markup wäre schlechter als keines. Sollte Careers-SEO relevant werden, zuerst das Frontmatter-Schema entsprechend erweitern.
+- **Strukturierte Daten**: Blog- und Case-Study-Details erhalten `Article`-JSON-LD, Service-Details (`/services/[slug]`) seit Phase 7 `Service`-JSON-LD (`lib/structured-data.ts#buildServiceJsonLd` + `components/content/json-ld.tsx`). Seit Phase 8 zusätzlich `Organization`-JSON-LD (`buildOrganizationJsonLd`) auf der Homepage — bewusst nur dort gerendert (Standard-Konvention), nicht sitesweit, um keine doppelten Structured-Data-Meldungen zu erzeugen. Für Stellenanzeigen wurde bewusst **kein** `JobPosting`-Schema ergänzt — Googles Rich-Results verlangen dafür `datePosted`/`validThrough`/`hiringOrganization`, die unser Content-Modell (noch) nicht abbildet; unvollständiges Markup wäre schlechter als keines. Sollte Careers-SEO relevant werden, zuerst das Frontmatter-Schema entsprechend erweitern.
 - RSS 2.0 pro Locale unter `/[locale]/blog/feed.xml` (`lib/rss.ts`), verlinkt via `<atom:link rel="self">`.
 - **`sitemap.xml`** (`app/sitemap.ts`, seit Phase 7): alle statischen Routen (Home, Services, Case-Studies, About, Blog, Careers, Contact, Privacy, Imprint) × alle Locales, plus die 6 Service-Detailseiten sowie sämtliche Blog-/Case-Study-/Stellendetailseiten aus `lib/content.ts`. Jeder Eintrag trägt `alternates.languages` (`lib/seo.ts#buildSitemapLanguageAlternates`) für konsistente hreflang-Angaben, analog zu `buildAlternates` für einzelne Seiten. Blogartikel liefern ein echtes `lastModified` (`publishedAt`); Case-Studies/Stellenanzeigen haben kein Datumsfeld im Content-Modell und lassen `lastModified` daher weg.
 - **`robots.txt`** (`app/robots.ts`, seit Phase 7): erlaubt alles außer `/*/dev` (internes Dashboard), verweist auf die Sitemap.
+
+## Monitoring (seit Phase 8, Vorbereitung ohne externen Dienst)
+
+- **`instrumentation.ts`** (Repo-Root): `register()` ist aktuell ein No-op (Einstiegspunkt für einen künftigen APM-/OTel-Provider); `onRequestError` protokolliert Server-Fehler (Server Components, Route Handlers, Server Actions) über `console.error`, inkl. Pfad/Methode/Route-Typ.
+- **`components/web-vitals.tsx`**: Client-Komponente, die `useReportWebVitals` (aus `next/web-vitals`) nutzt und alle Core-Web-Vitals-Metriken (TTFB, FCP, LCP, CLS, INP) über `console.info` protokolliert. Eingebunden im Root-Layout, damit der `"use client"`-Boundary auf diese eine Komponente beschränkt bleibt (next-intl/Next.js-Konvention).
+- **Kein externer Dienst integriert** (Sentry, Datadog, o. Ä.) — beide Stellen sind bewusst so geschnitten, dass ein späterer Anbieter nur den Funktionskörper ersetzen muss, nicht die Aufrufstellen.
 
 ## Accessibility-Konventionen
 

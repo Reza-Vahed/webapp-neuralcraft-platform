@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowLeft, Check } from "lucide-react";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
@@ -26,10 +26,16 @@ export function generateStaticParams() {
   );
 }
 
+// Every valid slug is enumerated above (services are a fixed, code-defined
+// list), so an unlisted slug is definitively invalid — 404 immediately
+// instead of attempting an on-demand render.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const service = services.find((item) => item.slug === slug);
   if (!service) return {};
 
@@ -48,6 +54,7 @@ export async function generateMetadata({
 
 export default async function ServiceDetailPage({ params }: PageProps) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const service = services.find((item) => item.slug === slug);
 
   if (!service) notFound();

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { ArticleLayout } from "@/components/layout/article-layout";
 import { Container } from "@/components/layout/container";
@@ -22,10 +22,16 @@ export function generateStaticParams() {
   return caseStudies.map((item) => ({ locale: item.locale, slug: item.slug }));
 }
 
+// Every valid slug is enumerated above (content is build-time, not
+// user-generated), so an unlisted slug is definitively invalid — 404
+// immediately instead of attempting an on-demand render.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const caseStudy = getCaseStudy(locale, slug);
   if (!caseStudy) return {};
 
@@ -49,6 +55,7 @@ export async function generateMetadata({
 
 export default async function CaseStudyPage({ params }: PageProps) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const caseStudy = getCaseStudy(locale, slug);
 
   if (!caseStudy) notFound();

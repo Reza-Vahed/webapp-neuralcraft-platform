@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { JobPostingCard } from "@/components/content/job-posting-card";
 import { Container } from "@/components/layout/container";
@@ -16,6 +16,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "CareersPage" });
 
   return buildBasicMetadata({
@@ -28,6 +29,7 @@ export async function generateMetadata({
 
 export default async function CareersPage({ params }: PageProps) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "CareersPage" });
   const jobs = getJobPostings(locale);
 

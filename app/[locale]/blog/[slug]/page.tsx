@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { ArticleLayout } from "@/components/layout/article-layout";
 import { Container } from "@/components/layout/container";
@@ -23,10 +23,16 @@ export function generateStaticParams() {
   return blogPosts.map((post) => ({ locale: post.locale, slug: post.slug }));
 }
 
+// Every valid slug is enumerated above (content is build-time, not
+// user-generated), so an unlisted slug is definitively invalid — 404
+// immediately instead of attempting an on-demand render.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const post = getBlogPost(locale, slug);
   if (!post) return {};
 
@@ -52,6 +58,7 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const post = getBlogPost(locale, slug);
 
   if (!post) notFound();

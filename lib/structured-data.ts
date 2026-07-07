@@ -1,5 +1,18 @@
 import { siteUrl } from "@/lib/site";
 
+// Site-wide entity schema — rendered once, on the homepage only (the
+// standard placement so it isn't reported as duplicated structured data
+// across every page).
+export function buildOrganizationJsonLd(): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "NeuralCraft",
+    url: siteUrl,
+    logo: `${siteUrl}/icon/pwa-512`,
+  };
+}
+
 export function buildArticleJsonLd({
   headline,
   description,
