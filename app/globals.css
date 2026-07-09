@@ -195,3 +195,167 @@ code[data-theme] span {
   border-radius: 0.25rem;
   padding-inline: 0.2rem;
 }
+
+/* Hero background (components/sections/hero-background.tsx, hero-glow.tsx).
+   Every animated layer carries `.hero-animate` in addition to its own
+   keyframe class, so this single rule is the one place that turns all of
+   it off for prefers-reduced-motion — see DESIGN.md's Hero section. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-animate {
+    animation: none !important;
+  }
+}
+
+/* Layer 1 — base atmosphere. Colors are literal per the brief (they equal
+   Tailwind's slate-950/slate-900/gray-900, kept as explicit hex since this
+   exact gradient shape needs more control than the from/via/to utilities
+   give). Light mode intentionally does NOT reuse these dark hex values —
+   a "dark atmosphere" look would fight light mode's own foreground/
+   background tokens, so light mode gets a much softer, token-based
+   equivalent instead (see DESIGN.md for the reasoning). Oversized and
+   slowly translated (transform only, compositor-cheap) for a barely-
+   perceptible drift rather than a static image. */
+.hero-atmosphere {
+  position: absolute;
+  inset: -15%;
+  background-image: radial-gradient(
+    ellipse at 50% 30%,
+    var(--muted) 0%,
+    var(--background) 60%,
+    var(--background) 100%
+  );
+}
+.dark .hero-atmosphere {
+  background-image: radial-gradient(
+    ellipse at 50% 30%,
+    #111827 0%,
+    #0f172a 55%,
+    #020617 100%
+  );
+}
+@keyframes hero-atmosphere-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-2%, 1.5%, 0);
+  }
+}
+.hero-atmosphere.hero-animate {
+  animation: hero-atmosphere-drift 50s var(--ease-premium) infinite;
+  will-change: transform;
+}
+
+/* Layer 2 — glow orbs (indigo/violet/cyan). Idle drift lives here in CSS,
+   scoped to each orb individually; the mouse-parallax offset (hero-glow.tsx)
+   is a separate `transform` applied by Framer Motion to the *parent*
+   element, so the two never fight over the same CSS property. */
+@keyframes hero-orb-drift-1 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0);
+  }
+}
+@keyframes hero-orb-drift-2 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-4%, 3%, 0);
+  }
+}
+@keyframes hero-orb-drift-3 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(2%, 3%, 0);
+  }
+}
+.hero-orb.hero-animate:nth-of-type(1) {
+  animation: hero-orb-drift-1 22s var(--ease-premium) infinite;
+}
+.hero-orb.hero-animate:nth-of-type(2) {
+  animation: hero-orb-drift-2 27s var(--ease-premium) infinite;
+}
+.hero-orb.hero-animate:nth-of-type(3) {
+  animation: hero-orb-drift-3 19s var(--ease-premium) infinite;
+}
+.hero-orb {
+  will-change: transform;
+}
+
+/* Layer 3 — grid. `currentColor` (set via `text-foreground` on the element)
+   keeps the lines correctly themed without a dedicated token; opacity stays
+   under 5% per the brief regardless of theme. */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.035;
+}
+@keyframes hero-grid-pulse {
+  0%,
+  100% {
+    opacity: 0.02;
+  }
+  50% {
+    opacity: 0.045;
+  }
+}
+.hero-grid.hero-animate {
+  animation: hero-grid-pulse 12s ease-in-out infinite;
+}
+
+/* Layer 4 — floating particles. Size/position/timing are randomized once
+   per render in hero-background.tsx (a Server Component, so this happens
+   once at build/request time, not on every client re-render — see
+   DESIGN.md). The keyframe itself is shared; only the inline custom
+   properties differ per particle. */
+@keyframes hero-particle-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(
+      var(--particle-drift-x, 6px),
+      var(--particle-drift-y, -10px),
+      0
+    );
+  }
+}
+.hero-particle.hero-animate {
+  animation-name: hero-particle-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Layer 5 — neural connection lines (decorative SVG). One accent line gets
+   a slow dash-offset "signal" pulse; the rest stay static so the total
+   amount of simultaneous motion stays restrained. */
+@keyframes hero-signal-pulse {
+  0% {
+    stroke-dashoffset: 24;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.5;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+.hero-signal.hero-animate {
+  animation: hero-signal-pulse 6s ease-in-out infinite;
+}
