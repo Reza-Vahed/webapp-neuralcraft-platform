@@ -2,8 +2,8 @@ import type { CSSProperties } from "react";
 
 // Inline styles only — email clients strip <style> tags and external CSS
 // unpredictably, so every rule has to travel with its element. Kept in one
-// place so both templates stay visually consistent (same indigo brand
-// accent as app/icon.tsx / DESIGN.md) without duplicating the object.
+// place so both templates stay visually consistent (same accent color as
+// app/icon.tsx / DESIGN.md) without duplicating the object.
 export const emailStyles = {
   body: {
     backgroundColor: "#f4f4f5",
@@ -21,7 +21,7 @@ export const emailStyles = {
     border: "1px solid #e4e4e7",
   },
   header: {
-    backgroundColor: "#4f46e5",
+    backgroundColor: "#7c2882",
     padding: "20px 32px",
   },
   brand: {

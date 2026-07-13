@@ -18,11 +18,11 @@ export default function GlobalError({
   return (
     <html lang="en">
       <body
-        style={{ background: "#0a0a0a", color: "#fafafa" }}
+        style={{ background: "#171310", color: "#fafafa" }}
         className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center font-sans"
       >
         <div
-          style={{ background: "rgba(79, 70, 229, 0.15)", color: "#818cf8" }}
+          style={{ background: "rgba(183, 92, 189, 0.15)", color: "#e0a8e5" }}
           className="flex size-20 items-center justify-center rounded-full text-4xl"
           aria-hidden
         >
@@ -40,7 +40,7 @@ export default function GlobalError({
         <button
           type="button"
           onClick={() => unstable_retry()}
-          style={{ background: "#4f46e5", color: "#fff" }}
+          style={{ background: "#b75cbd", color: "#fff" }}
           className="rounded-lg px-4 py-2 text-sm font-medium"
         >
           Try again

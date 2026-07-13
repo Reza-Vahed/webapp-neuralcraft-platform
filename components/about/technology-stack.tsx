@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { technologyCategories } from "@/lib/about-content";
 
 export async function TechnologyStack() {
@@ -13,17 +14,17 @@ export async function TechnologyStack() {
   return (
     <Section className="border-border/60 border-t">
       <Container>
-        <div className="max-w-2xl">
+        <ScrollReveal className="max-w-2xl">
           <p className="text-primary text-sm font-semibold tracking-wide uppercase">
             {t("technologyEyebrow")}
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h2 className="font-heading mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
             {t("technologyTitle")}
           </h2>
           <p className="text-muted-foreground mt-4 text-lg">
             {t("technologyLead")}
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2">
           {technologyCategories.map((category) => (

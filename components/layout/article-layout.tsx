@@ -40,7 +40,7 @@ export function ArticleLayout({
           </div>
         )}
 
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+        <h1 className="font-heading mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
           {title}
         </h1>
 

@@ -11,6 +11,10 @@ import { useHeroParallax } from "@/components/sections/hero-parallax-context";
 // .hero-orb keyframes in globals.css) is a *separate* transform on a
 // separate element, so it never fights with this parallax transform over
 // the same CSS property.
+//
+// Colors (Design Refresh "B"): fuchsia/rose/amber — the warm family that
+// matches the plum --primary accent, replacing the original cool
+// indigo/violet/cyan trio.
 export function HeroGlow() {
   const parallax = useHeroParallax();
 
@@ -21,15 +25,15 @@ export function HeroGlow() {
         className="absolute inset-0"
       >
         <div
-          className="hero-orb hero-animate absolute top-[8%] left-[12%] size-72 rounded-full bg-indigo-400/20 blur-[100px] sm:size-96 dark:bg-indigo-500/25"
+          className="hero-orb hero-animate absolute top-[8%] left-[12%] size-72 rounded-full bg-fuchsia-400/20 blur-[100px] sm:size-96 dark:bg-fuchsia-500/25"
           style={{ animationDelay: "0s" }}
         />
         <div
-          className="hero-orb hero-animate absolute top-[15%] right-[10%] size-64 rounded-full bg-violet-400/15 blur-[100px] sm:size-80 dark:bg-violet-500/20"
+          className="hero-orb hero-animate absolute top-[15%] right-[10%] size-64 rounded-full bg-rose-400/15 blur-[100px] sm:size-80 dark:bg-rose-500/20"
           style={{ animationDelay: "-6s" }}
         />
         <div
-          className="hero-orb hero-animate absolute bottom-[5%] left-[35%] size-64 rounded-full bg-cyan-300/15 blur-[100px] sm:size-80 dark:bg-cyan-400/20"
+          className="hero-orb hero-animate absolute bottom-[5%] left-[35%] size-64 rounded-full bg-amber-300/15 blur-[100px] sm:size-80 dark:bg-amber-400/20"
           style={{ animationDelay: "-12s" }}
         />
       </motion.div>

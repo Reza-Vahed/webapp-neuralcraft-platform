@@ -11,7 +11,10 @@
   --font-sans:
     var(--font-geist-sans), var(--font-vazirmatn), ui-sans-serif, sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  /* Headlines only (see `font-heading` usages) — falls through to the same
+     sans/Vazirmatn chain as --font-sans for glyphs Fraunces doesn't cover
+     (Persian), so Farsi headlines render in Vazirmatn automatically. */
+  --font-heading: var(--font-fraunces), var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -67,25 +70,30 @@
   --duration-slow: 400ms;
 }
 
+/* Warm editorial palette (Design Refresh, "B — Editorial & Elegant", see
+   DESIGN.md): every neutral carries a faint warm hue (~50-75°, chroma
+   ≤0.014) instead of true gray, and the single accent moved from a cold
+   indigo (hue ~277) to a rich plum/aubergine (hue ~325). Same single-accent
+   principle as before — only the hue and the neutrals' warmth changed. */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.511 0.262 276.966);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: oklch(0.985 0.006 75);
+  --foreground: oklch(0.19 0.012 50);
+  --card: oklch(0.985 0.006 75);
+  --card-foreground: oklch(0.19 0.012 50);
+  --popover: oklch(0.985 0.006 75);
+  --popover-foreground: oklch(0.19 0.012 50);
+  --primary: oklch(0.44 0.16 325);
+  --primary-foreground: oklch(0.985 0.004 75);
+  --secondary: oklch(0.965 0.006 70);
+  --secondary-foreground: oklch(0.22 0.01 50);
+  --muted: oklch(0.965 0.006 70);
+  --muted-foreground: oklch(0.5 0.015 50);
+  --accent: oklch(0.965 0.006 70);
+  --accent-foreground: oklch(0.22 0.01 50);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.511 0.262 276.966 / 45%);
+  --border: oklch(0.9 0.008 60);
+  --input: oklch(0.9 0.008 60);
+  --ring: oklch(0.44 0.16 325 / 45%);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -103,24 +111,24 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.585 0.233 277.117);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.16 0.012 50);
+  --foreground: oklch(0.97 0.006 75);
+  --card: oklch(0.22 0.014 50);
+  --card-foreground: oklch(0.97 0.006 75);
+  --popover: oklch(0.22 0.014 50);
+  --popover-foreground: oklch(0.97 0.006 75);
+  --primary: oklch(0.62 0.17 325);
+  --primary-foreground: oklch(0.98 0.004 75);
+  --secondary: oklch(0.28 0.014 50);
+  --secondary-foreground: oklch(0.97 0.006 75);
+  --muted: oklch(0.28 0.014 50);
+  --muted-foreground: oklch(0.72 0.012 60);
+  --accent: oklch(0.28 0.014 50);
+  --accent-foreground: oklch(0.97 0.006 75);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.585 0.233 277.117 / 50%);
+  --border: oklch(1 0.006 60 / 10%);
+  --input: oklch(1 0.006 60 / 15%);
+  --ring: oklch(0.62 0.17 325 / 50%);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -146,6 +154,15 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Prose headings (Markdown-rendered blog/case-study/job content via
+   `.prose` in ArticleLayout, plus the unstyled `<h2>`s on the legal pages)
+   pick up the display font too — Tailwind Typography doesn't set its own
+   font-family, so this is the one place needed to cover all of them at
+   once instead of touching every call site. */
+.prose :where(h1, h2, h3, h4) {
+  font-family: var(--font-heading);
 }
 
 /* Code blocks (rehype-pretty-code / Shiki, dual light+dark theme) */
@@ -206,15 +223,16 @@ code[data-theme] span {
   }
 }
 
-/* Layer 1 — base atmosphere. Colors are literal per the brief (they equal
-   Tailwind's slate-950/slate-900/gray-900, kept as explicit hex since this
-   exact gradient shape needs more control than the from/via/to utilities
-   give). Light mode intentionally does NOT reuse these dark hex values —
-   a "dark atmosphere" look would fight light mode's own foreground/
-   background tokens, so light mode gets a much softer, token-based
-   equivalent instead (see DESIGN.md for the reasoning). Oversized and
-   slowly translated (transform only, compositor-cheap) for a barely-
-   perceptible drift rather than a static image. */
+/* Layer 1 — base atmosphere. Colors are literal (Design Refresh "B": warm
+   near-black brown-charcoal instead of the original cool slate hex), kept
+   as explicit hex since this exact gradient shape needs more control than
+   the from/via/to utilities give. Light mode intentionally does NOT reuse
+   these dark hex values — a "dark atmosphere" look would fight light
+   mode's own foreground/background tokens, so light mode gets a much
+   softer, token-based equivalent instead (see DESIGN.md for the
+   reasoning). Oversized and slowly translated (transform only,
+   compositor-cheap) for a barely-perceptible drift rather than a static
+   image. */
 .hero-atmosphere {
   position: absolute;
   inset: -15%;
@@ -228,9 +246,9 @@ code[data-theme] span {
 .dark .hero-atmosphere {
   background-image: radial-gradient(
     ellipse at 50% 30%,
-    #111827 0%,
-    #0f172a 55%,
-    #020617 100%
+    #1c1613 0%,
+    #150f0c 55%,
+    #0a0706 100%
   );
 }
 @keyframes hero-atmosphere-drift {
