@@ -31,6 +31,11 @@ const geistMono = Geist_Mono({
 // drops through `--font-heading`'s own fallback chain to Vazirmatn, the
 // same automatic script fallback already used for `--font-sans` — no
 // locale branching needed in the component code.
+//
+// `axes` opts into Fraunces' non-standard variable axes (opsz = optical
+// size, SOFT/WONK = the softer, hand-drawn-leaning alternates) — next/font
+// only loads the standard weight axis by default, and the editorial
+// character we picked this font for comes from those extra axes.
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],

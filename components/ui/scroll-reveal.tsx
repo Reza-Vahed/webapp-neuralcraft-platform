@@ -32,8 +32,16 @@ export function ScrollReveal({
     <motion.div
       data-scroll-reveal
       className={className}
+      // 16px rise: enough to read as motion, small enough to stay "restrained"
+      // rather than a slide-in. `ease` duplicates --ease-premium's curve
+      // literally (globals.css) because Framer Motion's `transition.ease`
+      // takes a JS array/string, not a CSS custom property — keep both in
+      // sync if that token ever changes.
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
+      // -80px shrinks the trigger area inward from the real viewport edge,
+      // so the reveal fires once a section is meaningfully on-screen
+      // instead of the instant its top pixel appears at the bottom edge.
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
     >
