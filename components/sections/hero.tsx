@@ -25,7 +25,7 @@ export async function Hero() {
           {t("eyebrow")}
         </span>
 
-        <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+        <h1 className="font-heading max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
           {t("heroTitle")}
         </h1>
 

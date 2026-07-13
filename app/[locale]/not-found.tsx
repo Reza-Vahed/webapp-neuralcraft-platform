@@ -29,7 +29,7 @@ export default async function NotFound() {
         <p className="text-primary text-sm font-semibold tracking-wide uppercase">
           {t("eyebrow")}
         </p>
-        <h1 className="max-w-lg text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+        <h1 className="font-heading max-w-lg text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
           {t("title")}
         </h1>
         <p className="text-muted-foreground max-w-md text-lg text-balance">

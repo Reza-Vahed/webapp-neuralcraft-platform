@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Vazirmatn } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono, Vazirmatn } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -23,6 +23,18 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Display font for headlines only (h1/h2, see `font-heading` in
+// globals.css) — body text stays on Geist Sans. Fraunces has no Arabic
+// glyphs, so on Farsi pages the browser's per-glyph font fallback silently
+// drops through `--font-heading`'s own fallback chain to Vazirmatn, the
+// same automatic script fallback already used for `--font-sans` — no
+// locale branching needed in the component code.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  axes: ["opsz", "SOFT", "WONK"],
 });
 
 const vazirmatn = Vazirmatn({
@@ -86,10 +98,17 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={getDirection(locale)}
-      className={`${geistSans.variable} ${geistMono.variable} ${vazirmatn.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${vazirmatn.variable} ${fraunces.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
+        {/* Safety net for components/ui/scroll-reveal.tsx: its Framer
+            Motion elements SSR at opacity:0 until JS hydrates and reveals
+            them on scroll — without JS that content would stay invisible
+            forever, so this forces it visible whenever scripting is off. */}
+        <noscript>
+          <style>{`[data-scroll-reveal]{opacity:1!important;transform:none!important;}`}</style>
+        </noscript>
         <NextIntlClientProvider>
           <ThemeProvider
             attribute="class"

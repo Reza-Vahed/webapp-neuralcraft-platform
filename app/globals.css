@@ -11,7 +11,10 @@
   --font-sans:
     var(--font-geist-sans), var(--font-vazirmatn), ui-sans-serif, sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  /* Headlines only (see `font-heading` usages) — falls through to the same
+     sans/Vazirmatn chain as --font-sans for glyphs Fraunces doesn't cover
+     (Persian), so Farsi headlines render in Vazirmatn automatically. */
+  --font-heading: var(--font-fraunces), var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -146,6 +149,15 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Prose headings (Markdown-rendered blog/case-study/job content via
+   `.prose` in ArticleLayout, plus the unstyled `<h2>`s on the legal pages)
+   pick up the display font too — Tailwind Typography doesn't set its own
+   font-family, so this is the one place needed to cover all of them at
+   once instead of touching every call site. */
+.prose :where(h1, h2, h3, h4) {
+  font-family: var(--font-heading);
 }
 
 /* Code blocks (rehype-pretty-code / Shiki, dual light+dark theme) */

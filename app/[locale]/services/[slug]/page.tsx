@@ -99,7 +99,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <Icon className="size-6" aria-hidden />
           </div>
 
-          <h2 className="text-2xl font-semibold tracking-tight">
+          <h2 className="font-heading text-2xl font-semibold tracking-tight">
             {t("highlightsTitle")}
           </h2>
           <ul className="mt-6 space-y-4">
