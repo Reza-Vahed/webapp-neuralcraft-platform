@@ -223,15 +223,16 @@ code[data-theme] span {
   }
 }
 
-/* Layer 1 — base atmosphere. Colors are literal per the brief (they equal
-   Tailwind's slate-950/slate-900/gray-900, kept as explicit hex since this
-   exact gradient shape needs more control than the from/via/to utilities
-   give). Light mode intentionally does NOT reuse these dark hex values —
-   a "dark atmosphere" look would fight light mode's own foreground/
-   background tokens, so light mode gets a much softer, token-based
-   equivalent instead (see DESIGN.md for the reasoning). Oversized and
-   slowly translated (transform only, compositor-cheap) for a barely-
-   perceptible drift rather than a static image. */
+/* Layer 1 — base atmosphere. Colors are literal (Design Refresh "B": warm
+   near-black brown-charcoal instead of the original cool slate hex), kept
+   as explicit hex since this exact gradient shape needs more control than
+   the from/via/to utilities give. Light mode intentionally does NOT reuse
+   these dark hex values — a "dark atmosphere" look would fight light
+   mode's own foreground/background tokens, so light mode gets a much
+   softer, token-based equivalent instead (see DESIGN.md for the
+   reasoning). Oversized and slowly translated (transform only,
+   compositor-cheap) for a barely-perceptible drift rather than a static
+   image. */
 .hero-atmosphere {
   position: absolute;
   inset: -15%;
@@ -245,9 +246,9 @@ code[data-theme] span {
 .dark .hero-atmosphere {
   background-image: radial-gradient(
     ellipse at 50% 30%,
-    #111827 0%,
-    #0f172a 55%,
-    #020617 100%
+    #1c1613 0%,
+    #150f0c 55%,
+    #0a0706 100%
   );
 }
 @keyframes hero-atmosphere-drift {
