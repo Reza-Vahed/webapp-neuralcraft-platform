@@ -2,11 +2,11 @@ import { ImageResponse } from "next/og";
 
 export const contentType = "image/png";
 
-// Placeholder brand mark: a simple "N" monogram on the indigo accent color
-// (matches --primary in app/globals.css). Not final brand assets — swap for
-// a real logo-derived icon once the visual identity is finalized (see
-// DESIGN.md).
-const BRAND_INDIGO = "#4F46E5";
+// Placeholder brand mark: a simple "N" monogram on the accent color
+// (matches --primary in app/globals.css — plum/aubergine since the Design
+// Refresh). Not final brand assets — swap for a real logo-derived icon once
+// the visual identity is finalized (see DESIGN.md).
+const BRAND_ACCENT = "#7c2882";
 
 function Mark({ radius, fontSize }: { radius: number; fontSize: number }) {
   return (
@@ -17,7 +17,7 @@ function Mark({ radius, fontSize }: { radius: number; fontSize: number }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: BRAND_INDIGO,
+        background: BRAND_ACCENT,
         borderRadius: radius,
         color: "#fff",
         fontSize,

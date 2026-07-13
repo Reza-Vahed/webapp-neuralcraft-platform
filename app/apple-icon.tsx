@@ -5,7 +5,7 @@ export const contentType = "image/png";
 
 // Same placeholder monogram as app/icon.tsx, sized for iOS home screens
 // (Apple applies its own corner rounding, so no border-radius here).
-const BRAND_INDIGO = "#4F46E5";
+const BRAND_ACCENT = "#7c2882";
 
 export default function AppleIcon() {
   return new ImageResponse(
@@ -16,7 +16,7 @@ export default function AppleIcon() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: BRAND_INDIGO,
+        background: BRAND_ACCENT,
         color: "#fff",
         fontSize: 96,
         fontWeight: 700,
