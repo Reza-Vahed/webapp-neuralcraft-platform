@@ -21,7 +21,7 @@ export function Footer() {
     <footer className="border-border/60 border-t">
       <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-2">
-          <span className="text-base font-semibold tracking-tight">
+          <span className="font-heading text-base font-semibold tracking-tight">
             NeuralCraft
           </span>
           <p className="text-muted-foreground mt-3 max-w-sm text-sm">
