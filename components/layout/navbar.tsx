@@ -20,6 +20,13 @@ const navItems = [
   { href: "/careers", key: "careers" },
 ] as const;
 
+// Shared by the desktop nav and the mobile drawer's nav list — same
+// current-page rule, used twice, worth naming once instead of repeating
+// the ternary in both `.map()` calls below.
+function isNavItemActive(pathname: string, href: string) {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
+
 export function Navbar() {
   const t = useTranslations("Nav");
   const tCommon = useTranslations("Common");
@@ -63,20 +70,27 @@ export function Navbar() {
 
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => {
-            const isActive =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
+            const isActive = isNavItemActive(pathname, item.href);
             return (
+              // Navbar & Footer Feinschliff (Option B): the underline is a
+              // pseudo-element scaled on the transform axis (0 -> 1), not a
+              // width/border change — transform-only keeps it compositor-
+              // cheap and consistent with this project's "only animate
+              // transform/opacity" convention (see DESIGN.md's Hero &
+              // Motion section). Default transform-origin is center, so it
+              // grows outward symmetrically — deliberately not "origin-left"
+              // (which would need an RTL-specific mirror); growing from the
+              // middle looks identical and correct in both directions
+              // without any dir-aware CSS.
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "text-sm font-medium transition-colors",
+                  "after:bg-primary relative text-sm font-medium tracking-wide transition-colors after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:scale-x-0 after:transition-transform after:duration-300 after:ease-(--ease-premium) after:content-['']",
                   isActive
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-foreground after:scale-x-100"
+                    : "text-foreground/90 hover:text-foreground hover:after:scale-x-100"
                 )}
               >
                 {t(item.key)}
@@ -120,18 +134,31 @@ export function Navbar() {
       {open && (
         <nav id="mobile-nav" className="border-border/60 border-t md:hidden">
           <Container className="flex flex-col gap-1 py-4">
-            {navItems.map((item) => (
-              // py-3 (not the desktop-shared py-2): text-sm's 20px line
-              // height + 12px top/bottom lands exactly on the 44px
-              // touch-target guideline this audit checked against.
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-muted-foreground hover:bg-muted hover:text-foreground rounded-md px-3 py-3 text-sm font-medium transition-colors"
-              >
-                {t(item.key)}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = isNavItemActive(pathname, item.href);
+              return (
+                // py-3 (not the desktop-shared py-2): text-sm's 20px line
+                // height + 12px top/bottom lands exactly on the 44px
+                // touch-target guideline this audit checked against. Active
+                // state here is a filled pill (bg-muted), not the desktop
+                // underline — an underline reads oddly on a full-width
+                // block-level row, whereas a pill matches the same active/
+                // inactive convention LocaleSwitcher already uses.
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "rounded-md px-3 py-3 text-sm font-medium tracking-wide transition-colors",
+                    isActive
+                      ? "bg-muted text-foreground"
+                      : "text-foreground/90 hover:bg-muted hover:text-foreground"
+                  )}
+                >
+                  {t(item.key)}
+                </Link>
+              );
+            })}
             <div className="mt-2 flex items-center justify-between px-3">
               <LocaleSwitcher />
               <ThemeToggle />
