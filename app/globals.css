@@ -75,6 +75,19 @@
    ≤0.014) instead of true gray, and the single accent moved from a cold
    indigo (hue ~277) to a rich plum/aubergine (hue ~325). Same single-accent
    principle as before — only the hue and the neutrals' warmth changed. */
+/* Light-mode polish: --border/--input and --muted/--secondary/--accent were
+   originally tuned close to --background (1.14:1 and 1.76:1 luminance
+   contrast respectively — deliberately subtle, but "subtle" tipped into
+   "invisible": alternating section backgrounds (`bg-muted/30`, used
+   throughout Home/About) and hairline dividers (`border-border/60`, the
+   Navbar included) barely registered against the near-white background.
+   Dark mode never had this problem — the same relative tokens read as
+   clearly distinct against a much darker --background — so only the
+   :root values below changed; .dark is untouched. Verified against WCAG:
+   all *text* pairs already had 9-19:1 headroom before and after (nowhere
+   close to the 4.5:1 minimum), so this was a depth/definition fix, not a
+   contrast-failure fix — border did fail the 3:1 non-text/UI-component
+   guideline at 1.76:1 though, and now clears it at ~3.5:1. */
 :root {
   --background: oklch(0.985 0.006 75);
   --foreground: oklch(0.19 0.012 50);
@@ -84,15 +97,15 @@
   --popover-foreground: oklch(0.19 0.012 50);
   --primary: oklch(0.44 0.16 325);
   --primary-foreground: oklch(0.985 0.004 75);
-  --secondary: oklch(0.965 0.006 70);
+  --secondary: oklch(0.92 0.016 60);
   --secondary-foreground: oklch(0.22 0.01 50);
-  --muted: oklch(0.965 0.006 70);
+  --muted: oklch(0.92 0.016 60);
   --muted-foreground: oklch(0.5 0.015 50);
-  --accent: oklch(0.965 0.006 70);
+  --accent: oklch(0.92 0.016 60);
   --accent-foreground: oklch(0.22 0.01 50);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.008 60);
-  --input: oklch(0.9 0.008 60);
+  --border: oklch(0.8 0.016 55);
+  --input: oklch(0.8 0.016 55);
   --ring: oklch(0.44 0.16 325 / 45%);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
