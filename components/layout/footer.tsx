@@ -36,7 +36,7 @@ export function Footer() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                  className="text-foreground/90 hover:text-foreground text-sm tracking-wide transition-colors"
                 >
                   {tNav(item.key)}
                 </Link>
@@ -51,7 +51,7 @@ export function Footer() {
             <li>
               <Link
                 href="/imprint"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                className="text-foreground/90 hover:text-foreground text-sm tracking-wide transition-colors"
               >
                 {t("impressum")}
               </Link>
@@ -59,7 +59,7 @@ export function Footer() {
             <li>
               <Link
                 href="/privacy"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                className="text-foreground/90 hover:text-foreground text-sm tracking-wide transition-colors"
               >
                 {t("privacy")}
               </Link>
