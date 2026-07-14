@@ -46,7 +46,10 @@ export function Navbar() {
   return (
     <header className="border-border/60 bg-background/80 sticky top-0 z-50 border-b backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="text-base font-semibold tracking-tight">
+        <Link
+          href="/"
+          className="font-heading text-base font-semibold tracking-tight"
+        >
           NeuralCraft
         </Link>
 
