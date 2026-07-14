@@ -70,7 +70,7 @@ export function ContentCardLink({
         onPointerLeave={handlePointerLeave}
         style={{ rotateX: springRotateX, rotateY: springRotateY }}
       >
-        <Card className="ring-foreground/10 group-hover:ring-primary/50 h-full shadow-sm transition-shadow duration-300 ease-(--ease-premium) group-hover:shadow-lg">
+        <Card className="ring-foreground/16 dark:ring-foreground/10 group-hover:ring-primary/50 h-full shadow-sm transition-shadow duration-300 ease-(--ease-premium) group-hover:shadow-lg">
           {children}
         </Card>
       </motion.div>
