@@ -154,6 +154,17 @@
   html {
     @apply font-sans;
   }
+  /* Mobile-audit safety net: nothing in the layout is intentionally wider
+     than the viewport, so this should never actually clip real content —
+     it exists to turn a future accidental overflow (e.g. an oversized
+     decorative element) into "invisible" instead of "adds a horizontal
+     scrollbar to the whole page." `.prose pre`'s own `overflow-x: auto`
+     (below) is unaffected — that's a deliberate, contained scroll area on
+     a descendant, not the page itself. */
+  html,
+  body {
+    overflow-x: hidden;
+  }
 }
 
 /* Prose headings (Markdown-rendered blog/case-study/job content via

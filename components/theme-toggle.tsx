@@ -33,9 +33,15 @@ export function ThemeToggle() {
   const isDark = resolvedTheme === "dark";
 
   return (
+    // Mobile-audit: the visual 32px icon button stays compact (this sits
+    // in the dense desktop navbar too, where a 44px icon would look
+    // oversized) — the `after:` pseudo-element instead grows an invisible,
+    // centered 44px hit area around it, satisfying the touch-target
+    // guideline without changing what anyone actually sees.
     <Button
       variant="ghost"
       size="icon"
+      className="relative after:absolute after:inset-1/2 after:size-11 after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']"
       aria-label={isDark ? t("switchToLightTheme") : t("switchToDarkTheme")}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
