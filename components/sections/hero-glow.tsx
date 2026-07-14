@@ -17,6 +17,13 @@ import { useHeroParallax } from "@/components/sections/hero-parallax-context";
 // matches the plum --primary accent, replacing the original cool
 // indigo/violet/cyan trio.
 //
+// Light-mode polish: light-mode opacity bumped (fuchsia 20->35, rose
+// 15->28, amber 15->25) — the original values were tuned to be visible
+// against dark mode's much darker atmosphere and read as "almost not
+// there" on the light cream background, which is a much closer luminance
+// match to a pastel glow than a near-black background is. Dark mode's
+// `dark:` opacities are untouched.
+//
 // Blur radius is smaller below `sm`: `blur-[100px]` is a real compositing
 // cost (each orb is a full-screen-ish backdrop the GPU has to filter every
 // frame it repaints), and phones both have less GPU headroom and show the
@@ -32,15 +39,15 @@ export function HeroGlow() {
         className="absolute inset-0"
       >
         <div
-          className="hero-orb hero-animate absolute top-[8%] left-[12%] size-72 rounded-full bg-fuchsia-400/20 blur-[60px] sm:size-96 sm:blur-[100px] dark:bg-fuchsia-500/25"
+          className="hero-orb hero-animate absolute top-[8%] left-[12%] size-72 rounded-full bg-fuchsia-400/35 blur-[60px] sm:size-96 sm:blur-[100px] dark:bg-fuchsia-500/25"
           style={{ animationDelay: "0s" }}
         />
         <div
-          className="hero-orb hero-animate absolute top-[15%] right-[10%] size-64 rounded-full bg-rose-400/15 blur-[60px] sm:size-80 sm:blur-[100px] dark:bg-rose-500/20"
+          className="hero-orb hero-animate absolute top-[15%] right-[10%] size-64 rounded-full bg-rose-400/28 blur-[60px] sm:size-80 sm:blur-[100px] dark:bg-rose-500/20"
           style={{ animationDelay: "-6s" }}
         />
         <div
-          className="hero-orb hero-animate absolute bottom-[5%] left-[35%] size-64 rounded-full bg-amber-300/15 blur-[60px] sm:size-80 sm:blur-[100px] dark:bg-amber-400/20"
+          className="hero-orb hero-animate absolute bottom-[5%] left-[35%] size-64 rounded-full bg-amber-300/25 blur-[60px] sm:size-80 sm:blur-[100px] dark:bg-amber-400/20"
           style={{ animationDelay: "-12s" }}
         />
       </motion.div>

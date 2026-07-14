@@ -29,7 +29,10 @@ export async function CaseStudiesTeaser() {
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {caseStudyTeaserKeys.map((key) => (
-            <Card key={key} className="ring-foreground/10 h-full">
+            <Card
+              key={key}
+              className="ring-foreground/16 dark:ring-foreground/10 h-full"
+            >
               <CardHeader>
                 <p className="text-muted-foreground text-xs font-medium uppercase">
                   {tItems(`${key}.industry`)}

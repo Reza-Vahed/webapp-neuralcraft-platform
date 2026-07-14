@@ -86,9 +86,17 @@ export function HeroBackground() {
         />
       ))}
 
-      {/* Layer 5 — neural connection lines */}
+      {/* Layer 5 — neural connection lines. Light-mode polish: this used
+          text-foreground (near-black-on-cream) at the same low opacity in
+          both themes — in dark mode that reads as a faint constellation
+          against the dark atmosphere, but the same near-black hairlines on
+          a near-white background read as stray scratches rather than a
+          designed pattern. Recolored to text-primary (the plum accent) for
+          light mode only, so it reads as a deliberate brand-tinted motif
+          instead; dark mode keeps its original text-foreground/opacity
+          exactly. */}
       <svg
-        className="text-foreground absolute inset-0 size-full opacity-[0.07]"
+        className="text-primary dark:text-foreground absolute inset-0 size-full opacity-[0.06] dark:opacity-[0.07]"
         viewBox="0 0 800 400"
         preserveAspectRatio="xMidYMid slice"
         fill="none"
