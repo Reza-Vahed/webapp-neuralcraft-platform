@@ -31,6 +31,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Generates `.velite/` (the `@/.velite` content-types module that
+      # lib/content.ts and several pages import from). next.config.ts only
+      # triggers this as a side effect of `next dev`/`next build`, so on a
+      # fresh checkout — no `.velite/` yet, since it's gitignored — a
+      # standalone `tsc --noEmit` run below would otherwise fail on an
+      # unresolved module before `next build` ever gets a chance to
+      # generate it itself. Explicit step instead of reordering Typecheck
+      # after Build, so a real type error still fails fast at the
+      # Typecheck step instead of surfacing as a Build failure.
+      - name: Generate content types (Velite)
+        run: npm run content
+
       - name: Lint
         run: npm run lint
 
