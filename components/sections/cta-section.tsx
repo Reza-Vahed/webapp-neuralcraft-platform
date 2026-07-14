@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Link } from "@/i18n/navigation";
 
@@ -19,13 +20,15 @@ export async function CtaSection() {
           <p className="text-muted-foreground max-w-lg text-lg text-balance">
             {t("ctaSubtitle")}
           </p>
-          <Button
-            size="lg"
-            nativeButton={false}
-            render={<Link href="/contact" />}
-          >
-            {t("ctaButton")}
-          </Button>
+          <MagneticButton>
+            <Button
+              size="lg"
+              nativeButton={false}
+              render={<Link href="/contact" />}
+            >
+              {t("ctaButton")}
+            </Button>
+          </MagneticButton>
         </Container>
       </ScrollReveal>
     </Section>

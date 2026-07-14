@@ -33,7 +33,11 @@ export function LocaleSwitcher() {
             locale={locale}
             aria-current={isActive ? "true" : undefined}
             className={cn(
-              "rounded-md px-2 py-1 text-sm font-medium transition-colors",
+              // Mobile-audit: py-3 (not py-1) — these labels are already
+              // wide enough horizontally, the 28px-tall original fell short
+              // only on the vertical axis; 12px top/bottom + the 20px
+              // text-sm line height lands on the 44px guideline.
+              "rounded-md px-2 py-3 text-sm font-medium transition-colors",
               isActive
                 ? "bg-muted text-foreground"
                 : "text-muted-foreground hover:text-foreground"

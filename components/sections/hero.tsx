@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { HeroBackground } from "@/components/sections/hero-background";
 import { HeroInteractive } from "@/components/sections/hero-interactive";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 import { Link } from "@/i18n/navigation";
 
 // Hero stays a Server Component — translations are still fetched here, on
@@ -34,21 +35,25 @@ export async function Hero() {
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row">
-          <Button
-            size="lg"
-            nativeButton={false}
-            render={<Link href="/contact" />}
-          >
-            {t("ctaPrimary")}
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            nativeButton={false}
-            render={<Link href="/services" />}
-          >
-            {t("ctaSecondary")}
-          </Button>
+          <MagneticButton>
+            <Button
+              size="lg"
+              nativeButton={false}
+              render={<Link href="/contact" />}
+            >
+              {t("ctaPrimary")}
+            </Button>
+          </MagneticButton>
+          <MagneticButton>
+            <Button
+              size="lg"
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/services" />}
+            >
+              {t("ctaSecondary")}
+            </Button>
+          </MagneticButton>
         </div>
       </Container>
     </HeroInteractive>

@@ -1,6 +1,12 @@
 "use client";
 
-import { useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import {
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { useRef, type PointerEvent, type ReactNode } from "react";
 
 import { HeroParallaxContext } from "@/components/sections/hero-parallax-context";
@@ -18,6 +24,13 @@ import { HeroParallaxContext } from "@/components/sections/hero-parallax-context
 const MAX_OFFSET_PX = 20;
 const SPRING_CONFIG = { stiffness: 40, damping: 20, mass: 0.6 };
 
+// Scroll parallax (motion-polish): a second, independent offset added on
+// top of the mouse offset below — not a replacement. 24px is deliberately
+// smaller than the 20-40px mouse range so the two never fight for visual
+// attention; it only needs to read as "the glow sits at a different depth
+// than the page" while the Hero scrolls past, not as its own effect.
+const MAX_SCROLL_OFFSET_PX = 24;
+
 export function HeroInteractive({ children }: { children: ReactNode }) {
   const prefersReducedMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,6 +39,27 @@ export function HeroInteractive({ children }: { children: ReactNode }) {
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, SPRING_CONFIG);
   const springY = useSpring(mouseY, SPRING_CONFIG);
+
+  // Tracks the Hero's own scroll position, not the whole page: progress 0
+  // is "Hero just reached the top of the viewport" (effectively page load,
+  // since the Hero is the first section), progress 1 is "Hero has fully
+  // scrolled past". Framer Motion clamps this to [0, 1] by construction —
+  // it can't overshoot before/after those two checkpoints.
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+  const scrollY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, MAX_SCROLL_OFFSET_PX]
+  );
+  // Summed rather than picking one: the mouse spring should keep responding
+  // to pointer movement independently of however far the user has scrolled.
+  const combinedY = useTransform(
+    [springY, scrollY],
+    ([mouse, scroll]) => (mouse as number) + (scroll as number)
+  );
 
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
     if (prefersReducedMotion) return;
@@ -54,7 +88,7 @@ export function HeroInteractive({ children }: { children: ReactNode }) {
       onPointerLeave={handlePointerLeave}
     >
       <HeroParallaxContext.Provider
-        value={prefersReducedMotion ? null : { x: springX, y: springY }}
+        value={prefersReducedMotion ? null : { x: springX, y: combinedY }}
       >
         {children}
       </HeroParallaxContext.Provider>
