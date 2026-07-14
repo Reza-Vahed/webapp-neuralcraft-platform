@@ -44,7 +44,15 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="border-border/60 bg-background/80 sticky top-0 z-50 border-b backdrop-blur-md">
+    // Light-mode polish: the header previously relied on the same
+    // border-border/60 + backdrop-blur as dark mode, but light mode's much
+    // subtler --border (see globals.css) combined with a near-white page
+    // behind a near-white navbar meant the "sticky bar" had almost no edge
+    // once scrolled content sat under it. shadow-sm gives it a soft lift
+    // instead of (or in addition to) the border — dark mode already reads
+    // fine off the border alone against its darker background, so it keeps
+    // exactly its previous border opacity and no shadow.
+    <header className="border-border/80 dark:border-border/60 bg-background/80 sticky top-0 z-50 border-b shadow-sm backdrop-blur-md dark:shadow-none">
       <Container className="flex h-16 items-center justify-between">
         <Link
           href="/"
